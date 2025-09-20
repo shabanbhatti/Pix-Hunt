@@ -1,0 +1,5 @@
+<paths>
+    <external-path name="external_files" path="."/>
+    <external-files-path name="external_storage_files" path="Pictures/PixHunt"/>
+    <cache-path name="cache_files" path="."/>
+</paths>

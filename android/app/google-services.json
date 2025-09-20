@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "991811837814",
+    "project_id": "arcane-bus-466702-a4",
+    "storage_bucket": "arcane-bus-466702-a4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991811837814:android:9b917126eade18c18f2457",
+        "android_client_info": {
+          "package_name": "com.example.pix_hunt_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "991811837814-dvt43epsm72m32il4ut9rp7vcdjkppul.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pix_hunt_project",
+            "certificate_hash": "db7706b9ffa57f13711dc871502d57a4582e1fb2"
+          }
+        },
+        {
+          "client_id": "991811837814-93f6uiiq4iartg4qrt9gq0s9ndlkoeb7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZx1xUtHkFfuqR_oFX_BW40AvOWzrH3Ss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "991811837814-93f6uiiq4iartg4qrt9gq0s9ndlkoeb7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "991811837814-0ubnusi8dmje8o6l69jl9gkdlq2gjb5r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pixHuntProject"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/APi%20Riverpod/api_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/User_Image_riverpod.dart/user_img_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Pages/Home%20Page/Widgets/circle_avatar_home_widget.dart';
@@ -50,12 +49,10 @@ class HomeSliverAppbar extends ConsumerWidget {
                 builder: (context, ref, child) {
                   return IconButton(
                     onPressed: () async {
-                      
                       showLogoutDialog(context, () async {
                         await ref
                             .read(authProvider('logout').notifier)
                             .logout();
-
                       });
                     },
                     icon: Icon(
@@ -73,7 +70,7 @@ class HomeSliverAppbar extends ConsumerWidget {
                     SearchPage.pageName,
                   );
                 },
-                icon:const Icon(Icons.search, size: 30, color: Colors.white),
+                icon: const Icon(Icons.search, size: 30, color: Colors.white),
               ),
             ],
           ),
@@ -120,7 +117,7 @@ class HomeSliverAppbar extends ConsumerWidget {
                     child: Consumer(
                       builder: (context, ref, child) {
                         var myRef = ref.watch(userDbProvider);
-                        var x= ref.watch(apiProvider);
+                        var x = ref.watch(apiProvider);
                         return switch (myRef) {
                           InitialUserDb() => Text(''),
                           LoadingUserDb() => Skeletonizer(

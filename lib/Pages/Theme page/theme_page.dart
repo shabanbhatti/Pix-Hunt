@@ -24,7 +24,7 @@ class ThemePage extends StatelessWidget {
             builder: (context, ref, child) {
               var value = ref.watch(themeProvider).isDark;
               return Switch(
-                activeColor: Colors.indigo,
+                activeThumbColor: Colors.indigo,
                 inactiveThumbColor: Colors.grey,
 
                 // focusColor: Colors.red,

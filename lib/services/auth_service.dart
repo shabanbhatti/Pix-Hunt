@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
+import 'package:pix_hunt_project/Utils/constants_env.dart';
 
 class AuthService {
   final FirebaseAuth firebaseAuth;
@@ -8,10 +10,19 @@ class AuthService {
 
   AuthService({required this.firebaseAuth, required this.googleSignIn});
 
-Future<User?> getCurrentUser()async{
-  await firebaseAuth.currentUser?.reload();
-  return firebaseAuth.currentUser;
-}
+  Future<User?> getCurrentUser() async {
+    await firebaseAuth.currentUser?.reload();
+    return firebaseAuth.currentUser;
+  }
+
+  Future<bool> isUserNull() async {
+    var user = await firebaseAuth.currentUser;
+    if (user != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   Future<String> getCurrentUserUid() async {
     return firebaseAuth.currentUser!.uid;
@@ -21,40 +32,53 @@ Future<User?> getCurrentUser()async{
     required Auth auth,
     required String password,
   }) async {
-    return await firebaseAuth.createUserWithEmailAndPassword(
+    var newUser = await firebaseAuth.createUserWithEmailAndPassword(
       email: auth.email!,
       password: password,
     );
+    await newUser.user?.sendEmailVerification();
+    return newUser;
   }
 
-  Future<void> updateUserName(String name)async{
-var user= firebaseAuth.currentUser;
-      if (name != user?.displayName && name!='') {
-        await user?.updateDisplayName(name);
-      }    
+  Future<void> updateUserName(String name) async {
+    var user = firebaseAuth.currentUser;
+    if (name != user?.displayName && name != '') {
+      await user?.updateDisplayName(name);
+    }
   }
 
-  Future<void> updateEmail(String newEmail ,String password)async{
- var user= firebaseAuth.currentUser;
- if (newEmail != user?.email) {
+  Future<void> updateEmail(String newEmail, String password) async {
+    var user = firebaseAuth.currentUser;
+    if (newEmail != user?.email) {
       final cred = EmailAuthProvider.credential(
-        email: user?.email??'',
+        email: user?.email ?? '',
         password: password,
       );
       await firebaseAuth.currentUser?.reauthenticateWithCredential(cred);
-  
-        await user?.verifyBeforeUpdateEmail(newEmail);
-      }
+
+      await user?.verifyBeforeUpdateEmail(newEmail);
+    }
   }
 
-  Future<UserCredential> loginAccount({
+  Future<bool?> loginAccount({
     required String email,
     required String password,
   }) async {
-    return await firebaseAuth.signInWithEmailAndPassword(
+    var user = await firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
+    if (user.user != null) {
+      var isEmailVerified = user.user?.emailVerified ?? false;
+      if (isEmailVerified) {
+        return true;
+      } else {
+        firebaseAuth.signOut();
+        return false;
+      }
+    } else {
+      return null;
+    }
   }
 
   Future<void> logout() async {
@@ -67,33 +91,37 @@ var user= firebaseAuth.currentUser;
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
 
-  Future<Auth> signInWithGOOGLE() async {
-    await googleSignIn.initialize(
-      serverClientId:
-          '991811837814-93f6uiiq4iartg4qrt9gq0s9ndlkoeb7.apps.googleusercontent.com',
-    );
+  Future<Auth?> signInWithGOOGLE() async {
+    try {
+      await googleSignIn.initialize(serverClientId: EnvUtils.serverClientId);
 
-    // GoogleSignIn googleSignIn = GoogleSignIn.instance;
+      GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.authenticate();
 
-    GoogleSignInAccount googleSignInAccount = await googleSignIn.authenticate();
+      GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
 
-    GoogleSignInAuthentication googleSignInAuthentication =
-        googleSignInAccount.authentication;
+      AuthCredential authCredential = GoogleAuthProvider.credential(
+        idToken: googleSignInAuthentication.idToken,
+      );
 
-    AuthCredential authCredential = GoogleAuthProvider.credential(
-      idToken: googleSignInAuthentication.idToken,
-    );
+      UserCredential userCredential = await firebaseAuth.signInWithCredential(
+        authCredential,
+      );
 
-    UserCredential userCredential = await firebaseAuth.signInWithCredential(
-      authCredential,
-    );
-
-    Auth auth = Auth(
-      email: userCredential.user!.email,
-      name: userCredential.user!.displayName,
-      uid: userCredential.user!.uid,
-      createdAtDate: DateTime.now().toString(),
-    );
-    return auth;
+      Auth auth = Auth(
+        email: userCredential.user?.email,
+        name: userCredential.user?.displayName,
+        uid: userCredential.user?.uid,
+        createdAtDate: DateTime.now().toString(),
+      );
+      return auth;
+    } catch (e) {
+      if (e.toString().contains('canceled')) {
+        return null;
+      }
+      log(e.toString());
+      throw Exception(e.toString());
+    }
   }
 }

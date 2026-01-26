@@ -4,12 +4,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Models/dowloads_items_model.dart';
+import 'package:pix_hunt_project/Utils/date_format_util.dart';
 import 'package:pix_hunt_project/Widgets/custom_dialog_boxes.dart';
 
-class ViewDownloadedItem extends StatelessWidget {
+class ViewDownloadedItem extends StatefulWidget {
   const ViewDownloadedItem({super.key, required this.downloadsItem});
   static const pageName = '/view_downloaded_item';
   final DownloadsItem downloadsItem;
+
+  @override
+  State<ViewDownloadedItem> createState() => _ViewDownloadedItemState();
+}
+
+class _ViewDownloadedItemState extends State<ViewDownloadedItem>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,100 +42,117 @@ class ViewDownloadedItem extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                ),
-              ),
-              backgroundColor: Colors.indigo,
-              leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  CupertinoIcons.back,
-                  color: Colors.white,
-                  size: 40,
+              backgroundColor: Colors.transparent,
+
+              leading: Padding(
+                padding: EdgeInsetsGeometry.all(5),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: Colors.indigo,
+                    radius: 5,
+                    child: const Icon(
+                      CupertinoIcons.back,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
               actions: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: Consumer(
-                    builder: (context, ref, child) {
-                      return PopupMenuButton<String>(
-                        icon: const Icon(
-                          Icons.more_horiz,
-                          color: Colors.white,
-                          size: 40,
-                        ),
-                        onSelected: (value) {
-                          if (value == 'delete') {
-                            deleteDialogBox(context, () {
-                              ref
-                                  .read(userDbProvider.notifier)
-                                  .deleteDownloadedHistory(downloadsItem);
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            });
-                          }
-                        },
-                        itemBuilder:
-                            (context) => [
-                              PopupMenuItem(
-                                value: 'delete',
-                                child: ListTile(
-                                  leading: const Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ),
-                                  title: const Text('Delete'),
-                                ),
+                  padding: const EdgeInsetsGeometry.only(right: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Consumer(
+                        builder: (context, ref, _) {
+                          return GestureDetector(
+                            onTap: () {
+                              deleteDialogBox(context, () {
+                                ref
+                                    .read(userDbProvider.notifier)
+                                    .deleteDownloadedHistory(
+                                      widget.downloadsItem,
+                                    );
+
+                                Navigator.pop(context);
+                              });
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: Colors.indigo,
+                              radius: 23,
+                              child: const Icon(
+                                CupertinoIcons.delete,
+                                color: Colors.white,
                               ),
-                            ],
-                      );
-                    },
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ],
               pinned: true,
-              expandedHeight: 700,
+              expandedHeight: 500,
               floating: true,
               snap: true,
-              flexibleSpace: FlexibleSpaceBar(
-                background: LayoutBuilder(
-                  builder: (context, constraints) {
-                    var mqSize = Size(
-                      constraints.maxWidth,
-                      constraints.maxHeight,
-                    );
-                    return Container(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
+              flexibleSpace: Container(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                decoration: const BoxDecoration(color: Colors.black),
+                width: double.infinity,
+                height: double.infinity,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl: widget.downloadsItem.imgUrl,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            SliverSafeArea(
+              top: false,
+              sliver: SliverPadding(
+                padding: const EdgeInsetsGeometry.symmetric(horizontal: 10),
+                sliver: SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      _listtile(
+                        title: 'Image title',
+                        value: widget.downloadsItem.title,
+                      ),
+                      const Divider(),
+                      _listtile(
+                        title: 'Pixels',
+                        value: widget.downloadsItem.pixels,
+                      ),
+                      const Divider(),
+                      _listtile(
+                        title: 'Date',
+                        value: DateFormatUtil.dateFormat(
+                          widget.downloadsItem.date,
                         ),
-                        color: Colors.black,
                       ),
-                      width: mqSize.width,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Opacity(
-                            opacity: 0.7,
-                            child: CachedNetworkImage(
-                              imageUrl: downloadsItem.imgUrl,
-                              fit: BoxFit.cover,
-                              height: mqSize.height,
-                              width: mqSize.width,
-                            ),
-                          ),
-                        ],
+                      const Divider(),
+                      _listtile(
+                        title: 'Url',
+                        value: widget.downloadsItem.imgUrl,
                       ),
-                    );
-                  },
+                      const Divider(),
+                      _listtile(title: 'Status', value: 'Save to gallery'),
+                      const Divider(),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -121,4 +161,18 @@ class ViewDownloadedItem extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _listtile({required String title, required String value}) {
+  return Row(
+    children: [
+      Text('$title:', style: TextStyle(fontWeight: FontWeight.bold)),
+      Expanded(
+        child: Padding(
+          padding: EdgeInsetsGeometry.only(left: 10),
+          child: Text(value, maxLines: 1, overflow: TextOverflow.ellipsis),
+        ),
+      ),
+    ],
+  );
 }

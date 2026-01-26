@@ -6,11 +6,14 @@ class LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-
-      child: Card(
+    return Padding(
+      padding: const EdgeInsetsGeometry.all(5),
+      child: Container(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          color: Colors.grey.withAlpha(50),
+        ),
         child: Padding(
           padding: EdgeInsets.all(7),
           child: Column(

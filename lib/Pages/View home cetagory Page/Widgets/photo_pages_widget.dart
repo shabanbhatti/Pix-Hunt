@@ -6,13 +6,13 @@ import 'package:pix_hunt_project/Models/pexer.dart';
 class PhotoPagesWidget extends StatelessWidget {
   const PhotoPagesWidget({
     super.key,
-    required this.constListProducts,
+    required this.title,
     required this.pexer,
     required this.scrollController,
   });
 
   final Pexer pexer;
-  final ({String title, String imgPath}) constListProducts;
+  final String title;
   final ScrollController scrollController;
 
   @override
@@ -28,31 +28,19 @@ class PhotoPagesWidget extends StatelessWidget {
                     if (pexer.page == 5) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(
-                            search: constListProducts.title,
-                            pageNumber: 4,
-                          );
+                          .fetchApi(search: title, pageNumber: 4);
                     } else if (pexer.page == 4) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(
-                            search: constListProducts.title,
-                            pageNumber: 3,
-                          );
+                          .fetchApi(search: title, pageNumber: 3);
                     } else if (pexer.page == 3) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(
-                            search: constListProducts.title,
-                            pageNumber: 2,
-                          );
+                          .fetchApi(search: title, pageNumber: 2);
                     } else if (pexer.page == 2) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(
-                            search: constListProducts.title,
-                            pageNumber: 1,
-                          );
+                          .fetchApi(search: title, pageNumber: 1);
                     }
                     scrollController.animateTo(
                       0,
@@ -80,31 +68,19 @@ class PhotoPagesWidget extends StatelessWidget {
                     if (pexer.page == 1) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(
-                            search: constListProducts.title,
-                            pageNumber: 2,
-                          );
+                          .fetchApi(search: title, pageNumber: 2);
                     } else if (pexer.page == 2) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(
-                            search: constListProducts.title,
-                            pageNumber: 3,
-                          );
+                          .fetchApi(search: title, pageNumber: 3);
                     } else if (pexer.page == 3) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(
-                            search: constListProducts.title,
-                            pageNumber: 4,
-                          );
+                          .fetchApi(search: title, pageNumber: 4);
                     } else if (pexer.page == 4) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(
-                            search: constListProducts.title,
-                            pageNumber: 5,
-                          );
+                          .fetchApi(search: title, pageNumber: 5);
                     }
 
                     scrollController.animateTo(

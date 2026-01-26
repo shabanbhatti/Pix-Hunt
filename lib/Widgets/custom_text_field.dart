@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
@@ -8,7 +7,7 @@ class MyTextField extends StatelessWidget {
     required this.focusNode,
     required this.label,
     required this.prefixIcon,
-    required this.onSubmitted
+    required this.onSubmitted,
   });
   final TextEditingController controller;
   final FocusNode focusNode;
@@ -23,28 +22,27 @@ class MyTextField extends StatelessWidget {
         height: 40,
         child: TextField(
           onSubmitted: onSubmitted,
-          cursorColor: Colors.white,
-          style: const TextStyle(color: Colors.white),
+
           controller: controller,
           focusNode: focusNode,
 
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(bottom: 5),
             hintText: 'Search',
-            hintStyle: const TextStyle(color: Colors.white),
-            prefixIcon: Icon(prefixIcon, color: Colors.white),
+
+            prefixIcon: Icon(prefixIcon),
             border: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.white, width: 2),
               borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide(color: Theme.of(context).primaryColor),
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.white, width: 2),
               borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide(color: Theme.of(context).primaryColor),
             ),
 
             focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.white, width: 2),
               borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide(color: Theme.of(context).primaryColor),
             ),
           ),
         ),

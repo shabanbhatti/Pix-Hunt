@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/APi%20Riverpod/api_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Pages/Home%20Page/Widgets/circle_avatar_home_widget.dart';
 import 'package:pix_hunt_project/Pages/Login%20Page/login_page.dart';
 import 'package:pix_hunt_project/Pages/Search%20page/search_page.dart';
-import 'package:pix_hunt_project/Pages/User%20Profile%20Page/user_profile.dart';
+import 'package:pix_hunt_project/Pages/profile%20Page/user_profile.dart';
+import 'package:pix_hunt_project/Utils/extensions.dart';
 import 'package:pix_hunt_project/Utils/get_greeting_hours_method.dart';
-import 'package:pix_hunt_project/Widgets/custom_dialog_boxes.dart';
 import 'package:pix_hunt_project/main.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -45,24 +44,6 @@ class HomeSliverAppbar extends ConsumerWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Consumer(
-                builder: (context, ref, child) {
-                  return IconButton(
-                    onPressed: () async {
-                      showLogoutDialog(context, () async {
-                        await ref
-                            .read(authProvider('logout').notifier)
-                            .logout();
-                      });
-                    },
-                    icon: Icon(
-                      Icons.logout_rounded,
-                      size: 30,
-                      color: Colors.white,
-                    ),
-                  );
-                },
-              ),
               IconButton(
                 onPressed: () {
                   Navigator.pushNamed(
@@ -76,7 +57,7 @@ class HomeSliverAppbar extends ConsumerWidget {
           ),
         ),
       ],
-      backgroundColor: Colors.indigo,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       pinned: true,
       expandedHeight: 200,
       // floating: true,
@@ -117,7 +98,7 @@ class HomeSliverAppbar extends ConsumerWidget {
                     child: Consumer(
                       builder: (context, ref, child) {
                         var myRef = ref.watch(userDbProvider);
-                        var x = ref.watch(apiProvider);
+
                         return switch (myRef) {
                           InitialUserDb() => Text(''),
                           LoadingUserDb() => Skeletonizer(
@@ -125,7 +106,8 @@ class HomeSliverAppbar extends ConsumerWidget {
                             child: Text('Loading.....'),
                           ),
                           LoadedSuccessfulyUserDb(auth: var auth) => Text(
-                            auth.name.toString(),
+                            auth.name!.firstTwoWords(),
+
                             style: const TextStyle(
                               fontSize: 30,
                               color: Colors.white,

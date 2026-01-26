@@ -1,63 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:pix_hunt_project/Controllers/Downloads%20Stream%20RIverpod/download_stream_riv.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
-
 import 'package:pix_hunt_project/Pages/Download%20History%20Page/Widgets/list_tile.dart';
 import 'package:pix_hunt_project/Pages/View%20Downloaded%20Item%20page/view_downloaded_item.dart';
+import 'package:pix_hunt_project/Utils/date_format_util.dart';
 import 'package:pix_hunt_project/Widgets/custom_dialog_boxes.dart';
 import 'package:pix_hunt_project/Widgets/custom_show_bottom_sheets.dart';
 import 'package:pix_hunt_project/Widgets/custom_sliver_appbar.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class DownloadHistoryPage extends StatelessWidget {
+class DownloadHistoryPage extends ConsumerStatefulWidget {
   const DownloadHistoryPage({super.key});
   static const pageName = '/download_history_page';
 
-  String myDate(String date) {
-    DateTime dateTime = DateTime.parse(date);
+  @override
+  ConsumerState<DownloadHistoryPage> createState() =>
+      _DownloadHistoryPageState();
+}
 
-    var dateFormat = DateFormat.yMMMd().format(dateTime);
-    return dateFormat;
+class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(downloadHistoryStreamProvider, (previous, next) {
+      if (next.hasValue) {
+        animationController.forward();
+      }
+    });
     return Scaffold(
       body: Center(
         child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
           slivers: [
-            CustomSliverAppBar(title: 'Downloads'),
-            SliverToBoxAdapter(
-              child: Center(
-                child: Consumer(
-                  builder: (context, ref, child) {
-                    var myRef = ref.watch(downloadHistoryStreamProvider);
-                    return myRef.when(
-                      data: (data) {
-                        return (data.isEmpty)
-                            ? Padding(
-                              padding: EdgeInsets.symmetric(vertical: 300),
+            const CustomSliverAppBar(title: 'Downloads'),
+            SliverSafeArea(
+              top: false,
+              sliver: Consumer(
+                builder: (context, ref, child) {
+                  var myRef = ref.watch(downloadHistoryStreamProvider);
+                  return myRef.when(
+                    data: (x) {
+                      var data = x.reversed.toList();
+                      return (data.isEmpty)
+                          ? const SliverFillRemaining(
+                            child: Center(
                               child: Text(
                                 'No Downloads',
                                 style: TextStyle(
-                                  fontSize: 20,
                                   color: Colors.indigo,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            )
-                            : ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              reverse: true,
-                              itemCount: data.length,
-                              itemBuilder: (context, index) {
-                                return CustomListTile1(
+                            ),
+                          )
+                          : SliverList.builder(
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              final animation = CurvedAnimation(
+                                parent: animationController,
+                                curve: Interval(
+                                  index / data.length,
+                                  (index + 1) / data.length,
+                                  curve: Curves.easeInQuart,
+                                ),
+                              );
+                              return SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: const Offset(-1, 0),
+                                  end: Offset.zero,
+                                ).animate(animation),
+                                child: CustomListTile1(
                                   imgUrl: data[index].imgUrl,
-                                  date: myDate(data[index].date.toString()),
+                                  date: DateFormatUtil.dateFormat(
+                                    data[index].date.toString(),
+                                  ),
 
                                   onTap: () {
                                     Navigator.of(context).pushNamed(
@@ -69,15 +101,14 @@ class DownloadHistoryPage extends StatelessWidget {
                                     customBottomSheet(
                                       context,
                                       open: () {
+                                        Navigator.pop(context);
                                         Navigator.of(context).pushNamed(
                                           ViewDownloadedItem.pageName,
                                           arguments: data[index],
                                         );
                                       },
                                       delete: () {
-                                        print(
-                                          '--------UI DELETE CALLED---------',
-                                        );
+                                        Navigator.pop(context);
                                         deleteDialogBox(context, () {
                                           ref
                                               .read(userDbProvider.notifier)
@@ -93,19 +124,21 @@ class DownloadHistoryPage extends StatelessWidget {
                                   photographer:
                                       '${data[index].photographer}\n [${data[index].pixels}]',
                                   title: data[index].title,
-                                );
-                              },
-                            );
-                      },
-                      error: (error, stackTrace) {
-                        return Text('$error');
-                      },
-                      loading: () {
-                        return _loading();
-                      },
-                    );
-                  },
-                ),
+                                ),
+                              );
+                            },
+                          );
+                    },
+                    error: (error, stackTrace) {
+                      return SliverFillRemaining(
+                        child: Center(child: Text('$error')),
+                      );
+                    },
+                    loading: () {
+                      return _loading();
+                    },
+                  );
+                },
               ),
             ),
           ],
@@ -116,31 +149,26 @@ class DownloadHistoryPage extends StatelessWidget {
 }
 
 Widget _loading() {
-  return Skeletonizer(
-    enabled: true,
-    child: ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: List.generate(50, (index) => '').length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: Skeletonizer(
-            enabled: true,
-            child: Container(
-              width: 80,
-              height: 80,
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              decoration: BoxDecoration(
-                color: Colors.grey.withAlpha(100),
-                borderRadius: BorderRadius.circular(10),
-              ),
+  return SliverList.builder(
+    itemCount: List.generate(50, (index) => '').length,
+    itemBuilder: (context, index) {
+      return ListTile(
+        leading: Skeletonizer(
+          enabled: true,
+          child: Container(
+            width: 80,
+            height: 80,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            decoration: BoxDecoration(
+              color: Colors.grey.withAlpha(100),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
+        ),
 
-          title: Text('Hi there is a downliad histry page'),
-          subtitle: Text('Photographer \n  (2000 Pizels)'),
-        );
-      },
-    ),
+        title: Text('Hi there is a downliad histry page'),
+        subtitle: Text('Photographer \n  (2000 Pizels)'),
+      );
+    },
   );
 }

@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 
 import 'package:pix_hunt_project/Models/fav_items.dart';
-import 'package:pix_hunt_project/Pages/View%20card%20detail%20page%20(FAVOURITE)/view_fav_detail_card_page.dart';
+import 'package:pix_hunt_project/Pages/view%20card%20detail%20page/view_card_detail_page.dart';
+
+import 'package:pix_hunt_project/Utils/bottom%20sheets/half_size_bottom_sheet_util.dart';
 import 'package:pix_hunt_project/Widgets/custom_dialog_boxes.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -14,17 +16,24 @@ class FavCardWidget extends StatelessWidget {
   final FavItemModalClass favItem;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
-        Navigator.of(
+        // Navigator.of(
+        //   context,
+        // ).pushNamed(ViewCardDetailsPage.pageName, arguments: favItem);
+        openHalfBottomSheet(
           context,
-        ).pushNamed(ViewFavDetailPage.pageName, arguments: favItem);
+          child: ViewCardDetailsPage(favItemModalClass: favItem),
+        );
       },
-      child: Container(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-
-        child: Card(
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: Container(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            color: Colors.grey.withAlpha(50),
+          ),
           child: Padding(
             padding: EdgeInsets.all(7),
             child: Column(
@@ -35,25 +44,22 @@ class FavCardWidget extends StatelessWidget {
 
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(5),
-                    child: Hero(
-                      tag: favItem.largePhotoUrl,
-                      child: CachedNetworkImage(
-                        imageUrl: favItem.mediumPhotoUrl,
-                        fit: BoxFit.cover,
-                        fadeInDuration: const Duration(milliseconds: 300),
-                        placeholder:
-                            (context, url) => Skeletonizer(
-                              enabled: true,
-                              child: Container(
-                                height: double.infinity,
-                                width: double.infinity,
-                                color: Colors.grey[300],
-                              ),
+                    child: CachedNetworkImage(
+                      imageUrl: favItem.mediumPhotoUrl,
+                      fit: BoxFit.cover,
+                      fadeInDuration: const Duration(milliseconds: 300),
+                      placeholder:
+                          (context, url) => Skeletonizer(
+                            enabled: true,
+                            child: Container(
+                              height: double.infinity,
+                              width: double.infinity,
+                              color: Colors.grey[300],
                             ),
-                        errorWidget:
-                            (context, url, error) =>
-                                const Icon(Icons.wifi_off, color: Colors.red),
-                      ),
+                          ),
+                      errorWidget:
+                          (context, url, error) =>
+                              const Icon(Icons.wifi_off, color: Colors.red),
                     ),
                   ),
                 ),

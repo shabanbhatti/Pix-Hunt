@@ -3,34 +3,70 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/Search%20history%20stream%20riverpd/search_history_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
+import 'package:pix_hunt_project/Pages/View%20home%20cetagory%20Page/view_page.dart';
 import 'package:pix_hunt_project/Widgets/custom_sliver_appbar.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class ViewSearchHistoryPage extends StatelessWidget {
+class ViewSearchHistoryPage extends ConsumerStatefulWidget {
   const ViewSearchHistoryPage({super.key});
 
   static const pageName = '/search_history_page';
+
+  @override
+  ConsumerState<ViewSearchHistoryPage> createState() =>
+      _ViewSearchHistoryPageState();
+}
+
+class _ViewSearchHistoryPageState extends ConsumerState<ViewSearchHistoryPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    ref.listen(searchHistoryStreamProvider, (previous, next) {
+      if (next.hasValue) {
+        animationController.forward();
+      }
+    });
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0.5,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      ),
       body: Center(
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
             CustomSliverAppBar(title: 'Search history'),
 
-            SliverToBoxAdapter(
-              child: Center(
-                child: Consumer(
-                  builder: (context, ref, child) {
-                    var myRef = ref.watch(searchHistoryStreamProvider);
-                    return myRef.when(
-                      data: (data) => _data(data),
-                      error: (error, stackTrace) => Text(error.toString()),
-                      loading: () => _loading(),
-                    );
-                  },
-                ),
+            SliverSafeArea(
+              sliver: Consumer(
+                builder: (context, ref, child) {
+                  var myRef = ref.watch(searchHistoryStreamProvider);
+                  return myRef.when(
+                    data: (data) => _data(data),
+                    error:
+                        (error, stackTrace) => SliverFillRemaining(
+                          child: Center(child: Text(error.toString())),
+                        ),
+                    loading: () => _loading(),
+                  );
+                },
               ),
             ),
           ],
@@ -39,40 +75,61 @@ class ViewSearchHistoryPage extends StatelessWidget {
     );
   }
 
-  Widget _data(List<SearchHistory> data) {
+  Widget _data(List<SearchHistory> x) {
+    var data = x.reversed.toList();
     return (data.isEmpty)
-        ? Padding(
-          padding: EdgeInsets.only(top: 400),
-          child: const Text(
-            'No search history',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.indigo,
+        ? SliverFillRemaining(
+          child: Center(
+            child: const Text(
+              '🔎 No search history',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.indigo,
+              ),
             ),
           ),
         )
-        : ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
+        : SliverList.builder(
           itemCount: data.length,
-          reverse: true,
+
           itemBuilder: (context, index) {
             var searchHistory = data[index];
-            return ListTile(
-              leading: Icon(Icons.search),
-              title: Text(searchHistory.title),
-              trailing: Consumer(
-                builder: (context, ref, child) {
-                  return IconButton(
-                    onPressed: () {
-                      ref
-                          .read(userDbProvider.notifier)
-                          .removeSearchHistory(searchHistory);
-                    },
-                    icon: Icon(Icons.close),
+            final animation = CurvedAnimation(
+              parent: animationController,
+              curve: Interval(
+                index / data.length,
+                (index + 1) / data.length,
+                curve: Curves.easeInQuart,
+              ),
+            );
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(-1, 0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: ListTile(
+                onTap: () {
+                  Navigator.of(context).pushNamed(
+                    ViewContentPage.pageName,
+                    arguments:
+                        {'record': null, 'title': '${searchHistory.title}'}
+                            as Map<String, dynamic>,
                   );
                 },
+                leading: const Icon(Icons.search),
+                title: Text(searchHistory.title),
+                trailing: Consumer(
+                  builder: (context, ref, child) {
+                    return GestureDetector(
+                      onTap: () {
+                        ref
+                            .read(userDbProvider.notifier)
+                            .removeSearchHistory(searchHistory);
+                      },
+                      child: const Icon(Icons.close),
+                    );
+                  },
+                ),
               ),
             );
           },
@@ -81,20 +138,17 @@ class ViewSearchHistoryPage extends StatelessWidget {
 }
 
 Widget _loading() {
-  return Skeletonizer(
-    child: ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: List.generate(50, (index) => '').length,
-      reverse: true,
-      itemBuilder: (context, index) {
-        // var searchHistory= data[index];
-        return ListTile(
+  return SliverList.builder(
+    itemCount: List.generate(50, (index) => '').length,
+
+    itemBuilder: (context, index) {
+      return const Skeletonizer(
+        child: ListTile(
           leading: Icon(Icons.search),
           title: Text('searchHistory.title'),
           trailing: Icon(Icons.close),
-        );
-      },
-    ),
+        ),
+      );
+    },
   );
 }

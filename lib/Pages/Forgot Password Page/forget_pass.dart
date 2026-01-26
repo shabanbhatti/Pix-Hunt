@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
+import 'package:pix_hunt_project/Utils/toast.dart';
 import 'package:pix_hunt_project/Widgets/Signup%20&%20login%20text%20form%20field/text_form_field.dart';
-import 'package:pix_hunt_project/Widgets/custom_app_bar.dart';
+import 'package:pix_hunt_project/Widgets/custom%20btns/app_main_btn.dart';
 
 class ForgetPassPage extends ConsumerStatefulWidget {
   const ForgetPassPage({super.key});
@@ -17,6 +18,7 @@ class ForgetPassPage extends ConsumerStatefulWidget {
 class _ForgetPassPageState extends ConsumerState<ForgetPassPage> {
   TextEditingController controller = TextEditingController();
   FocusNode focusNode = FocusNode();
+  GlobalKey<FormState> formKey = GlobalKey();
 
   @override
   void dispose() {
@@ -28,78 +30,115 @@ class _ForgetPassPageState extends ConsumerState<ForgetPassPage> {
   Widget build(BuildContext context) {
     ref.listen(authProvider('forgot'), (previous, next) {
       if (next is AuthLoadedSuccessfuly) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Password reset link sent to your email (spam)."),
-            duration: Duration(seconds: 3),
-          ),
-        );
+        ToastUtils.showToast("Password reset link sent to your email (spam).");
       } else if (next is AuthError) {
         var error = next.error;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error), backgroundColor: Colors.red),
-        );
+        ToastUtils.showToast(error, color: Colors.red);
       }
     });
     return Scaffold(
-      appBar: customAppBar('Forgot password'),
       body: Center(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: EmailField(
-                controller: controller,
-                focusNode: focusNode,
-                label: 'Email',
-                prefixIcon: Icons.mail,
-                onFieldSubmitted: (p0) {},
-              ),
-            ),
+        child: SafeArea(
+          minimum: const EdgeInsets.symmetric(horizontal: 10),
+          child: Form(
+            key: formKey,
+            child: CustomScrollView(
+              slivers: [
+                SliverPadding(
+                  padding: const EdgeInsetsGeometry.symmetric(vertical: 10),
+                  sliver: SliverToBoxAdapter(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(
+                            CupertinoIcons.xmark_circle,
+                            size: 30,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: const Text(
+                    'Forgot your password',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: EmailField(
+                          isForName: false,
+                          controller: controller,
+                          focusNode: focusNode,
+                          label: 'Email',
+                          prefixIcon: Icons.mail,
+                          onFieldSubmitted: (p0) {},
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsetsGeometry.only(bottom: 10),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '*Hit that button, a password reset link will be sent to your\n  email. You can reset your password using that link.',
+                            style: TextStyle(
+                              fontSize: 12,
 
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: _loginButton(focusNode, controller),
+                              color: Color.fromARGB(255, 77, 91, 172),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      _forgotBtn(focusNode, controller, formKey),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
 
-Widget _loginButton(FocusNode focusNode, TextEditingController controller) {
-  return LayoutBuilder(
-    builder: (context, constraints) {
-      var mqSize = Size(constraints.maxWidth, constraints.maxHeight);
-      return SizedBox(
-        width: mqSize.width * 0.87,
-        child: Consumer(
-          builder: (context, ref, child) {
-            var myRef = ref.watch(authProvider('forgot'));
-            return ElevatedButton(
-              focusNode: focusNode,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.indigo,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+Widget _forgotBtn(
+  FocusNode focusNode,
+  TextEditingController controller,
+  GlobalKey<FormState> formKey,
+) {
+  return Consumer(
+    builder: (context, ref, child) {
+      var myRef = ref.watch(authProvider('forgot'));
+      return AppMainBtn(
+        widgetOrTitle: WidgetOrTitle.widget,
+        btnValueWidget:
+            (myRef is AuthLoading)
+                ? CupertinoActivityIndicator(color: Colors.white)
+                : const Text(
+                  'Send link',
+                  style: TextStyle(color: Colors.white),
                 ),
-              ),
-              onPressed: () {
-                ref
-                    .read(authProvider('forgot').notifier)
-                    .forgotPassword(controller.text.trim());
-              },
-              child:
-                  (myRef is AuthLoading)
-                      ? CupertinoActivityIndicator(color: Colors.white)
-                      : const Text(
-                        'Forgot password',
-                        style: TextStyle(color: Colors.white),
-                      ),
-            );
-          },
-        ),
+        focusNode: focusNode,
+
+        onTap: () {
+          var isValidate = formKey.currentState!.validate();
+          if (isValidate) {
+            ref
+                .read(authProvider('forgot').notifier)
+                .forgotPassword(controller.text.trim());
+          }
+        },
       );
     },
   );

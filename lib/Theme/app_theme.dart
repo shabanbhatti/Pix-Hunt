@@ -5,21 +5,22 @@ var darkMode = ThemeData(
   scaffoldBackgroundColor: Colors.black,
   primaryColor: Colors.white,
   drawerTheme: DrawerThemeData(backgroundColor: Colors.black),
-  bottomSheetTheme: BottomSheetThemeData(backgroundColor: const Color.fromARGB(255, 29, 29, 29)),
-  cardColor:const Color.fromARGB(255, 29, 29, 29),
+  bottomSheetTheme: BottomSheetThemeData(
+    backgroundColor: const Color.fromARGB(255, 29, 29, 29),
+  ),
+  cardColor: const Color.fromARGB(255, 29, 29, 29),
   textSelectionTheme: TextSelectionThemeData(
     cursorColor: Colors.white,
     selectionColor: Colors.white.withAlpha(70),
     selectionHandleColor: Colors.white,
   ),
   dividerColor: Colors.white,
-
 );
 
 var lightheme = ThemeData(
   dividerColor: Colors.black,
   brightness: Brightness.light,
-  scaffoldBackgroundColor: Colors.white,
+  scaffoldBackgroundColor: const Color.fromARGB(255, 233, 233, 233),
   primaryColor: Colors.black,
   drawerTheme: DrawerThemeData(backgroundColor: Colors.white),
   bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.white),
@@ -27,6 +28,6 @@ var lightheme = ThemeData(
   textSelectionTheme: TextSelectionThemeData(
     cursorColor: Colors.black,
     selectionColor: Colors.black.withAlpha(70),
-    selectionHandleColor: Colors.black
-  )
+    selectionHandleColor: Colors.black,
+  ),
 );

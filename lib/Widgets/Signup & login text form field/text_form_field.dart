@@ -10,52 +10,65 @@ class EmailField extends StatelessWidget {
     required this.prefixIcon,
 
     required this.onFieldSubmitted,
+    required this.isForName,
   });
   final TextEditingController controller;
   final FocusNode focusNode;
   final String label;
   final IconData prefixIcon;
+  final bool isForName;
 
   final void Function(String) onFieldSubmitted;
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          var mqSize = Size(constraints.maxWidth, constraints.minHeight);
-          return SizedBox(
-            width: mqSize.width * 0.85,
-            child: TextFormField(
-              controller: controller,
-              focusNode: focusNode,
-              validator: (value) {
-                // if (value!.isEmpty) {
-                //   return 'Field should not be empty';
-                // }
+    return Container(
+      height: 80,
+      color: Colors.transparent,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: controller,
+            focusNode: focusNode,
+            validator: (value) {
+              if (!isForName) {
+                if (value == null || value.isEmpty) {
+                  return 'Email is required';
+                }
+                if (!RegExp(
+                  r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                ).hasMatch(value)) {
+                  return 'Enter a valid email address';
+                }
                 return null;
-              },
-              onFieldSubmitted: onFieldSubmitted,
+              } else {
+                if (value!.isEmpty) {
+                  return 'Name is required';
+                } else {
+                  return null;
+                }
+              }
+            },
+            onFieldSubmitted: onFieldSubmitted,
 
-              decoration: InputDecoration(
-                label: Text(label),
-                prefixIcon: Icon(prefixIcon),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Theme.of(context).primaryColor)
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Theme.of(context).primaryColor)
-                ),
+            decoration: InputDecoration(
+              label: Text(label),
+              prefixIcon: Icon(prefixIcon),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Theme.of(context).primaryColor),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Theme.of(context).primaryColor),
+              ),
 
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.indigo, width: 2),
-                  borderRadius: BorderRadius.circular(10),
-                ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.indigo, width: 2),
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
@@ -75,69 +88,82 @@ class PasswordField extends StatelessWidget {
   final FocusNode focusNode;
 
   final void Function(String) onFieldSubmitted;
+  bool isValidPassword(String password) {
+    final hasUppercase = RegExp(r'[A-Z]').hasMatch(password);
+    final hasNumber = RegExp(r'[0-9]').hasMatch(password);
+
+    return hasUppercase && hasNumber;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          var mqSize = Size(constraints.maxWidth, constraints.minHeight);
-          return Consumer(
-            builder: (context, ref, child) {
-              var isObscure = ref.watch(
-                _obscureProvider.select((value) => value),
-              );
-              return SizedBox(
-                width: mqSize.width * 0.85,
-                child: TextFormField(
-                  controller: controller,
-                  obscureText: isObscure,
-                  validator: (value) {
-                    // if (value!.isEmpty) {
-                    //   return 'Field should not be empty';
-                    // }
-                    return null;
-                  },
-                  onFieldSubmitted: onFieldSubmitted,
-                  focusNode: focusNode,
-                  decoration: InputDecoration(
-                    suffixIcon:
-                        (isObscure)
-                            ? IconButton(
-                              onPressed: () {
-                                ref.read(_obscureProvider.notifier).toggled();
-                              },
-                              icon: Icon(Icons.visibility),
-                            )
-                            : IconButton(
-                              onPressed: () {
-                                ref.read(_obscureProvider.notifier).toggled();
-                              },
-                              icon: Icon(Icons.visibility_off),
-                            ),
+    return Consumer(
+      builder: (context, ref, child) {
+        var isObscure = ref.watch(_obscureProvider.select((value) => value));
+        return Container(
+          height: 80,
+          color: Colors.transparent,
 
-                    label: Text('Password'),
-                    prefixIcon: Icon(Icons.lock),
-                    border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Theme.of(context).primaryColor)
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Theme.of(context).primaryColor)
-                ),
+          child: Column(
+            children: [
+              TextFormField(
+                controller: controller,
+                obscureText: isObscure,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Password is required';
+                  }
+                  if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                    return 'Password must contain at least one capital letter';
+                  }
+                  if (!RegExp(r'[0-9]').hasMatch(value)) {
+                    return 'Password must contain at least one number';
+                  }
+                  return null;
+                },
+                onFieldSubmitted: onFieldSubmitted,
+                focusNode: focusNode,
+                decoration: InputDecoration(
+                  suffixIcon:
+                      (isObscure)
+                          ? IconButton(
+                            onPressed: () {
+                              ref.read(_obscureProvider.notifier).toggled();
+                            },
+                            icon: Icon(Icons.visibility),
+                          )
+                          : IconButton(
+                            onPressed: () {
+                              ref.read(_obscureProvider.notifier).toggled();
+                            },
+                            icon: Icon(Icons.visibility_off),
+                          ),
 
-
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.indigo, width: 2),
-                      borderRadius: BorderRadius.circular(10),
+                  label: Text('Password'),
+                  prefixIcon: Icon(Icons.lock),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.indigo, width: 2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
-              );
-            },
-          );
-        },
-      ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -158,65 +184,70 @@ class ConfirmPasswordField extends StatelessWidget {
   final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          var mqSize = Size(constraints.maxWidth, constraints.minHeight);
-          return Consumer(
+    return Container(
+      height: 80,
+      color: Colors.transparent,
+      child: Column(
+        children: [
+          Consumer(
             builder: (context, ref, child) {
               var isObscure = ref.watch(
                 _obscureConfirmProvider.select((value) => value),
               );
-              return SizedBox(
-                width: mqSize.width * 0.85,
-                child: TextFormField(
-                  controller: controller,
-                  obscureText: isObscure,
-                  validator: validator!,
-                  onFieldSubmitted: onFieldSubmitted,
-                  focusNode: focusNode,
-                  decoration: InputDecoration(
-                    suffixIcon:
-                        (isObscure)
-                            ? IconButton(
-                              onPressed: () {
-                                ref
-                                    .read(_obscureConfirmProvider.notifier)
-                                    .toggled();
-                              },
-                              icon: Icon(Icons.visibility),
-                            )
-                            : IconButton(
-                              onPressed: () {
-                                ref
-                                    .read(_obscureConfirmProvider.notifier)
-                                    .toggled();
-                              },
-                              icon: Icon(Icons.visibility_off),
-                            ),
+              return TextFormField(
+                controller: controller,
+                obscureText: isObscure,
+                validator:
+                    validator ??
+                    (v) {
+                      return null;
+                    },
+                onFieldSubmitted: onFieldSubmitted,
+                focusNode: focusNode,
+                decoration: InputDecoration(
+                  suffixIcon:
+                      (isObscure)
+                          ? IconButton(
+                            onPressed: () {
+                              ref
+                                  .read(_obscureConfirmProvider.notifier)
+                                  .toggled();
+                            },
+                            icon: Icon(Icons.visibility),
+                          )
+                          : IconButton(
+                            onPressed: () {
+                              ref
+                                  .read(_obscureConfirmProvider.notifier)
+                                  .toggled();
+                            },
+                            icon: Icon(Icons.visibility_off),
+                          ),
 
-                    label: Text('Confirm Password'),
-                    prefixIcon: Icon(Icons.lock),
-                    border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Theme.of(context).primaryColor)
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Theme.of(context).primaryColor)
-                ),
-
-
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.indigo, width: 2),
-                      borderRadius: BorderRadius.circular(10),
+                  label: Text('Confirm Password'),
+                  prefixIcon: Icon(Icons.lock),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
                     ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.indigo, width: 2),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               );
             },
-          );
-        },
+          ),
+        ],
       ),
     );
   }

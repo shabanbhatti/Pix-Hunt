@@ -3,13 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/APi%20Riverpod/api_riverpod.dart';
 import 'package:pix_hunt_project/Models/pexer.dart';
 
-
 class SearchPhotosPagesWidget extends StatelessWidget {
-  const SearchPhotosPagesWidget({super.key, required this.controller, required this.scrollController,required this.pexer});
+  const SearchPhotosPagesWidget({
+    super.key,
+    required this.controller,
+    required this.scrollController,
+    required this.pexer,
+  });
 
-final TextEditingController controller;
-final ScrollController scrollController;
-final Pexer pexer;
+  final TextEditingController controller;
+  final ScrollController scrollController;
+  final Pexer pexer;
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +45,13 @@ final Pexer pexer;
 
                     scrollController.animateTo(
                       0,
-                      duration:const Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                     );
                   },
                   icon: const Icon(
                     Icons.arrow_circle_left,
-                    size: 40,
+                    size: 30,
                     color: Colors.indigo,
                   ),
                 );
@@ -55,7 +59,10 @@ final Pexer pexer;
             )
             : const SizedBox(height: 10, width: 50),
 
-        Text(pexer.page.toString(), style: const TextStyle(fontSize: 20)),
+        Text(
+          pexer.page.toString(),
+          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+        ),
 
         Consumer(
           builder: (context, apiProviderREF, child) {
@@ -89,13 +96,13 @@ final Pexer pexer;
 
                     scrollController.animateTo(
                       0,
-                      duration:const Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                     );
                   },
-                  icon:const Icon(
+                  icon: const Icon(
                     Icons.arrow_circle_right,
-                    size: 40,
+                    size: 30,
                     color: Colors.indigo,
                   ),
                 )

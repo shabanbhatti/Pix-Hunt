@@ -14,9 +14,11 @@ class BoxWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         child: InkWell(
           onTap: () {
-            Navigator.of(
-              context,
-            ).pushNamed(ViewContentPage.pageName, arguments: record);
+            Navigator.of(context).pushNamed(
+              ViewContentPage.pageName,
+              arguments:
+                  {'record': record, 'title': ''} as Map<String, dynamic>,
+            );
           },
           child: Container(
             height: 130,

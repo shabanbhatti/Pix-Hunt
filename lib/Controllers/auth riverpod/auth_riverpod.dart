@@ -20,35 +20,54 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 
   // ---------CREATYE ACCOUNT
 
-  Future<void> createAccount({
+  Future<bool> isUserNull() async {
+    try {
+      state = AuthLoading();
+      var user = await authRepository.isUserNull();
+      state = AuthLoadedSuccessfuly();
+      return user;
+    } catch (e) {
+      state = AuthError(error: e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> createAccount({
     required Auth auth,
     required String password,
   }) async {
     try {
       state = AuthLoading();
 
-      await authRepository.createAccount(auth, password);
+      var newUser = await authRepository.createAccount(auth, password);
 
       state = AuthLoadedSuccessfuly();
+      return newUser;
     } catch (e) {
       state = AuthError(error: e.toString());
+      return false;
     }
   }
 
   // ---------LOGIN ACCOUNT
 
-  Future<void> loginAccount({
+  Future<bool?> loginAccount({
     required String email,
     required String password,
   }) async {
     try {
       state = AuthLoading();
 
-      await authRepository.loginAccount(email: email, password: password);
-      
+      var login = await authRepository.loginAccount(
+        email: email,
+        password: password,
+      );
+
       state = AuthLoadedSuccessfuly();
+      return login;
     } catch (e) {
       state = AuthError(error: e.toString());
+      return null;
     }
   }
 
@@ -65,15 +84,16 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 
   // ---------LIGIN WITH GOOGLE ACCOUNT
 
-  Future<void> signInWithGOOGLE() async {
+  Future<bool?> signInWithGOOGLE() async {
     state = AuthLoading();
     try {
-      await authRepository.googleSignIn();
-      
+      var isLogin = await authRepository.googleSignIn();
 
       state = AuthLoadedSuccessfuly();
+      return isLogin;
     } catch (e) {
       state = AuthError(error: e.toString());
+      return null;
     }
   }
 
@@ -86,29 +106,25 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  Future<void> updateEmail(String email, String password) async {
+    try {
+      state = AuthLoading();
+      await authRepository.updateEmail(email: email, password: password);
+      state = AuthLoadedSuccessfuly();
+    } catch (e) {
+      state = AuthError(error: e.toString());
+    }
+  }
 
-Future<void> updateEmail( String email,String password,)async{
-try {
-  state= AuthLoading();
-  await authRepository.updateEmail(email: email, password: password);
-  state= AuthLoadedSuccessfuly();
-} catch (e) {
-  state = AuthError(error: e.toString());
-}
-
-}
-
-Future<void> updateName( String name)async{
-try {
-  state= AuthLoading();
-  await authRepository.updateName(name: name);
-  state= AuthLoadedSuccessfuly();
-} catch (e) {
-  state = AuthError(error: e.toString());
-}
-
-}
-
+  Future<void> updateName(String name) async {
+    try {
+      state = AuthLoading();
+      await authRepository.updateName(name: name);
+      state = AuthLoadedSuccessfuly();
+    } catch (e) {
+      state = AuthError(error: e.toString());
+    }
+  }
 }
 
 sealed class AuthState {
@@ -124,7 +140,6 @@ class AuthLoading extends AuthState {
 }
 
 class AuthLoadedSuccessfuly extends AuthState {
-  
   const AuthLoadedSuccessfuly();
 }
 

@@ -15,23 +15,36 @@ class FavPage extends ConsumerStatefulWidget {
   ConsumerState<FavPage> createState() => _FavPageState();
 }
 
-class _FavPageState extends ConsumerState<FavPage> {
+class _FavPageState extends ConsumerState<FavPage>
+    with SingleTickerProviderStateMixin {
   TextEditingController controller = TextEditingController();
   FocusNode focusNode = FocusNode();
+  late AnimationController animationController;
+  late Animation<double> scale;
 
   @override
   void initState() {
     super.initState();
-
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+    scale = Tween<double>(begin: 0.7, end: 1.0).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.bounceOut),
+    );
+    animationController.forward();
     controller.addListener(() {
       ref.read(searchListProvider.notifier).search(controller.text);
     });
   }
 
+  ValueNotifier<String> searchKeyworkNotifier = ValueNotifier('');
   @override
   void dispose() {
     controller.dispose();
     focusNode.dispose();
+    animationController.dispose();
+    searchKeyworkNotifier.dispose();
     super.dispose();
   }
 
@@ -54,26 +67,61 @@ class _FavPageState extends ConsumerState<FavPage> {
           physics: const BouncingScrollPhysics(),
           slivers: [
             SliverappbarWithTextField(
+              searchKeyword: searchKeyworkNotifier,
               controller: controller,
               focusNode: focusNode,
+              isForSearchPage: false,
               isBottomNaviSearchPage: false,
             ),
-            SliverToBoxAdapter(
-              child: Center(
-                child: Consumer(
-                  builder: (context, ref, child) {
-                    var myRef = ref.watch(favStreamProvider);
-                    print(myRef.value);
-                    return myRef.when(
-                      data: (data) {
-                        var searchRef = ref.watch(searchListProvider);
-                        return _myCardWidget(searchRef);
-                      },
-                      error: (error, stackTrace) => Text(error.toString()),
-                      loading: () => _loading(),
+            SliverSafeArea(
+              top: false,
+              bottom: false,
+              sliver: ValueListenableBuilder(
+                valueListenable: searchKeyworkNotifier,
+                builder: (context, value, child) {
+                  if (value.isNotEmpty) {
+                    return SliverPadding(
+                      padding: EdgeInsetsGeometry.only(left: 10),
+                      sliver: SliverToBoxAdapter(
+                        child: Row(
+                          children: [
+                            Text('Search result: '),
+                            Expanded(
+                              child: Text(
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                value,
+                                style: TextStyle(
+                                  color: Colors.indigo,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     );
-                  },
-                ),
+                  } else {
+                    return const SliverToBoxAdapter();
+                  }
+                },
+              ),
+            ),
+            SliverSafeArea(
+              top: false,
+              sliver: Consumer(
+                builder: (context, ref, child) {
+                  var myRef = ref.watch(favStreamProvider);
+
+                  return myRef.when(
+                    data: (data) {
+                      var searchRef = ref.watch(searchListProvider);
+                      return _myCardWidget(searchRef, scale);
+                    },
+                    error: (error, stackTrace) => Text(error.toString()),
+                    loading: () => _loading(),
+                  );
+                },
               ),
             ),
           ],
@@ -82,43 +130,50 @@ class _FavPageState extends ConsumerState<FavPage> {
     );
   }
 
-  Widget _myCardWidget(List<FavItemModalClass> searchRef) {
-    return Padding(
-      padding: EdgeInsets.all(5),
-      child:
-          (searchRef.isEmpty)
-              ? Padding(
-                padding: EdgeInsets.only(top: 300),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.favorite, color: Colors.indigo),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10),
-                      child: const Text(
-                        'No Favourite items',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
+  Widget _myCardWidget(List<FavItemModalClass> list, Animation<double> scale) {
+    var searchRef = list.reversed.toList();
+    if (searchRef.isEmpty) {
+      return SliverPadding(
+        padding: EdgeInsets.all(5),
+        sliver: SliverFillRemaining(
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.favorite, color: Colors.indigo),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: const Text(
+                    'No Favourite items',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
-              )
-              : GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: searchRef.length,
-                
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return FavCardWidget(favItem: searchRef[index]);
-                },
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 5,
-                  mainAxisSpacing: 5,
-                  mainAxisExtent: 290,
-                ),
-              ),
-    );
+              ],
+            ),
+          ),
+        ),
+      );
+    } else {
+      return SliverPadding(
+        padding: const EdgeInsetsGeometry.all(5),
+        sliver: SliverGrid.builder(
+          itemCount: searchRef.length,
+
+          itemBuilder: (context, index) {
+            return ScaleTransition(
+              scale: scale,
+              child: FavCardWidget(favItem: searchRef[index]),
+            );
+          },
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+            mainAxisExtent: 290,
+          ),
+        ),
+      );
+    }
   }
 }
 
@@ -127,22 +182,19 @@ List<String> _loadingList = List.generate(50, (index) {
 });
 
 Widget _loading() {
-  return Padding(
+  return SliverPadding(
     padding: const EdgeInsets.all(5),
-    child: Skeletonizer(
-      child: GridView.builder(
-        shrinkWrap: true,
-        itemCount: _loadingList.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
-          mainAxisExtent: 290,
-        ),
-        itemBuilder: (context, index) {
-          return FavLoadingWidget();
-        },
+    sliver: SliverGrid.builder(
+      itemCount: _loadingList.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 5,
+        mainAxisExtent: 290,
       ),
+      itemBuilder: (context, index) {
+        return const Skeletonizer(child: FavLoadingWidget());
+      },
     ),
   );
 }

@@ -5,8 +5,11 @@ void showLogoutDialog(BuildContext context, void Function() logoutButton) {
     context: context,
     builder:
         (context) => AlertDialog(
-          title: const Text('Logout'),
-          content: const Text('Wanna Logout?'),
+          title: const Text(
+            'Logout',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: const Text('Do you want to log out your account?'),
           actions: [
             TextButton(
               onPressed: () {
@@ -53,35 +56,50 @@ void deleteDialogBox(BuildContext context, void Function() delete) {
   showDialog(
     context: context,
     builder:
-        (context) => AlertDialog(
-          title: Image.asset(
-            'assets/images/delete.png',
-            height: 50,
-            width: 50,
-            fit: BoxFit.fitHeight,
-          ),
-          content: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Wanna delete?',
-                style: TextStyle(fontWeight: FontWeight.bold),
+        (context) => SafeArea(
+          bottom: true,
+          child: AlertDialog(
+            title: Row(
+              children: [
+                Icon(Icons.warning, color: Colors.red, size: 40),
+                Padding(
+                  padding: EdgeInsetsGeometry.only(left: 10),
+                  child: const Text(
+                    'Delete',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+            content: const Text(
+              'Do you want to delete?',
+              style: TextStyle(fontSize: 12),
+            ),
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('No'),
+              ),
+              Padding(
+                padding: const EdgeInsetsGeometry.only(left: 20),
+                child: GestureDetector(
+                  onTap: () {
+                    delete();
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Delete',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-              child: const Text('No'),
-            ),
-            TextButton(
-              onPressed: delete,
-              child: const Text('Delete', style: TextStyle(color: Colors.red)),
-            ),
-          ],
         ),
   );
 }

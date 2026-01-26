@@ -1,10 +1,11 @@
 import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Pages/Decide%20Page/decide_page.dart';
+import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
+import 'package:pix_hunt_project/Pages/Home%20Page/home.dart';
+import 'package:pix_hunt_project/Pages/Login%20Page/login_page.dart';
 import 'package:pix_hunt_project/Utils/constant_mgs.dart';
+import 'package:shimmer/shimmer.dart';
 
 class IntroPage extends ConsumerStatefulWidget {
   const IntroPage({super.key});
@@ -45,21 +46,36 @@ class _IntroPageState extends ConsumerState<IntroPage>
         curve: Curves.easeInOutBack,
       ),
     );
+    loadAnimation();
+  }
 
-    Future.delayed(
-      const Duration(milliseconds: 300),
-      () => animationController.forward().then(
-        (value) => animationControllerForText.forward().then((value) {
-          ref.read(loadingProvider.notifier).toggled().then((value) {
-            Future.delayed(const Duration(seconds: 2), () {
-              if (mounted) {
-                Navigator.of(context).pushNamedAndRemoveUntil(DecidePage.pageName, (route) => false,);
-              }
-            });
-          });
-        }),
-      ),
-    );
+  void loadAnimation() async {
+    await Future.delayed(const Duration(microseconds: 300), () {
+      animationController.forward();
+    });
+    await Future.delayed(const Duration(), () {
+      animationControllerForText.forward();
+    });
+
+    var user = await ref.read(authProvider('intro').notifier).isUserNull();
+
+    if (user) {
+      Future.delayed(const Duration(seconds: 3), () {
+        if (mounted) {
+          Navigator.of(
+            context,
+          ).pushNamedAndRemoveUntil(Home.pageName, (route) => false);
+        }
+      });
+    } else {
+      Future.delayed(const Duration(seconds: 3), () {
+        if (mounted) {
+          Navigator.of(
+            context,
+          ).pushNamedAndRemoveUntil(LoginPage.pageName, (route) => false);
+        }
+      });
+    }
   }
 
   @override
@@ -74,67 +90,51 @@ class _IntroPageState extends ConsumerState<IntroPage>
     print('INTRO BUILD CALLED');
     return Scaffold(
       body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 200),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  var mqSize = Size(
-                    constraints.maxWidth,
-                    constraints.maxHeight,
-                  );
-                  return ScaleTransition(
-                    scale: scale,
-                    child: RotationTransition(
-                      turns: rotation,
-                      child: Hero(
-                        tag: 'into_to_login',
-                        flightShuttleBuilder:
-                            (
-                              flightContext,
-                              animation,
-                              flightDirection,
-                              fromHeroContext,
-                              toHeroContext,
-                            ) => RotationTransition(
-                              turns: animation.drive(
-                                Tween(begin: 0.0, end: 2 * pi),
-                              ),
-                              child: toHeroContext.widget,
-                            ),
-                        child: Image.asset(
-                          app_logo,
-                          width: mqSize.width * 0.3,
-                          fit: BoxFit.fitWidth,
+        child: SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ScaleTransition(
+                      scale: scale,
+                      child: RotationTransition(
+                        turns: rotation,
+                        child: Hero(
+                          tag: 'into_to_login',
+
+                          child: Image.asset(
+                            app_logo,
+                            fit: BoxFit.fitWidth,
+                            height: 150,
+                          ),
                         ),
                       ),
                     ),
-                  );
-                },
-              ),
-              const SizedBox(height: 10),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: FadeTransition(
-                  opacity: fade,
-                  child: const Text(
-                    'PIX hunt',
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
+                    const SizedBox(height: 20),
+                    FadeTransition(
+                      opacity: fade,
+                      child: Shimmer.fromColors(
+                        baseColor: Theme.of(context).primaryColor,
+                        highlightColor: const Color.fromARGB(
+                          255,
+                          132,
+                          132,
+                          132,
+                        ),
+                        period: const Duration(seconds: 1),
+                        child: const Text(
+                          'PIX hunt',
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(height: 150),
-              Consumer(
-                builder: (context, ref, child) {
-                  var isLoading = ref.watch(loadingProvider);
-                  if (isLoading) {
-                    return const CupertinoActivityIndicator(radius: 17);
-                  } else {
-                    return const SizedBox();
-                  }
-                },
               ),
             ],
           ),
@@ -146,16 +146,17 @@ class _IntroPageState extends ConsumerState<IntroPage>
 
 // ------------RIVERPOD PORTION------------------
 
-final loadingProvider = StateNotifierProvider<LoadingStateNotifier, bool>((
-  ref,
-) {
-  return LoadingStateNotifier();
-});
+// final loadingProvider = StateNotifierProvider<LoadingStateNotifier, bool>((
+//   ref,
+// ) {
+//   return LoadingStateNotifier();
+// });
 
-class LoadingStateNotifier extends StateNotifier<bool> {
-  LoadingStateNotifier() : super(false);
+// class LoadingStateNotifier extends StateNotifier<bool> {
+//   LoadingStateNotifier() : super(false);
 
-  Future<void> toggled() async {
-    state = true;
-  }
-}
+//   Future<void> toggled() async {
+
+//     state = true;
+//   }
+// }

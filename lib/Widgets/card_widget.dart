@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Models/fav_items.dart';
 import 'package:pix_hunt_project/Models/pexer.dart';
-import 'package:pix_hunt_project/Pages/View%20card%20detail%20page%20(HOME)/view_detail_card_page.dart';
+import 'package:pix_hunt_project/Pages/view%20card%20detail%20page/view_card_detail_page.dart';
 import 'package:pix_hunt_project/Pages/View%20home%20cetagory%20Page/view_page.dart';
+import 'package:pix_hunt_project/Utils/bottom%20sheets/half_size_bottom_sheet_util.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CardWidget extends StatelessWidget {
@@ -15,19 +17,33 @@ class CardWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
-        Navigator.of(
+        openHalfBottomSheet(
           context,
-        ).pushNamed(ViewCardPage.pageName, arguments: photo);
+          child: ViewCardDetailsPage(
+            favItemModalClass: FavItemModalClass(
+              photographer: photo.photographer,
+              title: photo.alt,
+              originalPhotoUrl: photo.src.original,
+              mediumPhotoUrl: photo.src.medium,
+              largePhotoUrl: photo.src.large,
+              smallPhotoUrl: photo.src.small,
+            ),
+          ),
+        );
       },
-      child: Container(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+      child: Padding(
+        padding: EdgeInsetsGeometry.all(5),
+        child: Container(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            color: Colors.grey.withAlpha(50),
+          ),
 
-        child: Card(
           child: Padding(
-            padding: EdgeInsets.all(7),
+            padding: const EdgeInsets.all(7),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -48,8 +64,7 @@ class CardWidget extends StatelessWidget {
                               child: Container(
                                 height: double.infinity,
                                 width: double.infinity,
-                                color:
-                                    Colors.grey[300],
+                                color: Colors.grey[300],
                               ),
                             ),
                         errorWidget:
@@ -94,7 +109,6 @@ class CardWidget extends StatelessWidget {
                                   DateTime.now().microsecondsSinceEpoch
                                       .toString();
                               if (myRef == false) {
-                                print('----------CALLED');
                                 ref
                                     .read(userDbProvider.notifier)
                                     .addFavouriteItems(
@@ -107,14 +121,15 @@ class CardWidget extends StatelessWidget {
                                         smallPhotoUrl: photo.src.small,
                                         id: id,
                                       ),
-                                      
                                     );
                               }
                             },
                             icon: Icon(
-                              (myRef) ? Icons.favorite : Icons.favorite_border,
+                              (myRef)
+                                  ? CupertinoIcons.heart_fill
+                                  : CupertinoIcons.heart,
                               color: (myRef) ? Colors.indigo : null,
-                              size: 30,
+                              size: 25,
                             ),
                           );
                         },

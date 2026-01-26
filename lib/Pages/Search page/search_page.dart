@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/APi%20Riverpod/api_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/on%20sync%20after%20email%20verify%20riverpod/on_sync_after_email_verify.dart';
 import 'package:pix_hunt_project/Models/pexer.dart';
 import 'package:pix_hunt_project/Pages/Search%20page/Widgets/search_photos_pages_widget.dart';
+import 'package:pix_hunt_project/Pages/View%20home%20cetagory%20Page/view_page.dart';
 import 'package:pix_hunt_project/Widgets/card_widget.dart';
 import 'package:pix_hunt_project/Widgets/loading_card_widget.dart';
 import 'package:pix_hunt_project/Widgets/sliverappbar_with_textfield.dart';
@@ -18,16 +21,27 @@ class SearchPage extends ConsumerStatefulWidget {
   ConsumerState<SearchPage> createState() => _SearchPageState();
 }
 
-class _SearchPageState extends ConsumerState<SearchPage> {
+class _SearchPageState extends ConsumerState<SearchPage>
+    with SingleTickerProviderStateMixin {
   TextEditingController controller = TextEditingController();
   FocusNode focusNode = FocusNode();
-
+  late AnimationController animationController;
+  late Animation<double> scale;
   @override
   void initState() {
     super.initState();
-    Future.microtask(() async {
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+    scale = Tween<double>(begin: 0.7, end: 1.0).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.bounceOut),
+    );
 
-        ref.read(onSyncAfterEmailVerifyProvider.notifier).syncEmailAfterVerification();
+    Future.microtask(() async {
+      ref
+          .read(onSyncAfterEmailVerifyProvider.notifier)
+          .syncEmailAfterVerification();
       ref.read(apiProvider.notifier).eraseAll();
     });
   }
@@ -38,56 +52,125 @@ class _SearchPageState extends ConsumerState<SearchPage> {
   void dispose() {
     controller.dispose();
     focusNode.dispose();
+    searchKeyworkNotifier.dispose();
+    animationController.dispose();
     scrollController.dispose();
     super.dispose();
   }
 
+  ValueNotifier<String> searchKeyworkNotifier = ValueNotifier('');
+
   @override
   Widget build(BuildContext context) {
     print('SEARCH PAGE INIT CALLED');
-   
+    ref.listen(apiProvider, (previous, next) {
+      if (next is ApiLoading) {
+        animationController.reverse();
+      }
+      if (next is ApiLoadedSuccessfuly) {
+        log('CALLED');
+        animationController.forward();
+      }
+    });
     return Scaffold(
       body: Center(
         child: Scrollbar(
+          controller: scrollController,
           radius: Radius.circular(20),
           thickness: 5,
           child: CustomScrollView(
             controller: scrollController,
-            physics: const BouncingScrollPhysics(),
             slivers: [
               SliverappbarWithTextField(
+                isForSearchPage: true,
+                animationController: animationController,
                 controller: controller,
+                searchKeyword: searchKeyworkNotifier,
                 focusNode: focusNode,
                 isBottomNaviSearchPage: widget.isBottomNaviSearchPage,
               ),
-
-              SliverToBoxAdapter(
-                child: Center(
-                  child: Consumer(
-                    builder: (context, apiProviderRef, child) {
-                      var myRef = apiProviderRef.watch(apiProvider);
-                      switch (myRef) {
-                        case ApiLoading():
-                          return _loading();
-                        case ApiLoadedSuccessfuly(pexer: var pexer):
-                          return _widget(pexer);
-                        case ApiError(message: var error):
-                          return Padding(
-                            padding: EdgeInsets.only(top: 300),
-                            child: Text(
-                              error,
-                              style: const TextStyle(
-                                color: Colors.indigo,
-                                fontWeight: FontWeight.bold,
+              SliverSafeArea(
+                top: false,
+                bottom: false,
+                sliver: ValueListenableBuilder(
+                  valueListenable: searchKeyworkNotifier,
+                  builder: (context, value, child) {
+                    if (value.isNotEmpty) {
+                      return SliverPadding(
+                        padding: const EdgeInsetsGeometry.only(left: 10),
+                        sliver: SliverToBoxAdapter(
+                          child: Row(
+                            children: [
+                              const Text('Search result: '),
+                              Expanded(
+                                child: Text(
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  value,
+                                  style: const TextStyle(
+                                    color: Colors.indigo,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
-                            ),
-                          );
-                        default:
-                          return _noSearchYet();
-                      }
-                    },
-                  ),
+                            ],
+                          ),
+                        ),
+                      );
+                    } else {
+                      return const SliverToBoxAdapter();
+                    }
+                  },
                 ),
+              ),
+
+              SliverSafeArea(
+                top: false,
+                sliver: Consumer(
+                  builder: (context, apiProviderRef, child) {
+                    var myRef = apiProviderRef.watch(apiProvider);
+                    if (myRef is ApiLoading) {
+                      return _loading();
+                    } else if (myRef is ApiLoadedSuccessfuly) {
+                      return _cardData(myRef.pexer);
+                    } else if (myRef is ApiError) {
+                      print(myRef.message);
+                      return SliverFillRemaining(
+                        child: Center(
+                          child: Text(
+                            myRef.message.contains(hardcodeError)
+                                ? 'No internet connection.'
+                                : myRef.message,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return SliverFillRemaining(
+                        child: Center(child: _noSearchYet()),
+                      );
+                    }
+                  },
+                ),
+              ),
+              Consumer(
+                builder: (context, x, child) {
+                  var myRef = x.watch(apiProvider);
+                  if (myRef is ApiLoadedSuccessfuly) {
+                    return SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: SearchPhotosPagesWidget(
+                          controller: controller,
+                          scrollController: scrollController,
+                          pexer: myRef.pexer,
+                        ),
+                      ),
+                    );
+                  } else {
+                    return const SliverToBoxAdapter();
+                  }
+                },
               ),
             ],
           ),
@@ -96,64 +179,53 @@ class _SearchPageState extends ConsumerState<SearchPage> {
     );
   }
 
-  Widget _widget(Pexer pexer) {
-    return Column(
-      children: [
-        GridView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: pexer.photos.length,
-          shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisExtent: 270,
-          ),
-          itemBuilder: (context, index) {
-            return CardWidget(photo: pexer.photos[index], index: index);
-          },
+  Widget _cardData(Pexer pexer) {
+    return SliverPadding(
+      padding: const EdgeInsets.all(5),
+      sliver: SliverGrid.builder(
+        itemCount: pexer.photos.length,
+
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
+          mainAxisExtent: 290,
         ),
-        SearchPhotosPagesWidget(
-          controller: controller,
-          scrollController: scrollController,
-          pexer: pexer,
-        ),
-      ],
+        itemBuilder: (context, index) {
+          return ScaleTransition(
+            scale: scale,
+            child: CardWidget(photo: pexer.photos[index], index: index),
+          );
+        },
+      ),
     );
   }
 }
 
 Widget _noSearchYet() {
-  return Padding(
-    padding: EdgeInsets.only(top: 300),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Icon(Icons.search, size: 30, color: Colors.indigo),
-        Padding(
-          padding: EdgeInsets.all(5),
-          child: const Text(
-            'Search content here',
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.indigo),
-          ),
-        ),
-      ],
-    ),
+  return const Text(
+    'Search content here',
+    style: TextStyle(fontWeight: FontWeight.bold),
   );
 }
 
-List list = List.generate(50, (index) => index);
+List<String> lodingList = List.generate(
+  20,
+  (index) => 'My Data is here the loading Data. DO you wanna access',
+);
 Widget _loading() {
-  return Skeletonizer(
-    child: GridView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: list.length,
-      shrinkWrap: true,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+  return SliverPadding(
+    padding: const EdgeInsets.all(5),
+    sliver: SliverGrid.builder(
+      itemCount: lodingList.length,
+      itemBuilder:
+          (context, index) => const Skeletonizer(child: const LoadingWidget()),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisExtent: 270,
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 5,
+        mainAxisExtent: 290,
       ),
-      itemBuilder: (context, index) {
-        return LoadingWidget();
-      },
     ),
   );
 }

@@ -21,7 +21,7 @@ class CustomListTile1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      shape: const Border(bottom: BorderSide(width: 1)),
+      shape: const Border(bottom: BorderSide(width: 0.2)),
       leading: Container(
         width: 80,
         height: 80,
@@ -32,6 +32,7 @@ class CustomListTile1 extends StatelessWidget {
         ),
         child: CachedNetworkImage(
           imageUrl: imgUrl,
+          fit: BoxFit.cover,
           placeholder:
               (context, url) => Skeletonizer(
                 enabled: true,

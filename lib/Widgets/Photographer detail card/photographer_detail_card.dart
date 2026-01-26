@@ -13,57 +13,44 @@ class PhotographerDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-        margin: const EdgeInsets.all(16),
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.circular(20),
-          // boxShadow: const [
-          //   BoxShadow(
-          //     color: Color.fromARGB(66, 0, 0, 0),
-          //     blurRadius: 15,
-          //     offset: Offset(0, 8),
-          //   ),
-          //   BoxShadow(
-          //     color: Colors.white,
-          //     offset: Offset(-4, -4),
-          //     blurRadius: 10,
-          //   ),
-          // ],
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Title:',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey,
+      child: SafeArea(
+        top: false,
+        bottom: false,
+        minimum: const EdgeInsets.symmetric(horizontal: 15),
+        child: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Title:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-            ),
-            Text(
-              title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Photographer:',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey,
+              Padding(
+                padding: const EdgeInsetsGeometry.only(left: 10),
+                child: Text(title, style: const TextStyle()),
               ),
-            ),
-            Text(
-              photographer,
-              style: const TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
-            ),
-          ],
+              const Divider(),
+              const Text(
+                'Photographer:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              Padding(
+                padding: const EdgeInsetsGeometry.only(left: 10),
+                child: Text(
+                  photographer,
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 91, 91, 91),
+                  ),
+                ),
+              ),
+              const Divider(),
+              const Text(
+                'Overview:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ),
       ),
     );

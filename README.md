@@ -1,13 +1,13 @@
-🎨 PixHunt – Flutter HD Image App
+# 🎨 PixHunt – Flutter HD Image App
 
-A production ready Flutter mobile application built using Riverpod state management, following a clean MVVM architecture with proper **Dependency Injection.  
-PixHunt lets users browse and download full-HD images** directly to their Android and iOS galleries 📱🖼️.
+A **production-ready Flutter mobile application** built using **Riverpod** state management, following a clean **MVVM architecture** with proper **Dependency Injection**.  
+PixHunt lets users browse and download **full-HD images** directly to their Android and iOS galleries 📱🖼️.
 
+---
 
+## 🚀 Key Features
 
- 🚀 Key Features
-
-🧑 User Side
+### 🧑 User Side
 - 🔐 Secure login and signup using **Firebase Authentication** (Google Sign-In included)  
 - 📸 Browse and search HD images from the **Pexels API**  
 - ⬇️ Download images directly to device gallery  
@@ -35,7 +35,7 @@ PixHunt lets users browse and download full-HD images** directly to their Androi
 
 ## 🎨 UI / UX Experience
 - 📱 Fully responsive UI for all screen sizes  
-- ✨ Smooth animations for better user engagement  
+- ✨ Very Smooth animations for better user engagement using explicit animations 
 - 🖌 Clean and modern design  
 - 🖼 Adaptive image display for HD quality downloads  
 
@@ -43,7 +43,7 @@ PixHunt lets users browse and download full-HD images** directly to their Androi
 
 ## 💾 App Persistence
 - 🌟 **Shared Preferences** used for:  
-  - Theme management (Light, Dark & System mode)  
+  - Theme management (Light & Dark)  
   - Login persistence  
   - Local preferences and settings  
 
@@ -62,10 +62,10 @@ PixHunt lets users browse and download full-HD images** directly to their Androi
 
 ---
 
-## 📸 Screenshots / Demo
+## 📸 Video / Demo
 *Add screenshots or GIFs here to showcase your app!*  
 Example:  
-![App Screenshot](link-to-your-screenshot.png)
+![App video Demo](https://drive.google.com/file/d/1fJGbtoQJuTyRb1GG9ladPPvENneUefMr/view?usp=drive_link)
 
 ---
 
@@ -73,7 +73,7 @@ Example:
 - 🛠 Support for additional image APIs  
 - 💾 Offline caching for downloaded images  
 - ⚡ Performance optimizations for faster load  
-- 🌐 Multi-language support  
+ 
 
 ---
 

@@ -133,23 +133,20 @@ class _FavPageState extends ConsumerState<FavPage>
   Widget _myCardWidget(List<FavItemModalClass> list, Animation<double> scale) {
     var searchRef = list.reversed.toList();
     if (searchRef.isEmpty) {
-      return SliverPadding(
-        padding: EdgeInsets.all(5),
-        sliver: SliverFillRemaining(
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.favorite, color: Colors.indigo),
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: const Text(
-                    'No Favourite items',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
+      return const SliverFillRemaining(
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.favorite),
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: const Text(
+                  'No Favourite items',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       );

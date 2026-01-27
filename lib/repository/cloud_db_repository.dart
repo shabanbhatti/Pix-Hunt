@@ -1,13 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
 import 'package:pix_hunt_project/Models/dowloads_items_model.dart';
 import 'package:pix_hunt_project/Models/fav_items.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
-import 'package:pix_hunt_project/Utils/toast.dart';
 import 'package:pix_hunt_project/services/auth_service.dart';
 import 'package:pix_hunt_project/services/cloud_DB_service.dart';
 import 'package:pix_hunt_project/services/shared_preference_service.dart';
@@ -64,6 +61,15 @@ class CloudDbRepository {
     String uid = authService.firebaseAuth.currentUser!.uid;
     try {
       await cloudDbService.deleteDownloadedHistory(downloadItems, uid);
+    } on FirebaseException catch (e) {
+      throw Exception(e.code);
+    }
+  }
+
+  Future<void> deleteAllDownloadHistory() async {
+    String uid = authService.firebaseAuth.currentUser!.uid;
+    try {
+      await cloudDbService.deleteAllDownloadedHistory(uid);
     } on FirebaseException catch (e) {
       throw Exception(e.code);
     }
@@ -128,15 +134,7 @@ class CloudDbRepository {
       String uid = authService.firebaseAuth.currentUser!.uid;
       var storage = await storageService.putFile(file, '/user_img', 'img/$uid');
       await cloudDbService.userImage(uid, storage.url, storage.path);
-      log(storage.url);
-      log(storage.path);
-      if (storage.url != '' || storage.url.isEmpty) {
-        log('Called');
-        SpService.setString(SpService.userImgKEY, storage.url);
-      }
     } on FirebaseException catch (e) {
-      log(e.code);
-      ToastUtils.showToast(e.toString(), color: Colors.red);
       throw Exception(e.code);
     }
   }
@@ -145,7 +143,6 @@ class CloudDbRepository {
     String uid = authService.firebaseAuth.currentUser!.uid;
     try {
       await storageService.deleteFile('/user_img', 'img/$uid');
-      await SpService.remove(SpService.userImgKEY);
       await cloudDbService.deleteUserImage(uid);
     } on FirebaseException catch (e) {
       throw Exception(e.code);

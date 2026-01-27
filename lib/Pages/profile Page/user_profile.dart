@@ -41,14 +41,12 @@ class _UserProfileState extends ConsumerState<UserProfile>
       duration: const Duration(seconds: 1),
     );
 
-    scale = Tween<double>(begin: 0.5, end: 1.0).animate(
+    scale = Tween<double>(begin: 0.7, end: 1.0).animate(
       CurvedAnimation(parent: animationController, curve: Curves.bounceOut),
     );
 
     animationController.forward();
-    Future.microtask(() {
-      ref.read(userDbProvider.notifier).fetchUserDbData();
-    });
+
     loadUsername();
   }
 
@@ -91,22 +89,19 @@ class _UserProfileState extends ConsumerState<UserProfile>
               top: false,
               bottom: false,
               sliver: SliverToBoxAdapter(
-                child: ScaleTransition(
-                  scale: scale,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(top: 25),
-                        child: const CircleAvatarWidget(),
-                      ),
-                      _userName(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 25),
+                      child: const CircleAvatarWidget(),
+                    ),
+                    ScaleTransition(scale: scale, child: _userName()),
 
-                      _userEmail(),
+                    ScaleTransition(scale: scale, child: _userEmail()),
 
-                      const Divider(),
-                    ],
-                  ),
+                    const Divider(),
+                  ],
                 ),
               ),
             ),

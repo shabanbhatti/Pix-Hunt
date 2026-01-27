@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/User_Image_riverpod.dart/user_img_riverpod.dart';
 import 'package:pix_hunt_project/Utils/constant_mgs.dart';
+import 'package:pix_hunt_project/Utils/extensions.dart';
+import 'package:pix_hunt_project/services/shared_preference_service.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CircleAvatarHomeWidget extends ConsumerStatefulWidget {
@@ -14,12 +16,16 @@ class CircleAvatarHomeWidget extends ConsumerStatefulWidget {
 }
 
 class _CircleAvatarWidgetState extends ConsumerState<CircleAvatarHomeWidget> {
+  ValueNotifier<String> usernameNotifier = ValueNotifier('');
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      ref.read(userImgProvider.notifier).getImage();
-    });
+    loadUsername();
+  }
+
+  Future<void> loadUsername() async {
+    var name = await SpService.getString('username');
+    usernameNotifier.value = name ?? '';
   }
 
   @override
@@ -35,12 +41,12 @@ class _CircleAvatarWidgetState extends ConsumerState<CircleAvatarHomeWidget> {
           child: Material(
             shape: const CircleBorder(),
             child: Container(
-              color: Colors.indigo,
+              color: Colors.pink,
               height: 40,
               width: 40,
+              alignment: Alignment.center,
               child: Consumer(
                 builder: (context, ref, child) {
-                  // var streamRef = ref.watch(userDocStreamProvider);
                   var myRef = ref.watch(userImgProvider);
                   if (myRef is LoadingState) {
                     return _loading();
@@ -60,10 +66,24 @@ class _CircleAvatarWidgetState extends ConsumerState<CircleAvatarHomeWidget> {
 
   Widget _data(String imgUrl) {
     return (imgUrl == '')
-        ? Image.asset(user_img)
+        ? ValueListenableBuilder(
+          valueListenable: usernameNotifier,
+          builder: (context, value, child) {
+            return Text(
+              value.initials,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 17,
+                color: Colors.white,
+              ),
+            );
+          },
+        )
         : CachedNetworkImage(
           imageUrl: imgUrl,
           fit: BoxFit.cover,
+          width: double.infinity,
+          height: double.infinity,
           progressIndicatorBuilder: (context, url, progress) => _loading(),
         );
   }

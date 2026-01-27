@@ -79,6 +79,14 @@ class UserDbStateNotifier extends StateNotifier<UserDbState> {
     }
   }
 
+  Future<void> deleteAllDownloadedHistory() async {
+    try {
+      await cloudDbRepository.deleteAllDownloadHistory();
+    } catch (e) {
+      state = ErrorUserDb(error: e.toString());
+    }
+  }
+
   Future<void> addSearchHistory(SearchHistory searchHistory) async {
     try {
       await cloudDbRepository.addSearchHistory(searchHistory);

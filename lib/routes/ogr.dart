@@ -113,8 +113,8 @@ Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
         builder: (context) {
           var data = routeSettings.arguments as Map<String, dynamic>;
           var imgUrl = data['imgUrl'];
-          var imgPath = data['imgPath'];
-          return ViewUserImgPage(imgPath: imgPath, imgUrl: imgUrl);
+
+          return ViewUserImgPage(imgUrl: imgUrl);
         },
 
         settings: routeSettings,
@@ -146,11 +146,6 @@ Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
         ),
         routeSettings: routeSettings,
       );
-    // case ViewCardPage.pageName:
-    //   return AnimatedRouting(
-    //     child: ViewCardPage(photo: routeSettings.arguments as Photo),
-    //     routeSettings: routeSettings,
-    //   );
 
     case ViewDownloadedItem.pageName:
       return AnimatedRouting(

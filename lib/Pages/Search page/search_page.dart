@@ -203,9 +203,15 @@ class _SearchPageState extends ConsumerState<SearchPage>
 }
 
 Widget _noSearchYet() {
-  return const Text(
-    'Search content here',
-    style: TextStyle(fontWeight: FontWeight.bold),
+  return const Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Icon(Icons.search),
+      const Text(
+        ' Search content here',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+    ],
   );
 }
 

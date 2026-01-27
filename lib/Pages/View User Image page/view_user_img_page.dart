@@ -5,13 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ViewUserImgPage extends StatelessWidget {
-  const ViewUserImgPage({
-    super.key,
-    required this.imgPath,
-    required this.imgUrl,
-  });
+  const ViewUserImgPage({super.key, required this.imgUrl});
 
-  final String imgPath;
   final String imgUrl;
   static const pageName = '/view_user_img';
 
@@ -19,7 +14,7 @@ class ViewUserImgPage extends StatelessWidget {
   Widget build(BuildContext context) {
     print('VIEW USER IMG BUILD CALLED');
     return Scaffold(
-      backgroundColor: Colors.indigo,
+      backgroundColor: const Color.fromARGB(255, 120, 120, 120),
       body: GestureDetector(
         onTap: () {
           Navigator.of(context).pop();
@@ -40,14 +35,11 @@ class ViewUserImgPage extends StatelessWidget {
                     color: Colors.white,
                     width: 300,
                     height: 300,
-                    child:
-                        (imgPath == '')
-                            ? CachedNetworkImage(
-                              imageUrl: imgUrl,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => _loading(),
-                            )
-                            : Image.file(File(imgPath), fit: BoxFit.cover),
+                    child: CachedNetworkImage(
+                      imageUrl: imgUrl,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => _loading(),
+                    ),
                   ),
                 ),
               ),

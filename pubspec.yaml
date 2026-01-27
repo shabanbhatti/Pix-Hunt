@@ -47,7 +47,7 @@ dependencies:
   path_provider: ^2.1.5
   dio: ^5.8.0+1
   
-  http: ^0.13.6
+  http: ^1.0.0
   cached_network_image: ^3.3.1
   intl: ^0.20.2
   image_picker: ^1.1.2
@@ -63,6 +63,7 @@ dependencies:
   flutter_dotenv: ^6.0.0
   animated_item: ^0.0.2
   firebase_app_check: ^0.3.2+10
+  image_cropper: ^11.0.0
 
 
 dev_dependencies:

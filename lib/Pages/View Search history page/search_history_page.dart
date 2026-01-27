@@ -80,12 +80,15 @@ class _ViewSearchHistoryPageState extends ConsumerState<ViewSearchHistoryPage>
     return (data.isEmpty)
         ? SliverFillRemaining(
           child: Center(
-            child: const Text(
-              '🔎 No search history',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.indigo,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.search),
+                const Text(
+                  ' No search history',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
           ),
         )

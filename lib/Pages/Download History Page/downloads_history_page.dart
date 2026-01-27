@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/Downloads%20Stream%20RIverpod/download_stream_riv.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
@@ -7,7 +9,6 @@ import 'package:pix_hunt_project/Pages/View%20Downloaded%20Item%20page/view_down
 import 'package:pix_hunt_project/Utils/date_format_util.dart';
 import 'package:pix_hunt_project/Widgets/custom_dialog_boxes.dart';
 import 'package:pix_hunt_project/Widgets/custom_show_bottom_sheets.dart';
-import 'package:pix_hunt_project/Widgets/custom_sliver_appbar.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class DownloadHistoryPage extends ConsumerStatefulWidget {
@@ -48,7 +49,51 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
       body: Center(
         child: CustomScrollView(
           slivers: [
-            const CustomSliverAppBar(title: 'Downloads'),
+            SliverAppBar(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back_ios_new_outlined),
+              ),
+              title: Text('Download history', style: const TextStyle()),
+              floating: true,
+              snap: true,
+              actions: [
+                Padding(
+                  padding: EdgeInsetsGeometry.only(right: 15),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          EasyLoading.show(
+                            indicator: CupertinoActivityIndicator(
+                              color: Colors.white,
+                            ),
+                            status: 'Clearing all history...',
+                            dismissOnTap: false,
+                          );
+                          ref
+                              .read(userDbProvider.notifier)
+                              .deleteAllDownloadedHistory();
+
+                          EasyLoading.dismiss();
+                        },
+                        child: Text(
+                          'Clear all',
+                          style: TextStyle(
+                            color: Colors.indigo,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             SliverSafeArea(
               top: false,
               sliver: Consumer(
@@ -60,12 +105,18 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
                       return (data.isEmpty)
                           ? const SliverFillRemaining(
                             child: Center(
-                              child: Text(
-                                'No Downloads',
-                                style: TextStyle(
-                                  color: Colors.indigo,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.download),
+                                  Text(
+                                    ' No Downloads',
+                                    style: TextStyle(
+                                      // color: Colors.indigo,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           )

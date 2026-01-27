@@ -1,16 +1,84 @@
-# pix_hunt_project
+🎨 PixHunt – Flutter HD Image App
 
-A new Flutter project.
+A production ready Flutter mobile application built using Riverpod state management, following a clean MVVM architecture with proper **Dependency Injection.  
+PixHunt lets users browse and download full-HD images** directly to their Android and iOS galleries 📱🖼️.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+ 🚀 Key Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+🧑 User Side
+- 🔐 Secure login and signup using **Firebase Authentication** (Google Sign-In included)  
+- 📸 Browse and search HD images from the **Pexels API**  
+- ⬇️ Download images directly to device gallery  
+- 🔖 Save favorites for later viewing  
+- 🔄 Full login persistence for seamless experience  
+- 🌗 Light and Dark theme support  
+- 🔍 Full search history tracking  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 🗂 User Activity & History
+- 📝 Search history  
+- ⬇️ Download history  
+- ❤️ Favorites  
+- All data is preserved **separately in Firebase**  
+
+---
+
+## 🧠 Architecture & State Management
+- 🏗 Clean **MVVM architecture** for scalable code  
+- ⚡ Optimized **Riverpod state management**  
+- 📦 Clear separation of **UI, business logic, and data layers**  
+- 🗺️ Navigation handled via **onGenerateRoute**  
+- 🔗 Fully adaptive, responsive UI with smooth **animations & transitions**  
+
+---
+
+## 🎨 UI / UX Experience
+- 📱 Fully responsive UI for all screen sizes  
+- ✨ Smooth animations for better user engagement  
+- 🖌 Clean and modern design  
+- 🖼 Adaptive image display for HD quality downloads  
+
+---
+
+## 💾 App Persistence
+- 🌟 **Shared Preferences** used for:  
+  - Theme management (Light, Dark & System mode)  
+  - Login persistence  
+  - Local preferences and settings  
+
+---
+
+## 🧰 Tech Stack
+- **Flutter & Dart**  
+- **Riverpod** (State Management)  
+- **MVVM Architecture**  
+- **Firebase**  
+  - Authentication (Google Sign-In)  
+  - Firestore  
+  - Storage  
+- **REST API Integration**  
+- **Shared Preferences**  
+
+---
+
+## 📸 Screenshots / Demo
+*Add screenshots or GIFs here to showcase your app!*  
+Example:  
+![App Screenshot](link-to-your-screenshot.png)
+
+---
+
+## 🔮 Future Enhancements
+- 🛠 Support for additional image APIs  
+- 💾 Offline caching for downloaded images  
+- ⚡ Performance optimizations for faster load  
+- 🌐 Multi-language support  
+
+---
+
+## ⚡ Installation
+
+1. Clone the repo:
+```bash
+git clone https://github.com/yourusername/PixHunt.git

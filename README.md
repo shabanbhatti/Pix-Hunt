@@ -63,7 +63,7 @@ PixHunt lets users browse and download **full-HD images** directly to their Andr
 ---
 
 ## 📸 Video / Demo
-![App video Demo] (https://drive.google.com/file/d/1fJGbtoQJuTyRb1GG9ladPPvENneUefMr/view?usp=drive_link)
+https://drive.google.com/file/d/1fJGbtoQJuTyRb1GG9ladPPvENneUefMr/view?usp=drive_link
 
 ---
 

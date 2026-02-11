@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
-import 'package:pix_hunt_project/Utils/constants_env.dart';
+import 'package:pix_hunt_project/core/constants/constants_env.dart';
 
 class AuthService {
   final FirebaseAuth firebaseAuth;

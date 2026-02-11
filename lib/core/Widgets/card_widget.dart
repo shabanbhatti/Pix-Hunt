@@ -7,8 +7,9 @@ import 'package:pix_hunt_project/Models/fav_items.dart';
 import 'package:pix_hunt_project/Models/pexer.dart';
 import 'package:pix_hunt_project/Pages/view%20card%20detail%20page/view_card_detail_page.dart';
 import 'package:pix_hunt_project/Pages/View%20home%20cetagory%20Page/view_page.dart';
-import 'package:pix_hunt_project/Utils/bottom%20sheets/half_size_bottom_sheet_util.dart';
-import 'package:pix_hunt_project/Utils/toast.dart';
+import 'package:pix_hunt_project/core/Utils/bottom%20sheets/half_size_bottom_sheet_util.dart';
+import 'package:pix_hunt_project/core/Utils/toast.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CardWidget extends StatelessWidget {
@@ -18,6 +19,7 @@ class CardWidget extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
+    var lng = AppLocalizations.of(context);
     return GestureDetector(
       onTap: () {
         openHalfBottomSheet(
@@ -124,7 +126,7 @@ class CardWidget extends StatelessWidget {
                                       ),
                                     );
                                 ToastUtils.showToast(
-                                  'Item added to Favourites 💙',
+                                  '${lng?.itemAddedToFavorite ?? ''} 💙',
                                   color: Colors.green,
                                 );
                               }

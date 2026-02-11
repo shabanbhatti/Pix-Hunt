@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
 import 'package:pix_hunt_project/Pages/Home%20Page/home.dart';
 import 'package:pix_hunt_project/Pages/Login%20Page/login_page.dart';
-import 'package:pix_hunt_project/Utils/constant_mgs.dart';
+import 'package:pix_hunt_project/core/constants/constant_imgs.dart';
 import 'package:shimmer/shimmer.dart';
 
 class IntroPage extends ConsumerStatefulWidget {

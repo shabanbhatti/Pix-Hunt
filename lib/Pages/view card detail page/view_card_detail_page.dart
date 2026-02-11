@@ -8,8 +8,9 @@ import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_river
 import 'package:pix_hunt_project/Models/dowloads_items_model.dart';
 import 'package:pix_hunt_project/Models/fav_items.dart';
 import 'package:pix_hunt_project/Pages/View%20Image%20Page/view_img_page.dart';
-import 'package:pix_hunt_project/Widgets/Photographer%20detail%20card/photographer_detail_card.dart';
-import 'package:pix_hunt_project/Widgets/custom%20btns/app_main_btn.dart';
+import 'package:pix_hunt_project/core/Widgets/Photographer%20detail%20card/photographer_detail_card.dart';
+import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class ViewCardDetailsPage extends StatefulWidget {
   const ViewCardDetailsPage({super.key, required this.favItemModalClass});
@@ -30,19 +31,7 @@ class _ViewCardDetailsPageState extends State<ViewCardDetailsPage>
   @override
   void initState() {
     super.initState();
-    firstNotifier = ValueNotifier((
-      imgPath: widget.favItemModalClass.largePhotoUrl,
-      pixels: '800 pixels',
-    ));
-    dataList = [
-      (
-        imgPath: widget.favItemModalClass.originalPhotoUrl,
-        pixels: '3k+ pixels',
-      ),
-      (imgPath: widget.favItemModalClass.largePhotoUrl, pixels: '800 pixels'),
-      (imgPath: widget.favItemModalClass.mediumPhotoUrl, pixels: '640 pixels'),
-      (imgPath: widget.favItemModalClass.smallPhotoUrl, pixels: '400 pixels'),
-    ];
+
     animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
@@ -52,6 +41,8 @@ class _ViewCardDetailsPageState extends State<ViewCardDetailsPage>
       CurvedAnimation(parent: animationController, curve: Curves.bounceOut),
     );
     animationController.forward();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
   }
 
   PageController pageController = PageController(initialPage: 1);
@@ -67,6 +58,29 @@ class _ViewCardDetailsPageState extends State<ViewCardDetailsPage>
   @override
   Widget build(BuildContext context) {
     print('VIEW CARD (FAV) BUILD CALLED');
+    var lng = AppLocalizations.of(context);
+    firstNotifier = ValueNotifier((
+      imgPath: widget.favItemModalClass.largePhotoUrl,
+      pixels: lng?.pixels800 ?? '',
+    ));
+    dataList = [
+      (
+        imgPath: widget.favItemModalClass.originalPhotoUrl,
+        pixels: lng?.pixels3k ?? '',
+      ),
+      (
+        imgPath: widget.favItemModalClass.largePhotoUrl,
+        pixels: lng?.pixels800 ?? '',
+      ),
+      (
+        imgPath: widget.favItemModalClass.mediumPhotoUrl,
+        pixels: lng?.pixels640 ?? '',
+      ),
+      (
+        imgPath: widget.favItemModalClass.smallPhotoUrl,
+        pixels: lng?.pixels400 ?? '',
+      ),
+    ];
     return Container(
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -308,6 +322,14 @@ class _ViewCardDetailsPageState extends State<ViewCardDetailsPage>
                                             id: id,
                                             date: DateTime.now().toString(),
                                           ),
+                                          AppLocalizations.of(
+                                                context,
+                                              )?.downloading ??
+                                              '',
+                                          AppLocalizations.of(
+                                                context,
+                                              )?.imageSavedToGallery ??
+                                              '',
                                         );
 
                                     if (isDownloaded != null) {
@@ -329,7 +351,8 @@ class _ViewCardDetailsPageState extends State<ViewCardDetailsPage>
                                     }
                                   },
                                   widgetOrTitle: WidgetOrTitle.title,
-                                  btnTitle: 'Download (${value.pixels})',
+                                  btnTitle:
+                                      '${AppLocalizations.of(context)?.download ?? ''} (${value.pixels})',
                                 );
                               },
                             );

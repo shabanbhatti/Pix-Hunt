@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class PhotographerDetailCard extends StatelessWidget {
   final String title;
@@ -12,6 +13,7 @@ class PhotographerDetailCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lng = AppLocalizations.of(context);
     return Center(
       child: SafeArea(
         top: false,
@@ -22,18 +24,24 @@ class PhotographerDetailCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Title:',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              Text(
+                '${lng?.title ?? ''}:',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Padding(
                 padding: const EdgeInsetsGeometry.only(left: 10),
                 child: Text(title, style: const TextStyle()),
               ),
               const Divider(),
-              const Text(
-                'Photographer:',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              Text(
+                '${lng?.photographer ?? ''}:',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Padding(
                 padding: const EdgeInsetsGeometry.only(left: 10),
@@ -45,9 +53,12 @@ class PhotographerDetailCard extends StatelessWidget {
                 ),
               ),
               const Divider(),
-              const Text(
-                'Overview:',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              Text(
+                '${lng?.overview ?? ''}:',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),

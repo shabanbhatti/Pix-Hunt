@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/APi%20Riverpod/api_riverpod.dart';
 import 'package:pix_hunt_project/Models/pexer.dart';
 import 'package:pix_hunt_project/Pages/View%20home%20cetagory%20Page/Widgets/photo_pages_widget.dart';
-import 'package:pix_hunt_project/Widgets/card_widget.dart';
-import 'package:pix_hunt_project/Widgets/custom_sliver_appbar.dart';
-import 'package:pix_hunt_project/Widgets/loading_card_widget.dart';
+import 'package:pix_hunt_project/core/Widgets/card_widget.dart';
+import 'package:pix_hunt_project/core/Widgets/custom_sliver_appbar.dart';
+import 'package:pix_hunt_project/core/Widgets/loading_card_widget.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 String hardcodeError =
@@ -76,7 +76,7 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
     return Scaffold(
       body: Center(
         child: RefreshIndicator(
-          color: Theme.of(context).primaryColor,
+          color: Colors.indigo,
           onRefresh: () {
             if (widget.title == null) {
               return ref

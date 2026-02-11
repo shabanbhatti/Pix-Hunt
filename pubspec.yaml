@@ -64,6 +64,8 @@ dependencies:
   animated_item: ^0.0.2
   firebase_app_check: ^0.3.2+10
   image_cropper: ^11.0.0
+  flutter_localizations:
+    sdk: flutter
 
 
 dev_dependencies:
@@ -87,7 +89,7 @@ flutter_launcher_icons:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

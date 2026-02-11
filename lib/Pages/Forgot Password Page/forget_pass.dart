@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
-import 'package:pix_hunt_project/Utils/toast.dart';
-import 'package:pix_hunt_project/Widgets/Signup%20&%20login%20text%20form%20field/text_form_field.dart';
-import 'package:pix_hunt_project/Widgets/custom%20btns/app_main_btn.dart';
+import 'package:pix_hunt_project/core/Utils/toast.dart';
+import 'package:pix_hunt_project/core/Widgets/Signup%20&%20login%20text%20form%20field/text_form_field.dart';
+import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class ForgetPassPage extends ConsumerStatefulWidget {
   const ForgetPassPage({super.key});
@@ -28,9 +29,10 @@ class _ForgetPassPageState extends ConsumerState<ForgetPassPage> {
 
   @override
   Widget build(BuildContext context) {
+    var lng = AppLocalizations.of(context);
     ref.listen(authProvider('forgot'), (previous, next) {
       if (next is AuthLoadedSuccessfuly) {
-        ToastUtils.showToast("Password reset link sent to your email (spam).");
+        ToastUtils.showToast("${lng?.passwordResetLinkSent ?? ''}");
       } else if (next is AuthError) {
         var error = next.error;
         ToastUtils.showToast(error, color: Colors.red);
@@ -64,9 +66,9 @@ class _ForgetPassPageState extends ConsumerState<ForgetPassPage> {
                     ),
                   ),
                 ),
-                const SliverToBoxAdapter(
-                  child: const Text(
-                    'Forgot your password',
+                SliverToBoxAdapter(
+                  child: Text(
+                    lng?.forgotYourPassword ?? '',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                   ),
                 ),
@@ -79,17 +81,17 @@ class _ForgetPassPageState extends ConsumerState<ForgetPassPage> {
                           isForName: false,
                           controller: controller,
                           focusNode: focusNode,
-                          label: 'Email',
+                          label: lng?.email ?? '',
                           prefixIcon: Icons.mail,
                           onFieldSubmitted: (p0) {},
                         ),
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsetsGeometry.only(bottom: 10),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            '*Hit that button, a password reset link will be sent to your\n  email. You can reset your password using that link.',
+                            '*${lng?.forgotBtnDetail ?? ''}',
                             style: TextStyle(
                               fontSize: 12,
 
@@ -125,8 +127,8 @@ Widget _forgotBtn(
         btnValueWidget:
             (myRef is AuthLoading)
                 ? CupertinoActivityIndicator(color: Colors.white)
-                : const Text(
-                  'Send link',
+                : Text(
+                  AppLocalizations.of(context)?.sentLink ?? '',
                   style: TextStyle(color: Colors.white),
                 ),
         focusNode: focusNode,

@@ -1,20 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
-import 'package:pix_hunt_project/Pages/Download%20History%20Page/downloads_history_page.dart';
-import 'package:pix_hunt_project/Pages/Favourite%20Page/fav_page.dart';
 import 'package:pix_hunt_project/Pages/Login%20Page/login_page.dart';
-import 'package:pix_hunt_project/Pages/Theme%20page/theme_page.dart';
+import 'package:pix_hunt_project/Pages/profile%20Page/Widgets/bottom_thanks_widget.dart';
 import 'package:pix_hunt_project/Pages/profile%20Page/Widgets/circle_avatar.dart';
-import 'package:pix_hunt_project/Pages/profile%20Page/Widgets/list_tile.dart';
-import 'package:pix_hunt_project/Pages/View%20Search%20history%20page/search_history_page.dart';
-import 'package:pix_hunt_project/Pages/update%20email%20page/update_email_page.dart';
-import 'package:pix_hunt_project/Pages/update%20name%20page/update_name_page.dart';
-import 'package:pix_hunt_project/Utils/extensions.dart';
-import 'package:pix_hunt_project/Widgets/custom_dialog_boxes.dart';
-import 'package:pix_hunt_project/Widgets/custom_sliver_appbar.dart';
+import 'package:pix_hunt_project/Pages/profile%20Page/Widgets/profile_listtile_widget.dart';
+import 'package:pix_hunt_project/Pages/profile%20Page/Widgets/profile_sliver_appbar.dart';
+
 import 'package:pix_hunt_project/services/shared_preference_service.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -79,12 +72,13 @@ class _UserProfileState extends ConsumerState<UserProfile>
     });
     return Scaffold(
       body: RefreshIndicator(
+        color: Colors.indigo,
         onRefresh: () {
           return loadUsername();
         },
         child: CustomScrollView(
           slivers: [
-            CustomSliverAppBar(title: 'Profile'),
+            const ProfileSliverAppbar(),
             SliverSafeArea(
               top: false,
               bottom: false,
@@ -112,78 +106,7 @@ class _UserProfileState extends ConsumerState<UserProfile>
               sliver: SliverToBoxAdapter(
                 child: ScaleTransition(
                   scale: scale,
-                  child: Column(
-                    children: [
-                      DrawerListTile(
-                        leading: CupertinoIcons.heart_fill,
-                        title: 'Favourites',
-                        onTap: () {
-                          Navigator.of(context).pushNamed(FavPage.pageName);
-                        },
-                      ),
-                      DrawerListTile(
-                        leading: Icons.search,
-                        title: 'Search history',
-                        onTap: () {
-                          Navigator.of(
-                            context,
-                          ).pushNamed(ViewSearchHistoryPage.pageName);
-                        },
-                      ),
-
-                      DrawerListTile(
-                        leading: Icons.download,
-                        title: 'Download history',
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            DownloadHistoryPage.pageName,
-                          );
-                        },
-                      ),
-                      DrawerListTile(
-                        leading: Icons.light_mode,
-                        title: 'Theme',
-                        onTap: () {
-                          Navigator.of(context).pushNamed(ThemePage.pageName);
-                        },
-                      ),
-
-                      DrawerListTile(
-                        leading: Icons.email,
-                        title: 'Update email',
-                        onTap: () {
-                          Navigator.of(
-                            context,
-                          ).pushNamed(UpdateEmailPage.pageName);
-                        },
-                      ),
-                      DrawerListTile(
-                        leading: Icons.person,
-                        title: 'Update name',
-                        onTap: () {
-                          Navigator.of(
-                            context,
-                          ).pushNamed(UpdateNamePage.pageName);
-                        },
-                      ),
-                      Consumer(
-                        builder: (context, ref, child) {
-                          return DrawerListTile(
-                            leading: Icons.logout,
-                            title: 'Log out',
-                            onTap: () async {
-                              showLogoutDialog(context, () async {
-                                await ref
-                                    .read(authProvider('logout1').notifier)
-                                    .logout();
-                              });
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                  child: const ProfileListtileWidget(),
                 ),
               ),
             ),
@@ -197,27 +120,7 @@ class _UserProfileState extends ConsumerState<UserProfile>
                     child: ValueListenableBuilder(
                       valueListenable: usernameNotifier,
                       builder: (context, value, child) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              '🎉Thanks ',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                            Text(
-                              value.firstTwoWords(),
-                              style: const TextStyle(
-                                color: Colors.indigo,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
-                            ),
-                            const Text(
-                              ' for vising🎉',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        );
+                        return BottomThanksWidget(value: value);
                       },
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class EmailField extends StatelessWidget {
   const EmailField({
@@ -21,6 +22,7 @@ class EmailField extends StatelessWidget {
   final void Function(String) onFieldSubmitted;
   @override
   Widget build(BuildContext context) {
+    var lng = AppLocalizations.of(context);
     return Container(
       height: 80,
       color: Colors.transparent,
@@ -32,17 +34,17 @@ class EmailField extends StatelessWidget {
             validator: (value) {
               if (!isForName) {
                 if (value == null || value.isEmpty) {
-                  return 'Email is required';
+                  return lng?.emailIsRequired ?? '';
                 }
                 if (!RegExp(
                   r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                 ).hasMatch(value)) {
-                  return 'Enter a valid email address';
+                  return lng?.invalidEmail ?? '';
                 }
                 return null;
               } else {
                 if (value!.isEmpty) {
-                  return 'Name is required';
+                  return lng?.nameIsRequired ?? '';
                 } else {
                   return null;
                 }
@@ -97,6 +99,7 @@ class PasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lng = AppLocalizations.of(context);
     return Consumer(
       builder: (context, ref, child) {
         var isObscure = ref.watch(_obscureProvider.select((value) => value));
@@ -111,13 +114,13 @@ class PasswordField extends StatelessWidget {
                 obscureText: isObscure,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Password is required';
+                    return lng?.passwordIsRequired ?? '';
                   }
                   if (!RegExp(r'[A-Z]').hasMatch(value)) {
-                    return 'Password must contain at least one capital letter';
+                    return lng?.passwordShouldContainOneCapitalLetter ?? '';
                   }
                   if (!RegExp(r'[0-9]').hasMatch(value)) {
-                    return 'Password must contain at least one number';
+                    return lng?.passwordShouldContainOneNumber ?? '';
                   }
                   return null;
                 },
@@ -130,16 +133,16 @@ class PasswordField extends StatelessWidget {
                             onPressed: () {
                               ref.read(_obscureProvider.notifier).toggled();
                             },
-                            icon: Icon(Icons.visibility),
+                            icon: const Icon(Icons.visibility),
                           )
                           : IconButton(
                             onPressed: () {
                               ref.read(_obscureProvider.notifier).toggled();
                             },
-                            icon: Icon(Icons.visibility_off),
+                            icon: const Icon(Icons.visibility_off),
                           ),
 
-                  label: Text('Password'),
+                  label: Text(lng?.password ?? ''),
                   prefixIcon: Icon(Icons.lock),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -184,6 +187,7 @@ class ConfirmPasswordField extends StatelessWidget {
   final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
+    var lng = AppLocalizations.of(context);
     return Container(
       height: 80,
       color: Colors.transparent,
@@ -224,8 +228,8 @@ class ConfirmPasswordField extends StatelessWidget {
                             icon: Icon(Icons.visibility_off),
                           ),
 
-                  label: Text('Confirm Password'),
-                  prefixIcon: Icon(Icons.lock),
+                  label: Text(lng?.password ?? ''),
+                  prefixIcon: const Icon(Icons.lock),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(

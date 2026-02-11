@@ -4,10 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
 
 import 'package:pix_hunt_project/Pages/update%20email%20page/Widgets/row_textfield_widget.dart';
-import 'package:pix_hunt_project/Utils/toast.dart';
-import 'package:pix_hunt_project/Widgets/custom%20btns/app_main_btn.dart';
+import 'package:pix_hunt_project/core/Utils/toast.dart';
+import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
 
-import 'package:pix_hunt_project/Widgets/custom_sliver_appbar.dart';
+import 'package:pix_hunt_project/core/Widgets/custom_sliver_appbar.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class UpdateEmailPage extends ConsumerStatefulWidget {
   const UpdateEmailPage({super.key});
@@ -34,21 +35,21 @@ class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage> {
   @override
   Widget build(BuildContext context) {
     print('UPDATE DATA BUILD CALLED');
+    var lng = AppLocalizations.of(context);
     ref.listen(authProvider('update'), (previous, next) async {
       if (next is AuthLoadedSuccessfuly) {
-        ToastUtils.showToast(
-          'Email verification link sent to your new email, please verify',
-        );
+        ToastUtils.showToast(lng?.emailVerificationLink ?? '');
       } else if (next is AuthError) {
         var error = next.error;
 
         ToastUtils.showToast(error, color: Colors.red);
       }
     });
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          const CustomSliverAppBar(title: 'Update email'),
+          CustomSliverAppBar(title: lng?.updateEmail ?? ''),
           const SliverToBoxAdapter(child: SizedBox(height: 30)),
           SliverSafeArea(
             top: false,
@@ -59,7 +60,7 @@ class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage> {
                   children: [
                     RowTextfieldWidget(
                       controller: emailController,
-                      title: 'Email',
+                      title: lng?.newEmail ?? '',
 
                       formKey: emailKey,
                       isObscure: false,
@@ -69,7 +70,7 @@ class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage> {
                       padding: const EdgeInsets.only(top: 10),
                       child: RowTextfieldWidget(
                         controller: passController,
-                        title: 'Password',
+                        title: lng?.password ?? '',
                         isObscure: true,
                         formKey: passKey,
                       ),
@@ -97,7 +98,10 @@ class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage> {
           btnValueWidget:
               (myRef is AuthLoading)
                   ? CupertinoActivityIndicator(color: Colors.white)
-                  : Text('Update name', style: TextStyle(color: Colors.white)),
+                  : Text(
+                    AppLocalizations.of(context)?.updateEmail ?? '',
+                    style: const TextStyle(color: Colors.white),
+                  ),
           onTap: () {
             // var nameValidate = nameKey.currentState!.validate();
             var emailValidate = emailKey.currentState!.validate();

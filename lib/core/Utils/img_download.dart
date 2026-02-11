@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 abstract class ImageDownloadMethodUtils {
   static Future<({String message, bool isDownloade})?> downloadImg(
     String url,
+    String onSuccess,
   ) async {
     try {
       var responce = await http.get(Uri.parse(url));
@@ -18,7 +19,7 @@ abstract class ImageDownloadMethodUtils {
         );
 
         debugPrint("Save result: $result");
-        return (message: '🎉 Image saved to photos', isDownloade: true);
+        return (message: '🎉 ${onSuccess}', isDownloade: true);
       } else {
         return null;
       }

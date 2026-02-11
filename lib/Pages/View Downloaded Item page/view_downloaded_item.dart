@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Models/dowloads_items_model.dart';
-import 'package:pix_hunt_project/Utils/date_format_util.dart';
-import 'package:pix_hunt_project/Widgets/custom_dialog_boxes.dart';
+import 'package:pix_hunt_project/core/Utils/date_format_util.dart';
+import 'package:pix_hunt_project/core/Widgets/custom_dialog_boxes.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class ViewDownloadedItem extends StatefulWidget {
   const ViewDownloadedItem({super.key, required this.downloadsItem});
@@ -36,6 +37,7 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
 
   @override
   Widget build(BuildContext context) {
+    var lng = AppLocalizations.of(context);
     print('Downloaded Item BUILD CALLED');
     return Scaffold(
       body: Center(
@@ -51,7 +53,7 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
                     Navigator.pop(context);
                   },
                   child: CircleAvatar(
-                    backgroundColor: Colors.indigo,
+                    backgroundColor: Colors.indigo.withAlpha(150),
                     radius: 5,
                     child: const Icon(
                       CupertinoIcons.back,
@@ -63,7 +65,7 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
               ),
               actions: [
                 Padding(
-                  padding: const EdgeInsetsGeometry.only(right: 10),
+                  padding: const EdgeInsetsGeometry.only(right: 10, left: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -82,7 +84,7 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor: Colors.indigo,
+                              backgroundColor: Colors.indigo.withAlpha(150),
                               radius: 23,
                               child: const Icon(
                                 CupertinoIcons.delete,
@@ -128,28 +130,31 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
                     children: [
                       const SizedBox(height: 20),
                       _listtile(
-                        title: 'Image title',
+                        title: lng?.imageTitle ?? '',
                         value: widget.downloadsItem.title,
                       ),
                       const Divider(),
                       _listtile(
-                        title: 'Pixels',
+                        title: lng?.pixels ?? '',
                         value: widget.downloadsItem.pixels,
                       ),
                       const Divider(),
                       _listtile(
-                        title: 'Date',
+                        title: lng?.date ?? '',
                         value: DateFormatUtil.dateFormat(
                           widget.downloadsItem.date,
                         ),
                       ),
                       const Divider(),
                       _listtile(
-                        title: 'Url',
+                        title: lng?.url ?? '',
                         value: widget.downloadsItem.imgUrl,
                       ),
                       const Divider(),
-                      _listtile(title: 'Status', value: 'Save to gallery'),
+                      _listtile(
+                        title: lng?.status ?? '',
+                        value: 'Save to gallery',
+                      ),
                       const Divider(),
                     ],
                   ),
@@ -169,7 +174,7 @@ Widget _listtile({required String title, required String value}) {
       Text('$title:', style: TextStyle(fontWeight: FontWeight.bold)),
       Expanded(
         child: Padding(
-          padding: EdgeInsetsGeometry.only(left: 10),
+          padding: EdgeInsetsGeometry.only(left: 10, right: 10),
           child: Text(value, maxLines: 1, overflow: TextOverflow.ellipsis),
         ),
       ),

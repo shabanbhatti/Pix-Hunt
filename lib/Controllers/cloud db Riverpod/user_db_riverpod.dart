@@ -6,7 +6,7 @@ import 'package:pix_hunt_project/Models/auth_model.dart';
 import 'package:pix_hunt_project/Models/dowloads_items_model.dart';
 import 'package:pix_hunt_project/Models/fav_items.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
-import 'package:pix_hunt_project/Utils/download%20image%20Method/img_download.dart';
+import 'package:pix_hunt_project/core/Utils/img_download.dart';
 import 'package:pix_hunt_project/providers/app_provider_objects.dart';
 import 'package:pix_hunt_project/repository/cloud_db_repository.dart';
 
@@ -51,15 +51,18 @@ class UserDbStateNotifier extends StateNotifier<UserDbState> {
 
   Future<({bool isDownloade, String message})?> addDownloadedPhotos(
     DownloadsItem downloadedItems,
+    String downloading,
+    String onSuccess,
   ) async {
     try {
       EasyLoading.show(
-        status: 'Downloading...',
+        status: downloading,
         indicator: const CupertinoActivityIndicator(color: Colors.grey),
       );
       await cloudDbRepository.addDownloadedPhotos(downloadedItems);
       var data = await ImageDownloadMethodUtils.downloadImg(
         downloadedItems.imgUrl,
+        onSuccess,
       );
 
       EasyLoading.dismiss();

@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/User_Image_riverpod.dart/user_img_riverpod.dart';
 import 'package:pix_hunt_project/Pages/View%20User%20Image%20page/view_user_img_page.dart';
-import 'package:pix_hunt_project/Utils/extensions.dart';
-import 'package:pix_hunt_project/Utils/image_picker_utils.dart';
-import 'package:pix_hunt_project/Utils/toast.dart';
-import 'package:pix_hunt_project/Widgets/View%20user%20image%20bottom%20sheet/user_img_bottom_sheet.dart';
+import 'package:pix_hunt_project/core/Utils/extensions.dart';
+import 'package:pix_hunt_project/core/Utils/image_picker_utils.dart';
+import 'package:pix_hunt_project/core/Utils/toast.dart';
+import 'package:pix_hunt_project/core/Widgets/View%20user%20image%20bottom%20sheet/user_img_bottom_sheet.dart';
 
 import 'package:pix_hunt_project/services/shared_preference_service.dart';
 import 'package:skeletonizer/skeletonizer.dart';

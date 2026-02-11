@@ -4,9 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Pages/update%20email%20page/Widgets/row_textfield_widget.dart';
-import 'package:pix_hunt_project/Utils/toast.dart';
-import 'package:pix_hunt_project/Widgets/custom%20btns/app_main_btn.dart';
-import 'package:pix_hunt_project/Widgets/custom_sliver_appbar.dart';
+import 'package:pix_hunt_project/core/Utils/toast.dart';
+import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
+import 'package:pix_hunt_project/core/Widgets/custom_sliver_appbar.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:pix_hunt_project/services/shared_preference_service.dart';
 
 class UpdateNamePage extends ConsumerStatefulWidget {
@@ -48,16 +49,18 @@ class _UpdateNamePageState extends ConsumerState<UpdateNamePage> {
   @override
   Widget build(BuildContext context) {
     print('UPDATE name BUILD CALLED');
+    var lng = AppLocalizations.of(context);
     ref.listen(authProvider('update_name'), (previous, next) {
       if (next is AuthLoadedSuccessfuly) {
-        ToastUtils.showToast('Name updated successfully');
+        ToastUtils.showToast(lng?.nameUpdatedSuccessfully ?? '');
         Navigator.pop(context);
       }
     });
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          const CustomSliverAppBar(title: 'Update name'),
+          CustomSliverAppBar(title: lng?.updateName ?? ''),
           const SliverToBoxAdapter(child: SizedBox(height: 30)),
           SliverSafeArea(
             top: false,
@@ -71,7 +74,7 @@ class _UpdateNamePageState extends ConsumerState<UpdateNamePage> {
                   children: [
                     RowTextfieldWidget(
                       controller: nameController,
-                      title: 'name',
+                      title: lng?.name ?? '',
 
                       formKey: nameKey,
                       isObscure: false,
@@ -100,7 +103,10 @@ class _UpdateNamePageState extends ConsumerState<UpdateNamePage> {
           btnValueWidget:
               (myRef is AuthLoading)
                   ? CupertinoActivityIndicator(color: Colors.white)
-                  : Text('Update name', style: TextStyle(color: Colors.white)),
+                  : Text(
+                    AppLocalizations.of(context)?.updateName ?? '',
+                    style: const TextStyle(color: Colors.white),
+                  ),
           onTap: () async {
             var nameValidate = nameKey.currentState!.validate();
 

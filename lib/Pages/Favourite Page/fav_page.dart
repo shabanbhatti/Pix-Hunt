@@ -4,7 +4,8 @@ import 'package:pix_hunt_project/Controllers/Fav%20page%20Stream%20riverpod/fav_
 import 'package:pix_hunt_project/Models/fav_items.dart';
 import 'package:pix_hunt_project/Pages/Favourite%20Page/Widgets/fav_card_widget.dart';
 import 'package:pix_hunt_project/Pages/Favourite%20Page/Widgets/fav_loading_widget.dart';
-import 'package:pix_hunt_project/Widgets/sliverappbar_with_textfield.dart';
+import 'package:pix_hunt_project/core/Widgets/sliverappbar_with_textfield.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class FavPage extends ConsumerStatefulWidget {
@@ -133,7 +134,7 @@ class _FavPageState extends ConsumerState<FavPage>
   Widget _myCardWidget(List<FavItemModalClass> list, Animation<double> scale) {
     var searchRef = list.reversed.toList();
     if (searchRef.isEmpty) {
-      return const SliverFillRemaining(
+      return SliverFillRemaining(
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -141,8 +142,8 @@ class _FavPageState extends ConsumerState<FavPage>
               const Icon(Icons.favorite),
               Padding(
                 padding: EdgeInsets.only(left: 10),
-                child: const Text(
-                  'No Favourite items',
+                child: Text(
+                  ' ${AppLocalizations.of(context)!.noFavouriteItems} ',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),

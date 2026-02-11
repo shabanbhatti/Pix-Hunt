@@ -6,7 +6,8 @@ import 'package:pix_hunt_project/Controllers/APi%20Riverpod/api_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
 
-import 'package:pix_hunt_project/Widgets/custom_text_field.dart';
+import 'package:pix_hunt_project/core/Widgets/custom_text_field.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class SliverappbarWithTextField extends StatelessWidget {
   const SliverappbarWithTextField({
@@ -53,7 +54,7 @@ class SliverappbarWithTextField extends StatelessWidget {
                           return MyTextField(
                             controller: controller,
                             focusNode: focusNode,
-                            label: 'Search',
+                            label: AppLocalizations.of(context)!.search,
                             prefixIcon: Icons.search,
                             onSubmitted: (p0) async {
                               if (isForSearchPage) {

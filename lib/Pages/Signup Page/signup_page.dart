@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
-import 'package:pix_hunt_project/Utils/toast.dart';
-import 'package:pix_hunt_project/Widgets/Signup%20&%20login%20text%20form%20field/text_form_field.dart';
-import 'package:pix_hunt_project/Widgets/custom%20btns/app_main_btn.dart';
+import 'package:pix_hunt_project/core/Utils/toast.dart';
+import 'package:pix_hunt_project/core/Widgets/Signup%20&%20login%20text%20form%20field/text_form_field.dart';
+import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class SignupPage extends ConsumerStatefulWidget {
   const SignupPage({super.key});
@@ -42,10 +43,11 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
+    var lng = AppLocalizations.of(context);
     ref.listen(authProvider('create'), (previous, next) {
       if (next is AuthLoadedSuccessfuly) {
         ToastUtils.showToast(
-          'Account verification link has sent to your email (SPAM folder), Please verify your email.',
+          lng?.accountVerificationLinkSent ?? '',
           duration: 5,
         );
         Navigator.pop(context);
@@ -83,9 +85,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     ),
                   ),
                 ),
-                const SliverToBoxAdapter(
-                  child: const Text(
-                    'Create your account',
+                SliverToBoxAdapter(
+                  child: Text(
+                    lng?.createAccount ?? '',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                   ),
                 ),
@@ -98,7 +100,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                         isForName: true,
                         controller: nameController,
                         focusNode: nameFocusNode,
-                        label: 'Name',
+                        label: lng?.name ?? '',
                         prefixIcon: Icons.person,
 
                         onFieldSubmitted:
@@ -111,7 +113,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                         isForName: false,
                         controller: emailController,
                         focusNode: emailFocusNode,
-                        label: 'Email',
+                        label: lng?.email ?? '',
                         prefixIcon: Icons.mail,
 
                         onFieldSubmitted:
@@ -139,18 +141,18 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             ).requestFocus(buttonFocusNode),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Field should not be empty';
+                            return lng?.fieldShouldNotBeEmpty ?? '';
                           } else if (value != passwordController.text) {
-                            return 'Password does not match to create password';
+                            return lng?.passwordDoesntMatch ?? '';
                           }
                           return null;
                         },
                       ),
 
-                      const Align(
+                      Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          '*Hit that button to enjoy high quality photos and \n download them instantly.',
+                          '*${lng?.createBtnDetail ?? ''}',
                           style: TextStyle(
                             fontSize: 12,
 
@@ -182,9 +184,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           btnValueWidget:
               myRef is AuthLoading
                   ? const CupertinoActivityIndicator(color: Colors.white)
-                  : const Text(
-                    'Sign up',
-                    style: TextStyle(color: Colors.white),
+                  : Text(
+                    AppLocalizations.of(context)?.signup ?? '',
+                    style: const TextStyle(color: Colors.white),
                   ),
           onTap: () {
             var isValidate = formKey.currentState?.validate();

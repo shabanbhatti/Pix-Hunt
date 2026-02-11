@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/User_Image_riverpod.dart/user_img_riverpod.dart';
-import 'package:pix_hunt_project/Utils/constant_mgs.dart';
-import 'package:pix_hunt_project/Utils/extensions.dart';
+import 'package:pix_hunt_project/core/constants/constant_imgs.dart';
+import 'package:pix_hunt_project/core/Utils/extensions.dart';
 import 'package:pix_hunt_project/services/shared_preference_service.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class RowTextfieldWidget extends StatefulWidget {
   RowTextfieldWidget({
@@ -21,6 +22,7 @@ class _RowTextfieldWidgetState extends State<RowTextfieldWidget> {
   @override
   Widget build(BuildContext context) {
     print('FIELD UPDATED CALLED');
+    var lng = AppLocalizations.of(context);
     return Row(
       children: [
         Expanded(
@@ -41,14 +43,14 @@ class _RowTextfieldWidgetState extends State<RowTextfieldWidget> {
                 style: TextStyle(fontSize: 15),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Field should not be empty';
+                    return lng?.fieldShouldNotBeEmpty ?? '';
                   } else {
                     return null;
                   }
                 },
                 controller: widget.controller,
                 decoration: InputDecoration(
-                  hintText: (widget.title == 'Email') ? 'New email' : '',
+                  hintText: widget.title,
                   suffixIcon:
                       (widget.title == 'Password')
                           ? IconButton(

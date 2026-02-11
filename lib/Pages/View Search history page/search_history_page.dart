@@ -1,10 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/Search%20history%20stream%20riverpd/search_history_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
 import 'package:pix_hunt_project/Pages/View%20home%20cetagory%20Page/view_page.dart';
-import 'package:pix_hunt_project/Widgets/custom_sliver_appbar.dart';
+import 'package:pix_hunt_project/core/Widgets/custom_sliver_appbar.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ViewSearchHistoryPage extends ConsumerStatefulWidget {
@@ -38,6 +41,7 @@ class _ViewSearchHistoryPageState extends ConsumerState<ViewSearchHistoryPage>
 
   @override
   Widget build(BuildContext context) {
+    log('View search history page');
     ref.listen(searchHistoryStreamProvider, (previous, next) {
       if (next.hasValue) {
         animationController.forward();
@@ -52,7 +56,9 @@ class _ViewSearchHistoryPageState extends ConsumerState<ViewSearchHistoryPage>
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            CustomSliverAppBar(title: 'Search history'),
+            CustomSliverAppBar(
+              title: AppLocalizations.of(context)!.searchHistory,
+            ),
 
             SliverSafeArea(
               sliver: Consumer(
@@ -84,8 +90,8 @@ class _ViewSearchHistoryPageState extends ConsumerState<ViewSearchHistoryPage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.search),
-                const Text(
-                  ' No search history',
+                Text(
+                  ' ${AppLocalizations.of(context)?.noSearchHistory ?? ''} ',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],

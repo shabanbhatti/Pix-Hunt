@@ -28,7 +28,7 @@ class MyTextField extends StatelessWidget {
 
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(bottom: 5),
-            hintText: 'Search',
+            hintText: label,
 
             prefixIcon: Icon(prefixIcon),
             border: OutlineInputBorder(

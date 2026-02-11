@@ -1,16 +1,17 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/language%20riverpod/language_riverpod.dart';
 import 'package:pix_hunt_project/Pages/Forgot%20Password%20Page/forget_pass.dart';
 import 'package:pix_hunt_project/Pages/Home%20Page/home.dart';
 import 'package:pix_hunt_project/Pages/Signup%20Page/signup_page.dart';
-import 'package:pix_hunt_project/Utils/constant_mgs.dart';
-import 'package:pix_hunt_project/Utils/toast.dart';
-import 'package:pix_hunt_project/Widgets/Signup%20&%20login%20text%20form%20field/text_form_field.dart';
-import 'package:pix_hunt_project/Widgets/custom%20btns/app_main_btn.dart';
+import 'package:pix_hunt_project/core/constants/constant_imgs.dart';
+import 'package:pix_hunt_project/core/Utils/toast.dart';
+import 'package:pix_hunt_project/core/Widgets/Signup%20&%20login%20text%20form%20field/text_form_field.dart';
+import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:pix_hunt_project/main.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -41,11 +42,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     print('LOGIN BUILD CALLED');
+    var lng = AppLocalizations.of(context);
     ref.listen(authProvider('login'), (previous, next) {
       if (next is AuthLoading) {
         EasyLoading.show(
           indicator: const CupertinoActivityIndicator(color: Colors.white),
-          status: 'Signing you in...',
+          status: lng?.signingYouIn ?? '',
           dismissOnTap: false,
         );
       }
@@ -73,17 +75,53 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             key: formKey,
             child: CustomScrollView(
               slivers: [
+                SliverAppBar(
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  actions: [
+                    PopupMenuButton<String>(
+                      onSelected: (value) {
+                        if (value.isNotEmpty) {
+                          ref
+                              .read(languageProvider.notifier)
+                              .languageToggled(value);
+                        }
+                      },
+                      itemBuilder:
+                          (context) => const [
+                            PopupMenuItem(
+                              value: 'en',
+                              child: Text('🇺🇸 English'),
+                            ),
+                            PopupMenuItem(
+                              value: 'es',
+                              child: Text('🇪🇸 Spanish'),
+                            ),
+                            PopupMenuItem(
+                              value: 'ar',
+                              child: Text('🇸🇦 Arabic'),
+                            ),
+                            PopupMenuItem(
+                              value: 'ur',
+                              child: Text('🇵🇰 Urdu'),
+                            ),
+                            PopupMenuItem(
+                              value: 'zh',
+                              child: Text('🇨🇳 Chinese'),
+                            ),
+                          ],
+                    ),
+                  ],
+                ),
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      const SizedBox(height: 30),
                       _topLogo(),
                       Padding(
                         padding: const EdgeInsetsGeometry.symmetric(
                           vertical: 20,
                         ),
-                        child: const Text(
-                          'Login',
+                        child: Text(
+                          lng?.login ?? '',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
@@ -95,7 +133,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         isForName: false,
                         controller: emailController,
                         focusNode: emailFocusNode,
-                        label: 'Email',
+                        label: lng?.email ?? '',
                         prefixIcon: Icons.mail,
 
                         onFieldSubmitted:
@@ -114,10 +152,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             ).requestFocus(buttonFocusNode),
                       ),
 
-                      _forgotPsswordButton(),
+                      _forgotPsswordButton(context),
                       _loginButton(buttonFocusNode, formKey),
 
-                      _signupbutton(),
+                      _signupbutton(context),
 
                       Consumer(
                         builder: (context, ref, child) {
@@ -165,7 +203,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           btnValueWidget:
               (myRef is AuthLoading)
                   ? const CupertinoActivityIndicator(color: Colors.white)
-                  : const Text('Login', style: TextStyle(color: Colors.white)),
+                  : Text(
+                    AppLocalizations.of(context)?.login ?? '',
+                    style: TextStyle(color: Colors.white),
+                  ),
           onTap: () async {
             var isValidate = formKey.currentState?.validate();
             if (isValidate!) {
@@ -183,7 +224,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ).pushNamedAndRemoveUntil(Home.pageName, (route) => false);
               } else {
                 ToastUtils.showToast(
-                  'Email is not verified! Please verify your email before login',
+                  AppLocalizations.of(context)?.emailNotVerified ?? '',
                   color: Colors.red,
                   duration: 4,
                 );
@@ -207,7 +248,7 @@ Widget _topLogo() => Hero(
   ),
 );
 
-Widget _forgotPsswordButton() {
+Widget _forgotPsswordButton(BuildContext context) {
   return Padding(
     padding: const EdgeInsetsGeometry.only(bottom: 10),
     child: Row(
@@ -219,8 +260,8 @@ Widget _forgotPsswordButton() {
               navigatorKey.currentContext!,
             ).pushNamed(ForgetPassPage.pageName);
           },
-          child: const Text(
-            'Forgot password?',
+          child: Text(
+            AppLocalizations.of(context)?.forgotPassword ?? '',
             style: const TextStyle(
               decorationColor: Color.fromARGB(255, 77, 91, 172),
               decoration: TextDecoration.underline,
@@ -234,13 +275,13 @@ Widget _forgotPsswordButton() {
   );
 }
 
-Widget _signupbutton() {
+Widget _signupbutton(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(top: 25, bottom: 20),
     child: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text("If you don't have an account"),
+        Text(AppLocalizations.of(context)?.ifYouDontHaveAccount ?? ''),
         GestureDetector(
           onTap: () {
             Navigator.of(
@@ -248,9 +289,9 @@ Widget _signupbutton() {
             ).pushNamed(SignupPage.pageName);
           },
           child: Padding(
-            padding: EdgeInsetsGeometry.only(left: 10),
-            child: const Text(
-              'Create account',
+            padding: EdgeInsetsGeometry.only(left: 10, right: 10),
+            child: Text(
+              AppLocalizations.of(context)?.createAccount ?? '',
               style: TextStyle(
                 decorationColor: Color.fromARGB(255, 77, 91, 172),
                 decoration: TextDecoration.underline,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pix_hunt_project/Utils/toast.dart';
+import 'package:pix_hunt_project/core/Utils/toast.dart';
 
 import 'package:pix_hunt_project/providers/app_provider_objects.dart';
 import 'package:pix_hunt_project/repository/cloud_db_repository.dart';

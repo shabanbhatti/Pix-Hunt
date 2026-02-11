@@ -6,8 +6,8 @@ import 'package:pix_hunt_project/Pages/Home%20Page/Widgets/circle_avatar_home_wi
 import 'package:pix_hunt_project/Pages/Login%20Page/login_page.dart';
 import 'package:pix_hunt_project/Pages/Search%20page/search_page.dart';
 import 'package:pix_hunt_project/Pages/profile%20Page/user_profile.dart';
-import 'package:pix_hunt_project/Utils/extensions.dart';
-import 'package:pix_hunt_project/Utils/get_greeting_hours_method.dart';
+import 'package:pix_hunt_project/core/Utils/extensions.dart';
+import 'package:pix_hunt_project/core/Utils/get_greeting_hours_method.dart';
 import 'package:pix_hunt_project/main.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -57,7 +57,7 @@ class HomeSliverAppbar extends ConsumerWidget {
           ),
         ),
       ],
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Colors.transparent,
       pinned: true,
       expandedHeight: 200,
       // floating: true,
@@ -84,7 +84,7 @@ class HomeSliverAppbar extends ConsumerWidget {
                   Align(
                     alignment: const Alignment(-0.8, 0.1),
                     child: Text(
-                      getGreetingMessage(),
+                      getGreetingMessage(context),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Theme/app_theme.dart';
+import 'package:pix_hunt_project/core/Theme/app_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final themeProvider = StateNotifierProvider<ThemeStateNotifier, ThemeClass>((ref) {

@@ -6,8 +6,8 @@ import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_river
 import 'package:pix_hunt_project/Models/fav_items.dart';
 import 'package:pix_hunt_project/Pages/view%20card%20detail%20page/view_card_detail_page.dart';
 
-import 'package:pix_hunt_project/Utils/bottom%20sheets/half_size_bottom_sheet_util.dart';
-import 'package:pix_hunt_project/Widgets/custom_dialog_boxes.dart';
+import 'package:pix_hunt_project/core/Utils/bottom%20sheets/half_size_bottom_sheet_util.dart';
+import 'package:pix_hunt_project/core/Widgets/custom_dialog_boxes.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class FavCardWidget extends StatelessWidget {

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:pix_hunt_project/Models/pexer.dart';
-import 'package:pix_hunt_project/Utils/constants_env.dart';
+import 'package:pix_hunt_project/core/constants/constants_env.dart';
 
 class ApiService {
   String api(String search, String pageNumber) {

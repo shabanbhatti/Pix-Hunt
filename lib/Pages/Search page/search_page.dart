@@ -7,9 +7,10 @@ import 'package:pix_hunt_project/Controllers/on%20sync%20after%20email%20verify%
 import 'package:pix_hunt_project/Models/pexer.dart';
 import 'package:pix_hunt_project/Pages/Search%20page/Widgets/search_photos_pages_widget.dart';
 import 'package:pix_hunt_project/Pages/View%20home%20cetagory%20Page/view_page.dart';
-import 'package:pix_hunt_project/Widgets/card_widget.dart';
-import 'package:pix_hunt_project/Widgets/loading_card_widget.dart';
-import 'package:pix_hunt_project/Widgets/sliverappbar_with_textfield.dart';
+import 'package:pix_hunt_project/core/Widgets/card_widget.dart';
+import 'package:pix_hunt_project/core/Widgets/loading_card_widget.dart';
+import 'package:pix_hunt_project/core/Widgets/sliverappbar_with_textfield.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class SearchPage extends ConsumerStatefulWidget {
@@ -63,6 +64,7 @@ class _SearchPageState extends ConsumerState<SearchPage>
   @override
   Widget build(BuildContext context) {
     print('SEARCH PAGE INIT CALLED');
+    var lng = AppLocalizations.of(context);
     ref.listen(apiProvider, (previous, next) {
       if (next is ApiLoading) {
         animationController.reverse();
@@ -101,7 +103,9 @@ class _SearchPageState extends ConsumerState<SearchPage>
                         sliver: SliverToBoxAdapter(
                           child: Row(
                             children: [
-                              const Text('Search result: '),
+                              Text(
+                                '${AppLocalizations.of(context)?.searchResult ?? ''}: ',
+                              ),
                               Expanded(
                                 child: Text(
                                   maxLines: 1,
@@ -139,7 +143,7 @@ class _SearchPageState extends ConsumerState<SearchPage>
                         child: Center(
                           child: Text(
                             myRef.message.contains(hardcodeError)
-                                ? 'No internet connection.'
+                                ? lng?.noInternetConnection ?? ''
                                 : myRef.message,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
@@ -147,7 +151,7 @@ class _SearchPageState extends ConsumerState<SearchPage>
                       );
                     } else {
                       return SliverFillRemaining(
-                        child: Center(child: _noSearchYet()),
+                        child: Center(child: _noSearchYet(context)),
                       );
                     }
                   },
@@ -202,14 +206,14 @@ class _SearchPageState extends ConsumerState<SearchPage>
   }
 }
 
-Widget _noSearchYet() {
-  return const Row(
+Widget _noSearchYet(BuildContext context) {
+  return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Icon(Icons.search),
-      const Text(
-        ' Search content here',
-        style: TextStyle(fontWeight: FontWeight.bold),
+      const Icon(Icons.search),
+      Text(
+        ' ${AppLocalizations.of(context)?.searchContentHere ?? ''} ',
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
     ],
   );

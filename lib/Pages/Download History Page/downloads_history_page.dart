@@ -6,9 +6,10 @@ import 'package:pix_hunt_project/Controllers/Downloads%20Stream%20RIverpod/downl
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Pages/Download%20History%20Page/Widgets/list_tile.dart';
 import 'package:pix_hunt_project/Pages/View%20Downloaded%20Item%20page/view_downloaded_item.dart';
-import 'package:pix_hunt_project/Utils/date_format_util.dart';
-import 'package:pix_hunt_project/Widgets/custom_dialog_boxes.dart';
-import 'package:pix_hunt_project/Widgets/custom_show_bottom_sheets.dart';
+import 'package:pix_hunt_project/core/Utils/date_format_util.dart';
+import 'package:pix_hunt_project/core/Widgets/custom_dialog_boxes.dart';
+import 'package:pix_hunt_project/core/Widgets/custom_show_bottom_sheets.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class DownloadHistoryPage extends ConsumerStatefulWidget {
@@ -40,6 +41,7 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
 
   @override
   Widget build(BuildContext context) {
+    var lng = AppLocalizations.of(context);
     ref.listen(downloadHistoryStreamProvider, (previous, next) {
       if (next.hasValue) {
         animationController.forward();
@@ -57,12 +59,12 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
                 },
                 icon: Icon(Icons.arrow_back_ios_new_outlined),
               ),
-              title: Text('Download history', style: const TextStyle()),
+              title: Text(lng?.downloadHistory ?? '', style: const TextStyle()),
               floating: true,
               snap: true,
               actions: [
                 Padding(
-                  padding: EdgeInsetsGeometry.only(right: 15),
+                  padding: EdgeInsetsGeometry.only(right: 15, left: 15),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -82,7 +84,7 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
                           EasyLoading.dismiss();
                         },
                         child: Text(
-                          'Clear all',
+                          lng?.clearAll ?? '',
                           style: TextStyle(
                             color: Colors.indigo,
                             fontWeight: FontWeight.bold,
@@ -103,14 +105,15 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
                     data: (x) {
                       var data = x.reversed.toList();
                       return (data.isEmpty)
-                          ? const SliverFillRemaining(
+                          ? SliverFillRemaining(
                             child: Center(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.download),
                                   Text(
-                                    ' No Downloads',
+                                    ' ${lng?.noDownloads ?? ''}',
+
                                     style: TextStyle(
                                       // color: Colors.indigo,
                                       fontWeight: FontWeight.bold,

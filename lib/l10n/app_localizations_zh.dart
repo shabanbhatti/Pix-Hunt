@@ -252,7 +252,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get forgotPassword => '忘记密码？';
 
   @override
-  String get createAccount => '创建账户';
+  String get createAccount => '创建您的账户';
 
   @override
   String get ifYouDontHaveAccount => '如果您还没有账户';
@@ -261,10 +261,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get login => '登录';
 
   @override
+  String get loginYourAccount => '登录您的账户';
+
+  @override
   String get forgotYourPassword => '忘记您的密码？';
 
   @override
-  String get forgotBtnDetail => '点击下方按钮，密码重置链接将发送到您的邮箱。\n您可以使用该链接重置密码。';
+  String get forgotBtnDetail => '点击下方按钮，密码重置链接将发送到您的邮箱。您可以使用该链接重置密码。';
 
   @override
   String get createBtnDetail => '点击下方按钮，享受高质量图片并立即下载。';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 void showUserImageOptionsSheet(
   BuildContext context, {
@@ -14,6 +15,7 @@ void showUserImageOptionsSheet(
     ),
 
     builder: (context) {
+      var lng = AppLocalizations.of(context);
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -22,7 +24,7 @@ void showUserImageOptionsSheet(
               backgroundColor: Colors.indigo,
               child: Icon(Icons.image, color: Colors.white),
             ),
-            title: const Text('Open Image'),
+            title: Text(lng?.openImage ?? ''),
             onTap: open,
           ),
           ListTile(
@@ -30,7 +32,7 @@ void showUserImageOptionsSheet(
               backgroundColor: Colors.indigo,
               child: Icon(Icons.edit, color: Colors.white),
             ),
-            title: const Text('Change Picture'),
+            title: Text(lng?.changePicture ?? ''),
             onTap: changePic,
           ),
           ListTile(
@@ -38,7 +40,7 @@ void showUserImageOptionsSheet(
               backgroundColor: Colors.indigo,
               child: Icon(Icons.delete, color: Colors.white),
             ),
-            title: const Text('Remove', style: TextStyle(color: Colors.red)),
+            title: Text(lng?.remove ?? '', style: TextStyle(color: Colors.red)),
             onTap: remove,
           ),
           const Divider(),
@@ -47,7 +49,7 @@ void showUserImageOptionsSheet(
               backgroundColor: Colors.indigo,
               child: Icon(Icons.close, color: Colors.white),
             ),
-            title: const Text('Cancel'),
+            title: Text(lng?.cancel ?? ''),
             onTap: () {
               Navigator.pop(context);
             },

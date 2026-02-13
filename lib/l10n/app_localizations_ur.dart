@@ -254,13 +254,16 @@ class AppLocalizationsUr extends AppLocalizations {
   String get forgotPassword => 'پاس ورڈ بھول گئے؟';
 
   @override
-  String get createAccount => 'اکاؤنٹ بنائیں';
+  String get createAccount => 'اپنا اکاؤنٹ بنائیں';
 
   @override
   String get ifYouDontHaveAccount => 'اگر آپ کا اکاؤنٹ نہیں ہے';
 
   @override
   String get login => 'لاگ اِن';
+
+  @override
+  String get loginYourAccount => 'اپنے اکاؤنٹ میں لاگ اِن کریں';
 
   @override
   String get forgotYourPassword => 'اپنا پاس ورڈ بھول گئے؟';

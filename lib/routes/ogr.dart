@@ -1,33 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:pix_hunt_project/Models/dowloads_items_model.dart';
 
-import 'package:pix_hunt_project/Pages/Download%20History%20Page/downloads_history_page.dart';
-import 'package:pix_hunt_project/Pages/Favourite%20Page/fav_page.dart';
-import 'package:pix_hunt_project/Pages/Forgot%20Password%20Page/forget_pass.dart';
-import 'package:pix_hunt_project/Pages/Home%20Page/home.dart';
-import 'package:pix_hunt_project/Pages/Intro%20Page/intro_page.dart';
-import 'package:pix_hunt_project/Pages/Login%20Page/login_page.dart';
-import 'package:pix_hunt_project/Pages/Search%20page/search_page.dart';
-import 'package:pix_hunt_project/Pages/Signup%20Page/signup_page.dart';
-import 'package:pix_hunt_project/Pages/Theme%20page/theme_page.dart';
-import 'package:pix_hunt_project/Pages/View%20Image%20Page/view_img_page.dart';
-import 'package:pix_hunt_project/Pages/update%20email%20page/update_email_page.dart';
-import 'package:pix_hunt_project/Pages/profile%20Page/user_profile.dart';
-import 'package:pix_hunt_project/Pages/View%20Downloaded%20Item%20page/view_downloaded_item.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/Download%20History%20Page/downloads_history_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/Favourite%20Page/fav_page.dart';
+import 'package:pix_hunt_project/Pages/initial%20screens/Forgot%20Password%20Page/forget_pass.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/Home%20Page/home.dart';
+import 'package:pix_hunt_project/Pages/initial%20screens/splash%20page/splash_page.dart';
+import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/Search%20page/search_page.dart';
+import 'package:pix_hunt_project/Pages/initial%20screens/Signup%20Page/signup_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/Theme%20page/theme_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/View%20Image%20Page/view_img_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/update%20email%20page/update_email_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/user_profile.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/View%20Downloaded%20Item%20page/view_downloaded_item.dart';
 
-import 'package:pix_hunt_project/Pages/View%20Search%20history%20page/search_history_page.dart';
-import 'package:pix_hunt_project/Pages/View%20User%20Image%20page/view_user_img_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/View%20Search%20history%20page/search_history_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/View%20User%20Image%20page/view_user_img_page.dart';
 
-import 'package:pix_hunt_project/Pages/View%20home%20cetagory%20Page/view_page.dart';
-import 'package:pix_hunt_project/Pages/update%20name%20page/update_name_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/View%20home%20cetagory%20Page/view_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/update%20name%20page/update_name_page.dart';
+import 'package:pix_hunt_project/Pages/initial%20screens/decide%20page/decide_page.dart';
 
 Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
-    case IntroPage.pageName:
-      return MaterialPageRoute(
-        builder: (context) => const IntroPage(),
-        settings: routeSettings,
-      );
+    case DecidePage.pageName:
+      return StraightRouting(child: const DecidePage());
 
     case ForgetPassPage.pageName:
       return PageRouteBuilder(
@@ -184,6 +182,23 @@ class AnimatedRouting extends PageRouteBuilder {
         transitionsBuilder:
             (context, animation, secondaryAnimation, child) => FadeTransition(
               opacity: animation.drive(Tween(begin: 0.0, end: 1.0)),
+              child: child,
+            ),
+      );
+}
+
+class StraightRouting extends PageRouteBuilder {
+  final Widget child;
+
+  StraightRouting({required this.child, RouteSettings? routeSettings})
+    : super(
+        pageBuilder: (context, animation, secondaryAnimation) => child,
+        settings: routeSettings,
+        transitionDuration: const Duration(milliseconds: 200),
+        reverseTransitionDuration: const Duration(milliseconds: 200),
+        transitionsBuilder:
+            (context, animation, secondaryAnimation, child) => ScaleTransition(
+              scale: animation.drive(Tween(begin: 1.0, end: 1.0)),
               child: child,
             ),
       );

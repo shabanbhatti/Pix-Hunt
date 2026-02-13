@@ -80,11 +80,11 @@
   "searchResult": "Resultado de búsqueda",
   "signingYouIn": "Iniciando sesión...",
   "forgotPassword": "¿Olvidó su contraseña?",
-  "createAccount": "Crear cuenta",
+  "createAccount": "Crea tu cuenta",
   "ifYouDontHaveAccount": "Si no tiene una cuenta",
   "login": "Iniciar sesión",
   "forgotYourPassword": "¿Olvidó su contraseña?",
-  "forgotBtnDetail": "Toque el botón de abajo y se enviará un enlace para restablecer la contraseña a su correo.\nPuede restablecer su contraseña usando ese enlace.",
+  "forgotBtnDetail": "Toque el botón de abajo y se enviará un enlace para restablecer la contraseña a su correo.Puede restablecer su contraseña usando ese enlace.",
   "createBtnDetail": "Toque el botón de abajo para disfrutar de fotos de alta calidad y descargarlas al instante.",
   "confirmPassword": "Confirmar contraseña",
   "signup": "Registrarse",
@@ -98,5 +98,6 @@
   "passwordShouldContainOneNumber": "La contraseña debe contener al menos un número",
   "accountVerificationLinkSent": "Se ha enviado un enlace de verificación a su correo (revise la carpeta de spam). Por favor verifique su cuenta.",
   "passwordDoesntMatch": "Las contraseñas no coinciden",
-  "emailNotVerified": "¡El correo electrónico no está verificado! Por favor, verifica tu correo antes de iniciar sesión."
+  "emailNotVerified": "¡El correo electrónico no está verificado! Por favor, verifica tu correo antes de iniciar sesión.",
+  "loginYourAccount": "Inicia sesión en tu cuenta"
 }

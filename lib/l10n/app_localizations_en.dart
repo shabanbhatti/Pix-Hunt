@@ -254,7 +254,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get forgotPassword => 'Forgot Password?';
 
   @override
-  String get createAccount => 'Create Account';
+  String get createAccount => 'Create Your Account';
 
   @override
   String get ifYouDontHaveAccount => 'If you don\'t have an account';
@@ -263,15 +263,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login => 'Login';
 
   @override
+  String get loginYourAccount => 'Login Your Account';
+
+  @override
   String get forgotYourPassword => 'Forgot Your Password?';
 
   @override
   String get forgotBtnDetail =>
-      'Tap the button below and a password reset link will be sent to your \n email. You can reset your password using that link.';
+      'Tap the button below and a password reset link will be sent to your email. You can reset your password using that link.';
 
   @override
   String get createBtnDetail =>
-      'Tap the button below to enjoy high quality photos and \n download them instantly.';
+      'Tap the button below to enjoy high quality photos and download them instantly.';
 
   @override
   String get confirmPassword => 'Confirm Password';

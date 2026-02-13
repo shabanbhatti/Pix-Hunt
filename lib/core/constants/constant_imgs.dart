@@ -5,3 +5,7 @@ const String user_img = 'assets/images/user_profile.png';
 const String google_logo = 'assets/images/go_ogle.png';
 
 const String shadow_png = 'assets/images/shadow.png';
+
+const String background_png = 'assets/images/background.png';
+
+const String mountains_back = 'assets/images/mountain_bck.jpg';

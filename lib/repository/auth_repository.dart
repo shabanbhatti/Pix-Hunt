@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
+import 'package:pix_hunt_project/core/errors/exceptions/firebase_auth_exceptions.dart';
+import 'package:pix_hunt_project/core/errors/failures/failures.dart';
 import 'package:pix_hunt_project/services/auth_service.dart';
 import 'package:pix_hunt_project/services/cloud_DB_service.dart';
 import 'package:pix_hunt_project/services/shared_preference_service.dart';
@@ -22,7 +24,8 @@ class AuthRepository {
       await cloudDbService.addUser(auth, create.user!.uid.toString());
       return true;
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+      var message = handleFirebaseAuthException(e);
+      throw AuthFailure(message: message);
     }
   }
 
@@ -30,7 +33,8 @@ class AuthRepository {
     try {
       return await authService.isUserNull();
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+      var message = handleFirebaseAuthException(e);
+      throw AuthFailure(message: message);
     }
   }
 
@@ -45,11 +49,12 @@ class AuthRepository {
       );
       var uid = await authService.getCurrentUserUid();
       var user = await cloudDbService.getUserData(uid);
-      log(user.name ?? '');
+
       SpService.setString('username', user.name ?? '');
       return isLogin;
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+      var message = handleFirebaseAuthException(e);
+      throw AuthFailure(message: message);
     }
   }
 
@@ -59,7 +64,8 @@ class AuthRepository {
       await SpService.setBool(SpService.loggedKEY, false);
       await SpService.remove(SpService.userImgKEY);
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+      var message = handleFirebaseAuthException(e);
+      throw AuthFailure(message: message);
     }
   }
 
@@ -67,7 +73,8 @@ class AuthRepository {
     try {
       await authService.forgotPassword(email);
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+      var message = handleFirebaseAuthException(e);
+      throw AuthFailure(message: message);
     }
   }
 
@@ -95,7 +102,8 @@ class AuthRepository {
       await authService.updateEmail(email, password);
       await cloudDbService.updateEmail(email, uid);
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+      var message = handleFirebaseAuthException(e);
+      throw AuthFailure(message: message);
     }
   }
 
@@ -105,7 +113,7 @@ class AuthRepository {
       await authService.updateUserName(name);
       await cloudDbService.updateName(name, uid);
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+      throw AuthFailure(message: e.code);
     }
   }
 
@@ -113,7 +121,7 @@ class AuthRepository {
     try {
       return await authService.getCurrentUser();
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+      throw AuthFailure(message: e.code);
     }
   }
 }

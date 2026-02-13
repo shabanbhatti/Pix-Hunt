@@ -80,7 +80,7 @@
   "searchResult": "تلاش کا نتیجہ",
   "signingYouIn": "آپ کو لاگ اِن کیا جا رہا ہے...",
   "forgotPassword": "پاس ورڈ بھول گئے؟",
-  "createAccount": "اکاؤنٹ بنائیں",
+  "createAccount": "اپنا اکاؤنٹ بنائیں",
   "ifYouDontHaveAccount": "اگر آپ کا اکاؤنٹ نہیں ہے",
   "login": "لاگ اِن",
   "forgotYourPassword": "اپنا پاس ورڈ بھول گئے؟",
@@ -98,5 +98,6 @@
   "passwordShouldContainOneNumber": "پاس ورڈ میں کم از کم ایک نمبر ہونا چاہیے",
   "accountVerificationLinkSent": "اکاؤنٹ تصدیقی لنک آپ کی ای میل (اسپام فولڈر بھی چیک کریں) پر بھیج دیا گیا ہے۔ براہِ کرم تصدیق کریں۔",
   "passwordDoesntMatch": "پاس ورڈز آپس میں مطابقت نہیں رکھتے",
-  "emailNotVerified":  "ای میل کی تصدیق نہیں ہوئی! براہِ کرم لاگ اِن کرنے سے پہلے اپنی ای میل کی تصدیق کریں۔"
+  "emailNotVerified":  "ای میل کی تصدیق نہیں ہوئی! براہِ کرم لاگ اِن کرنے سے پہلے اپنی ای میل کی تصدیق کریں۔",
+  "loginYourAccount": "اپنے اکاؤنٹ میں لاگ اِن کریں"
 }

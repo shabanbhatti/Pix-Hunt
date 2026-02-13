@@ -593,7 +593,7 @@ abstract class AppLocalizations {
   /// No description provided for @createAccount.
   ///
   /// In en, this message translates to:
-  /// **'Create Account'**
+  /// **'Create Your Account'**
   String get createAccount;
 
   /// No description provided for @ifYouDontHaveAccount.
@@ -608,6 +608,12 @@ abstract class AppLocalizations {
   /// **'Login'**
   String get login;
 
+  /// No description provided for @loginYourAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Login Your Account'**
+  String get loginYourAccount;
+
   /// No description provided for @forgotYourPassword.
   ///
   /// In en, this message translates to:
@@ -617,13 +623,13 @@ abstract class AppLocalizations {
   /// No description provided for @forgotBtnDetail.
   ///
   /// In en, this message translates to:
-  /// **'Tap the button below and a password reset link will be sent to your \n email. You can reset your password using that link.'**
+  /// **'Tap the button below and a password reset link will be sent to your email. You can reset your password using that link.'**
   String get forgotBtnDetail;
 
   /// No description provided for @createBtnDetail.
   ///
   /// In en, this message translates to:
-  /// **'Tap the button below to enjoy high quality photos and \n download them instantly.'**
+  /// **'Tap the button below to enjoy high quality photos and download them instantly.'**
   String get createBtnDetail;
 
   /// No description provided for @confirmPassword.

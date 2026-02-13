@@ -254,7 +254,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get forgotPassword => '¿Olvidó su contraseña?';
 
   @override
-  String get createAccount => 'Crear cuenta';
+  String get createAccount => 'Crea tu cuenta';
 
   @override
   String get ifYouDontHaveAccount => 'Si no tiene una cuenta';
@@ -263,11 +263,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get login => 'Iniciar sesión';
 
   @override
+  String get loginYourAccount => 'Inicia sesión en tu cuenta';
+
+  @override
   String get forgotYourPassword => '¿Olvidó su contraseña?';
 
   @override
   String get forgotBtnDetail =>
-      'Toque el botón de abajo y se enviará un enlace para restablecer la contraseña a su correo.\nPuede restablecer su contraseña usando ese enlace.';
+      'Toque el botón de abajo y se enviará un enlace para restablecer la contraseña a su correo.Puede restablecer su contraseña usando ese enlace.';
 
   @override
   String get createBtnDetail =>

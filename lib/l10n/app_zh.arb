@@ -80,11 +80,11 @@
   "searchResult": "搜索结果",
   "signingYouIn": "正在为您登录...",
   "forgotPassword": "忘记密码？",
-  "createAccount": "创建账户",
+  "createAccount": "创建您的账户",
   "ifYouDontHaveAccount": "如果您还没有账户",
   "login": "登录",
   "forgotYourPassword": "忘记您的密码？",
-  "forgotBtnDetail": "点击下方按钮，密码重置链接将发送到您的邮箱。\n您可以使用该链接重置密码。",
+  "forgotBtnDetail": "点击下方按钮，密码重置链接将发送到您的邮箱。您可以使用该链接重置密码。",
   "createBtnDetail": "点击下方按钮，享受高质量图片并立即下载。",
   "confirmPassword": "确认密码",
   "signup": "注册",
@@ -98,5 +98,7 @@
   "passwordShouldContainOneNumber": "密码必须包含至少一个数字",
   "accountVerificationLinkSent": "账户验证链接已发送到您的邮箱（请检查垃圾邮件）。请完成验证。",
   "passwordDoesntMatch": "两次输入的密码不匹配",
-  "emailNotVerified": "电子邮件尚未验证！请在登录前验证您的电子邮件。"
+  "emailNotVerified": "电子邮件尚未验证！请在登录前验证您的电子邮件。",
+  "loginYourAccount": "登录您的账户"
+
 }

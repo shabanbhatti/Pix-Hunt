@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_state.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
+import 'package:pix_hunt_project/core/errors/failures/failures.dart';
 import 'package:pix_hunt_project/providers/app_provider_objects.dart';
 import 'package:pix_hunt_project/repository/auth_repository.dart';
 
@@ -26,8 +28,8 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
       var user = await authRepository.isUserNull();
       state = AuthLoadedSuccessfuly();
       return user;
-    } catch (e) {
-      state = AuthError(error: e.toString());
+    } on Failures catch (e) {
+      state = AuthError(error: e.message);
       return false;
     }
   }
@@ -43,8 +45,8 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 
       state = AuthLoadedSuccessfuly();
       return newUser;
-    } catch (e) {
-      state = AuthError(error: e.toString());
+    } on Failures catch (e) {
+      state = AuthError(error: e.message);
       return false;
     }
   }
@@ -65,8 +67,8 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 
       state = AuthLoadedSuccessfuly();
       return login;
-    } catch (e) {
-      state = AuthError(error: e.toString());
+    } on Failures catch (e) {
+      state = AuthError(error: e.message);
       return null;
     }
   }
@@ -77,8 +79,8 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     try {
       await authRepository.forgotPassword(email: email);
       state = AuthLoadedSuccessfuly();
-    } catch (e) {
-      state = AuthError(error: e.toString());
+    } on Failures catch (e) {
+      state = AuthError(error: e.message);
     }
   }
 
@@ -91,8 +93,8 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 
       state = AuthLoadedSuccessfuly();
       return isLogin;
-    } catch (e) {
-      state = AuthError(error: e.toString());
+    } on Failures catch (e) {
+      state = AuthError(error: e.message);
       return null;
     }
   }
@@ -101,8 +103,8 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     try {
       await authRepository.signOut();
       state = AuthLoadedSuccessfuly();
-    } catch (e) {
-      state = AuthError(error: e.toString());
+    } on Failures catch (e) {
+      state = AuthError(error: e.message);
     }
   }
 
@@ -111,8 +113,8 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
       state = AuthLoading();
       await authRepository.updateEmail(email: email, password: password);
       state = AuthLoadedSuccessfuly();
-    } catch (e) {
-      state = AuthError(error: e.toString());
+    } on Failures catch (e) {
+      state = AuthError(error: e.message);
     }
   }
 
@@ -121,29 +123,8 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
       state = AuthLoading();
       await authRepository.updateName(name: name);
       state = AuthLoadedSuccessfuly();
-    } catch (e) {
-      state = AuthError(error: e.toString());
+    } on Failures catch (e) {
+      state = AuthError(error: e.message);
     }
   }
-}
-
-sealed class AuthState {
-  const AuthState();
-}
-
-class Initial extends AuthState {
-  const Initial();
-}
-
-class AuthLoading extends AuthState {
-  const AuthLoading();
-}
-
-class AuthLoadedSuccessfuly extends AuthState {
-  const AuthLoadedSuccessfuly();
-}
-
-class AuthError extends AuthState {
-  final String error;
-  const AuthError({required this.error});
 }

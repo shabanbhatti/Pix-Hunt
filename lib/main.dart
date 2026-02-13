@@ -9,6 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/Theme%20riverpod/theme_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/language%20riverpod/language_riverpod.dart';
+import 'package:pix_hunt_project/Pages/initial%20screens/decide%20page/decide_page.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:pix_hunt_project/routes/ogr.dart';
 import 'package:pix_hunt_project/firebase_options.dart';
@@ -49,6 +50,7 @@ class MyApp extends ConsumerWidget {
       theme: ref.watch(themeProvider).themeData,
       debugShowCheckedModeBanner: false,
       onGenerateRoute: onGenerateRoute,
+      initialRoute: DecidePage.pageName,
       navigatorKey: navigatorKey,
       localizationsDelegates: [
         AppLocalizations.delegate,

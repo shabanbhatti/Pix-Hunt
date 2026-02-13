@@ -254,7 +254,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get forgotPassword => 'هل نسيت كلمة المرور؟';
 
   @override
-  String get createAccount => 'إنشاء حساب';
+  String get createAccount => 'أنشئ حسابك';
 
   @override
   String get ifYouDontHaveAccount => 'إذا لم يكن لديك حساب';
@@ -263,11 +263,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get login => 'تسجيل الدخول';
 
   @override
+  String get loginYourAccount => 'سجّل الدخول إلى حسابك';
+
+  @override
   String get forgotYourPassword => 'هل نسيت كلمة المرور؟';
 
   @override
   String get forgotBtnDetail =>
-      'اضغط على الزر أدناه وسيتم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.\nيمكنك إعادة تعيين كلمة المرور باستخدام هذا الرابط.';
+      'اضغط على الزر أدناه وسيتم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني. يمكنك إعادة تعيين كلمة المرور باستخدام هذا الرابط.';
 
   @override
   String get createBtnDetail =>

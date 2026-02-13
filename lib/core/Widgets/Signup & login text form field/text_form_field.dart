@@ -55,6 +55,7 @@ class EmailField extends StatelessWidget {
             decoration: InputDecoration(
               label: Text(label),
               prefixIcon: Icon(prefixIcon),
+              labelStyle: TextStyle(color: Theme.of(context).primaryColor),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: Theme.of(context).primaryColor),
@@ -143,6 +144,7 @@ class PasswordField extends StatelessWidget {
                           ),
 
                   label: Text(lng?.password ?? ''),
+                  labelStyle: TextStyle(color: Theme.of(context).primaryColor),
                   prefixIcon: Icon(Icons.lock),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -225,10 +227,11 @@ class ConfirmPasswordField extends StatelessWidget {
                                   .read(_obscureConfirmProvider.notifier)
                                   .toggled();
                             },
-                            icon: Icon(Icons.visibility_off),
+                            icon: const Icon(Icons.visibility_off),
                           ),
 
-                  label: Text(lng?.password ?? ''),
+                  label: Text(lng?.confirmPassword ?? ''),
+                  labelStyle: TextStyle(color: Theme.of(context).primaryColor),
                   prefixIcon: const Icon(Icons.lock),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),

@@ -16,10 +16,11 @@ class AuthService {
   }
 
   Future<bool> isUserNull() async {
-    var user = await firebaseAuth.currentUser;
-    if (user != null) {
+    var user = await firebaseAuth.currentUser?.emailVerified ?? false;
+    if (user) {
       return true;
     } else {
+      await firebaseAuth.signOut();
       return false;
     }
   }
@@ -120,7 +121,7 @@ class AuthService {
       if (e.toString().contains('canceled')) {
         return null;
       }
-      log(e.toString());
+
       throw Exception(e.toString());
     }
   }

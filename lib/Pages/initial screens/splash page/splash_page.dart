@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:pix_hunt_project/core/constants/constant_imgs.dart';
@@ -24,7 +26,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashPageState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    print('INTRO BUILD CALLED');
+    log('Splash page build called');
     return Scaffold(
       body: Center(
         child: SafeArea(

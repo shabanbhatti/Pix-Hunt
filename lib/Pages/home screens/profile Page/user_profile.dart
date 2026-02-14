@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
@@ -8,6 +10,7 @@ import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/Widgets/bot
 import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/Widgets/circle_avatar.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/Widgets/profile_listtile_widget.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/Widgets/profile_sliver_appbar.dart';
+import 'package:pix_hunt_project/core/Utils/toast.dart';
 
 import 'package:pix_hunt_project/services/shared_preference_service.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -64,13 +67,12 @@ class _UserProfileState extends ConsumerState<UserProfile>
 
   @override
   Widget build(BuildContext context) {
-    print('DRAWER BUILD CALLED');
+    log('Profile page build called');
     ref.listen(authProvider('logout1'), (previous, next) {
       if (next is AuthError) {
         var error = next.error;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error), backgroundColor: Colors.red),
-        );
+
+        ToastUtils.showToast(error, color: Colors.red);
       } else if (next is AuthLoadedSuccessfuly) {
         Navigator.of(
           context,
@@ -93,58 +95,71 @@ class _UserProfileState extends ConsumerState<UserProfile>
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 25),
-                      child: const CircleAvatarWidget(),
-                    ),
-                    FadeTransition(
-                      opacity: fade,
-                      child: ScaleTransition(scale: scale, child: _userName()),
-                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        const CircleAvatarWidget(),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              FadeTransition(
+                                opacity: fade,
+                                child: ScaleTransition(
+                                  scale: scale,
+                                  child: _userName(),
+                                ),
+                              ),
 
-                    FadeTransition(
-                      opacity: fade,
-                      child: ScaleTransition(scale: scale, child: _userEmail()),
+                              FadeTransition(
+                                opacity: fade,
+                                child: ScaleTransition(
+                                  scale: scale,
+                                  child: _userEmail(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-
-                    const Divider(),
                   ],
+                ),
+              ),
+            ),
+            const SliverPadding(padding: EdgeInsetsGeometry.only(top: 10)),
+            SliverPadding(
+              padding: const EdgeInsetsGeometry.symmetric(vertical: 25),
+              sliver: SliverSafeArea(
+                top: false,
+                bottom: false,
+                sliver: SliverToBoxAdapter(
+                  child: FadeTransition(
+                    opacity: fade,
+                    child: ScaleTransition(
+                      scale: scale,
+                      child: const ProfileListtileWidget(),
+                    ),
+                  ),
                 ),
               ),
             ),
 
             SliverSafeArea(
               top: false,
-              bottom: false,
               sliver: SliverToBoxAdapter(
-                child: FadeTransition(
-                  opacity: fade,
-                  child: ScaleTransition(
-                    scale: scale,
-                    child: const ProfileListtileWidget(),
-                  ),
-                ),
-              ),
-            ),
-            const SliverToBoxAdapter(child: Divider()),
-            SliverPadding(
-              padding: const EdgeInsetsGeometry.only(top: 20),
-              sliver: SliverSafeArea(
-                top: false,
-                sliver: SliverToBoxAdapter(
-                  child: Center(
-                    child: ValueListenableBuilder(
-                      valueListenable: usernameNotifier,
-                      builder: (context, value, child) {
-                        return FadeTransition(
-                          opacity: fade,
-                          child: ScaleTransition(
-                            scale: scale,
-                            child: BottomThanksWidget(value: value),
-                          ),
-                        );
-                      },
-                    ),
+                child: Center(
+                  child: ValueListenableBuilder(
+                    valueListenable: usernameNotifier,
+                    builder: (context, value, child) {
+                      return FadeTransition(
+                        opacity: fade,
+                        child: ScaleTransition(
+                          scale: scale,
+                          child: BottomThanksWidget(value: value),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -172,8 +187,9 @@ Widget _userName() {
         } else if (myRef is LoadedSuccessfulyUserDb) {
           return Text(
             myRef.auth.name!,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+            // 'Muhammad Shaban Abubakkar Bhatti',
+            maxLines: 2,
+
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           );
         } else {
@@ -201,10 +217,10 @@ Widget _userEmail() {
         } else if (myRef is LoadedSuccessfulyUserDb) {
           return Text(
             myRef.auth.email!,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            // overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-              fontSize: 15,
+              fontSize: 12,
               fontWeight: FontWeight.bold,
               color: const Color.fromARGB(255, 136, 136, 136),
             ),

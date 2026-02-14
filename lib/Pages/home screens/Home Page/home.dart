@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hawk_fab_menu/hawk_fab_menu.dart';
@@ -12,6 +12,7 @@ import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page
 import 'package:pix_hunt_project/Pages/home%20screens/Search%20page/search_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/user_profile.dart';
 import 'package:pix_hunt_project/core/Utils/toast.dart';
+import 'package:pix_hunt_project/core/constants/constant_static_products_home_utils.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class Home extends ConsumerStatefulWidget {
@@ -36,7 +37,7 @@ class _HomeState extends ConsumerState<Home> {
 
   @override
   Widget build(BuildContext context) {
-    print('HOME BUILD CALLED');
+    log('Home page build called');
     var lng = AppLocalizations.of(context);
     ref.listen(onSyncAfterEmailVerifyProvider, (previous, next) async {
       var error = next;
@@ -58,63 +59,14 @@ class _HomeState extends ConsumerState<Home> {
       }
     });
 
-    List<({String title, String imgPath})> products1 = [
-      (title: lng?.nature ?? '', imgPath: 'nature.jpg'),
-      (title: lng?.flowers ?? '', imgPath: 'flowers.jpg'),
-      (title: lng?.forests ?? '', imgPath: 'forests.jpg'),
-      (title: lng?.oceans ?? '', imgPath: 'oceans.jpg'),
-      (title: lng?.rivers ?? '', imgPath: 'rivers.jpg'),
-    ];
-
-    List<({String title, String imgPath})> products2 = [
-      (title: lng?.mountains ?? '', imgPath: 'mountains.jpg'),
-      (title: lng?.deserts ?? '', imgPath: 'desert.jpg'),
-      (title: lng?.night ?? '', imgPath: 'moon.jpg'),
-      (title: lng?.waterfall ?? '', imgPath: 'waterfall.jpg'),
-    ];
-
-    List<({String title, String imgPath})> products3 = [
-      (title: lng?.universe ?? '', imgPath: 'universe.jpg'),
-      (title: lng?.city ?? '', imgPath: 'city.jpg'),
-      (title: lng?.village ?? '', imgPath: 'village.jpeg'),
-      (title: lng?.wildlife ?? '', imgPath: 'wild_life.jpg'),
-    ];
-
-    List<({String title, String imgPath})> products4 = [
-      (title: lng?.mosque ?? '', imgPath: 'mosque.jpg'),
-      (title: lng?.synagogue ?? '', imgPath: 'synagogue.jpg'),
-      (title: lng?.church ?? '', imgPath: 'church.jpg'),
-    ];
-
-    List<({String title, String imgPath})> products5 = [
-      (title: lng?.mysticPlaces ?? '', imgPath: 'mystric.jpg'),
-      (title: lng?.historicalPlaces ?? '', imgPath: 'historical.jpg'),
-      (title: lng?.animals ?? '', imgPath: 'animals.jpg'),
-    ];
-
-    List<({String title, String imgPath})> products6 = [
-      (title: lng?.village ?? '', imgPath: 'village.jpeg'),
-      (title: lng?.motorcycles ?? '', imgPath: 'motorcycle.jpg'),
-      (title: lng?.cars ?? '', imgPath: 'cars.jpg'),
-
-      (title: lng?.animals ?? '', imgPath: 'animals.jpg'),
-      (title: lng?.village ?? '', imgPath: 'village.jpeg'),
-      (title: lng?.city ?? '', imgPath: 'city.jpg'),
-    ];
-    return Material(
+    return SafeArea(
+      top: false,
       child: HawkFabMenu(
         backgroundColor: Colors.black.withAlpha(100),
         fabColor: Colors.indigo,
         iconColor: Colors.white,
         icon: AnimatedIcons.home_menu,
-        body: _HomeWidget(
-          products1: products1,
-          products3: products3,
-          products6: products6,
-          products5: products5,
-          products4: products4,
-          products2: products2,
-        ),
+        body: const _HomeWidget(),
 
         items: [
           HawkFabMenuItem(
@@ -154,52 +106,72 @@ class _HomeState extends ConsumerState<Home> {
   }
 }
 
-typedef _RecordList = List<({String imgPath, String title})>;
-
 class _HomeWidget extends StatelessWidget {
-  const _HomeWidget({
-    required this.products1,
-    required this.products3,
-    required this.products6,
-    required this.products5,
-    required this.products4,
-    required this.products2,
-  });
-  final _RecordList products1;
-  final _RecordList products3;
-  final _RecordList products6;
-  final _RecordList products5;
-  final _RecordList products4;
-  final _RecordList products2;
+  const _HomeWidget();
+
   @override
-  Widget build(BuildContext context) {
-    print('LLLL');
+  Widget build(BuildContext x) {
     return Scaffold(
       body: Center(
         child: Scrollbar(
           radius: Radius.circular(20),
 
           child: CustomScrollView(
-            physics: const BouncingScrollPhysics(),
             slivers: [
               const HomeSliverAppbar(),
 
               SliverPadding(
                 padding: EdgeInsets.only(top: 20),
-                sliver: _topRowList(products1),
+                sliver: Consumer(
+                  builder: (context, r, _) {
+                    return _topRowList(
+                      ConstantStaticProductsHomeUtils.product1(context),
+                    );
+                  },
+                ),
               ),
               SliverToBoxAdapter(child: const Divider()),
-              _topRowList(products3),
+              Consumer(
+                builder: (context, r, _) {
+                  return _topRowList(
+                    ConstantStaticProductsHomeUtils.product3(context),
+                  );
+                },
+              ),
               SliverToBoxAdapter(child: const Divider()),
 
-              _columnList(products6),
+              Consumer(
+                builder: (context, r, _) {
+                  return _columnList(
+                    ConstantStaticProductsHomeUtils.product6(context),
+                  );
+                },
+              ),
               SliverToBoxAdapter(child: const Divider()),
-              _topRowList(products5),
+              Consumer(
+                builder: (context, r, _) {
+                  return _topRowList(
+                    ConstantStaticProductsHomeUtils.product5(context),
+                  );
+                },
+              ),
               SliverToBoxAdapter(child: const Divider()),
 
-              _columnList(products4),
+              Consumer(
+                builder: (context, r, _) {
+                  return _columnList(
+                    ConstantStaticProductsHomeUtils.product4(context),
+                  );
+                },
+              ),
               SliverToBoxAdapter(child: const Divider()),
-              _columnList(products2),
+              Consumer(
+                builder: (context, r, _) {
+                  return _columnList(
+                    ConstantStaticProductsHomeUtils.product2(context),
+                  );
+                },
+              ),
             ],
           ),
         ),

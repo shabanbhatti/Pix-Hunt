@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,7 +37,7 @@ class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('UPDATE DATA BUILD CALLED');
+    log('Update email page build called');
     var lng = AppLocalizations.of(context);
     ref.listen(authProvider('update'), (previous, next) async {
       if (next is AuthLoadedSuccessfuly) {

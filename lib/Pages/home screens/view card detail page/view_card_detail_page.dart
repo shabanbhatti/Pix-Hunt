@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animated_item/animated_item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -136,7 +138,7 @@ class _ViewCardDetailsPageState extends State<ViewCardDetailsPage>
 
   @override
   Widget build(BuildContext context) {
-    print('VIEW CARD (FAV) BUILD CALLED');
+    log('View card deatil page build called');
     var lng = AppLocalizations.of(context);
     firstNotifier = ValueNotifier((
       imgPath: widget.favItemModalClass.largePhotoUrl,

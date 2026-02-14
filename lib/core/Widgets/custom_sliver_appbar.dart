@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
@@ -5,17 +6,15 @@ class CustomSliverAppBar extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
+    return CupertinoSliverNavigationBar(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      leading: IconButton(
-        onPressed: () {
+      leading: GestureDetector(
+        onTap: () {
           Navigator.pop(context);
         },
-        icon: Icon(Icons.arrow_back_ios_new_outlined),
+        child: const Icon(Icons.arrow_back_ios_new_outlined),
       ),
-      title: Text(title, style: const TextStyle()),
-      floating: true,
-      snap: true,
+      largeTitle: Text(title),
     );
   }
 }

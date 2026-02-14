@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -10,7 +12,7 @@ class ViewUserImgPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('VIEW USER IMG BUILD CALLED');
+    log('view user img page build called');
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 120, 120, 120),
       body: GestureDetector(

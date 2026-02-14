@@ -1,13 +1,14 @@
 // 1. Firebase References
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Models/fav_items.dart';
-import 'package:pix_hunt_project/providers/app_provider_objects.dart';
+import 'package:pix_hunt_project/core/injectors/injectors.dart';
+import 'package:pix_hunt_project/repository/cloud_db_repository.dart';
 
 final favStreamProvider = StreamProvider.autoDispose<List<FavItemModalClass>>((
   ref,
 ) {
-  var cloudRep = ref.read(cloudDbRepositoryProviderObject);
-  
+  var cloudRep = getIt<CloudDbRepository>();
+
   return cloudRep.favItemsStreams();
 });
 

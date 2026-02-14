@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:pix_hunt_project/Controllers/APi%20Riverpod/api_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/api%20Riverpod/api_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
 
-import 'package:pix_hunt_project/core/Widgets/custom_text_field.dart';
+import 'package:pix_hunt_project/core/Widgets/custom_search_text_field.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class SliverappbarWithTextField extends StatelessWidget {
@@ -29,20 +29,31 @@ class SliverappbarWithTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
+    print('SLIVER APP BAR CALLED');
+    return CupertinoSliverNavigationBar(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      toolbarHeight: 80,
+      // toolbarHeight: 140,
 
-      pinned: true,
-      leading: const SizedBox(),
+      // pinned: true,
+      leading: GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: const Icon(CupertinoIcons.back),
+      ),
+      largeTitle: Text(
+        (isBottomNaviSearchPage)
+            ? AppLocalizations.of(context)?.favourite ?? ''
+            : AppLocalizations.of(context)?.search ?? '',
+      ),
 
-      flexibleSpace: FlexibleSpaceBar(
-        background: Container(
+      bottom: PreferredSize(
+        preferredSize: const Size(double.infinity, 40),
+        child: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20),
+              Expanded(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -89,21 +100,7 @@ class SliverappbarWithTextField extends StatelessWidget {
                         },
                       ),
                     ),
-                    Expanded(
-                      flex: 5,
-                      child:
-                          (isBottomNaviSearchPage == false)
-                              ? IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: const Icon(
-                                  CupertinoIcons.xmark_circle,
-                                  size: 35,
-                                ),
-                              )
-                              : const SizedBox(),
-                    ),
+                    const Spacer(flex: 1),
                   ],
                 ),
               ),

@@ -1,12 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_state.dart';
-import 'package:pix_hunt_project/Controllers/language%20riverpod/language_riverpod.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Forgot%20Password%20Page/forget_pass.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Home%20Page/home.dart';
+import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/widgets/login_sliver_appbar.dart';
+import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/widgets/login_title_widget.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Signup%20Page/signup_page.dart';
 import 'package:pix_hunt_project/core/constants/constant_imgs.dart';
 import 'package:pix_hunt_project/core/Utils/toast.dart';
@@ -119,13 +122,23 @@ class _LoginPageState extends ConsumerState<LoginPage>
 
   @override
   Widget build(BuildContext context) {
-    print('LOGIN BUILD CALLED');
-    var lng = AppLocalizations.of(context);
+    log('Login page build called');
     ref.listen(authProvider('login'), (previous, next) {
       if (next is AuthLoading) {
         EasyLoading.show(
-          indicator: const CupertinoActivityIndicator(color: Colors.white),
-          status: lng?.signingYouIn ?? '',
+          indicator: Column(
+            children: [
+              const CupertinoActivityIndicator(color: Colors.white),
+              Builder(
+                builder:
+                    (contextx) => Text(
+                      AppLocalizations.of(contextx)?.signingYouIn ?? '',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+              ),
+            ],
+          ),
+
           dismissOnTap: false,
         );
       }
@@ -153,43 +166,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
             key: formKey,
             child: CustomScrollView(
               slivers: [
-                SliverAppBar(
-                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                  actions: [
-                    PopupMenuButton<String>(
-                      onSelected: (value) {
-                        if (value.isNotEmpty) {
-                          ref
-                              .read(languageProvider.notifier)
-                              .languageToggled(value);
-                        }
-                      },
-                      itemBuilder:
-                          (context) => const [
-                            PopupMenuItem(
-                              value: 'en',
-                              child: Text('🇺🇸 English'),
-                            ),
-                            PopupMenuItem(
-                              value: 'es',
-                              child: Text('🇪🇸 Spanish'),
-                            ),
-                            PopupMenuItem(
-                              value: 'ar',
-                              child: Text('🇸🇦 Arabic'),
-                            ),
-                            PopupMenuItem(
-                              value: 'ur',
-                              child: Text('🇵🇰 Urdu'),
-                            ),
-                            PopupMenuItem(
-                              value: 'zh',
-                              child: Text('🇨🇳 Chinese'),
-                            ),
-                          ],
-                    ),
-                  ],
-                ),
+                const LoginSliverAppbar(),
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
@@ -197,20 +174,14 @@ class _LoginPageState extends ConsumerState<LoginPage>
                         scale: scaleTitle,
                         child: FadeTransition(
                           opacity: fadeTitle,
-                          child: Row(
+                          child: const Row(
                             children: [
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsetsGeometry.only(
                                     bottom: 40,
                                   ),
-                                  child: Text(
-                                    lng?.loginYourAccount ?? '',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 40,
-                                    ),
-                                  ),
+                                  child: const LoginTitleWidget(),
                                 ),
                               ),
                             ],
@@ -222,17 +193,10 @@ class _LoginPageState extends ConsumerState<LoginPage>
                         scale: scaleEmailField,
                         child: FadeTransition(
                           opacity: fadeEmailField,
-                          child: EmailField(
-                            isForName: false,
+                          child: _LoginEmailTextFieldWidget(
                             controller: emailController,
                             focusNode: emailFocusNode,
-                            label: lng?.email ?? '',
-                            prefixIcon: Icons.mail,
-
-                            onFieldSubmitted:
-                                (p0) => FocusScope.of(
-                                  context,
-                                ).requestFocus(passwordFocusNode),
+                            passwordFocusNode: passwordFocusNode,
                           ),
                         ),
                       ),
@@ -241,14 +205,10 @@ class _LoginPageState extends ConsumerState<LoginPage>
                         scale: scalePasswordField,
                         child: FadeTransition(
                           opacity: fadePasswordField,
-                          child: PasswordField(
+                          child: _LoginPasswordTextFieldWidget(
                             controller: passwordController,
                             focusNode: passwordFocusNode,
-
-                            onFieldSubmitted:
-                                (p0) => FocusScope.of(
-                                  context,
-                                ).requestFocus(buttonFocusNode),
+                            btnFocusNode: buttonFocusNode,
                           ),
                         ),
                       ),
@@ -257,7 +217,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
                         scale: scaleLoginbtn,
                         child: FadeTransition(
                           opacity: fadeLoginBtn,
-                          child: _forgotPsswordButton(context),
+                          child: const _ForgotButton(),
                         ),
                       ),
                       ScaleTransition(
@@ -272,7 +232,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
                         scale: scaleCreateAccount,
                         child: FadeTransition(
                           opacity: fadeCreateAccount,
-                          child: _signupbutton(context),
+                          child: _signupbutton(),
                         ),
                       ),
 
@@ -364,72 +324,116 @@ class _LoginPageState extends ConsumerState<LoginPage>
   }
 }
 
-Widget _topLogo() => Hero(
-  tag: 'into_to_login',
-
-  child: Image.asset(
-    app_logo,
-    height: 150,
-    width: double.infinity,
-    fit: BoxFit.fitHeight,
-  ),
-);
-
-Widget _forgotPsswordButton(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsetsGeometry.only(bottom: 10),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        GestureDetector(
-          onTap: () {
-            Navigator.of(
-              navigatorKey.currentContext!,
-            ).pushNamed(ForgetPassPage.pageName);
-          },
-          child: Text(
-            AppLocalizations.of(context)?.forgotPassword ?? '',
-            style: const TextStyle(
-              decorationColor: Color.fromARGB(255, 77, 91, 172),
-              decoration: TextDecoration.underline,
-              color: Color.fromARGB(255, 77, 91, 172),
-              fontSize: 15,
+Widget _signupbutton() {
+  return Builder(
+    builder: (context) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 25, bottom: 20),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(AppLocalizations.of(context)?.ifYouDontHaveAccount ?? ''),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(
+                  navigatorKey.currentContext!,
+                ).pushNamed(SignupPage.pageName);
+              },
+              child: Padding(
+                padding: EdgeInsetsGeometry.only(left: 10, right: 10),
+                child: Text(
+                  AppLocalizations.of(context)?.createAccount ?? '',
+                  style: TextStyle(
+                    decorationColor: Color.fromARGB(255, 77, 91, 172),
+                    decoration: TextDecoration.underline,
+                    color: Color.fromARGB(255, 77, 91, 172),
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-      ],
-    ),
+      );
+    },
   );
 }
 
-Widget _signupbutton(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 25, bottom: 20),
-    child: Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(AppLocalizations.of(context)?.ifYouDontHaveAccount ?? ''),
-        GestureDetector(
-          onTap: () {
-            Navigator.of(
-              navigatorKey.currentContext!,
-            ).pushNamed(SignupPage.pageName);
-          },
-          child: Padding(
-            padding: EdgeInsetsGeometry.only(left: 10, right: 10),
+class _LoginEmailTextFieldWidget extends StatelessWidget {
+  const _LoginEmailTextFieldWidget({
+    required this.controller,
+    required this.focusNode,
+    required this.passwordFocusNode,
+  });
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final FocusNode passwordFocusNode;
+  @override
+  Widget build(BuildContext context) {
+    var lng = AppLocalizations.of(context);
+    return EmailField(
+      isForName: false,
+      controller: controller,
+      focusNode: focusNode,
+      label: lng?.email ?? '',
+      prefixIcon: Icons.mail,
+
+      onFieldSubmitted:
+          (p0) => FocusScope.of(context).requestFocus(passwordFocusNode),
+    );
+  }
+}
+
+class _LoginPasswordTextFieldWidget extends StatelessWidget {
+  const _LoginPasswordTextFieldWidget({
+    required this.controller,
+    required this.focusNode,
+    required this.btnFocusNode,
+  });
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final FocusNode btnFocusNode;
+  @override
+  Widget build(BuildContext context) {
+    return PasswordField(
+      controller: controller,
+      focusNode: focusNode,
+
+      onFieldSubmitted:
+          (p0) => FocusScope.of(context).requestFocus(btnFocusNode),
+    );
+  }
+}
+
+class _ForgotButton extends StatelessWidget {
+  const _ForgotButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsetsGeometry.only(bottom: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.of(
+                navigatorKey.currentContext!,
+              ).pushNamed(ForgetPassPage.pageName);
+            },
             child: Text(
-              AppLocalizations.of(context)?.createAccount ?? '',
-              style: TextStyle(
+              AppLocalizations.of(context)?.forgotPassword ?? '',
+              style: const TextStyle(
                 decorationColor: Color.fromARGB(255, 77, 91, 172),
                 decoration: TextDecoration.underline,
                 color: Color.fromARGB(255, 77, 91, 172),
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
+                fontSize: 15,
               ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }

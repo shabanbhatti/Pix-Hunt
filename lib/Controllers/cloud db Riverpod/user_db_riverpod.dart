@@ -7,14 +7,12 @@ import 'package:pix_hunt_project/Models/dowloads_items_model.dart';
 import 'package:pix_hunt_project/Models/fav_items.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
 import 'package:pix_hunt_project/core/Utils/img_download.dart';
-import 'package:pix_hunt_project/providers/app_provider_objects.dart';
+import 'package:pix_hunt_project/core/injectors/injectors.dart';
 import 'package:pix_hunt_project/repository/cloud_db_repository.dart';
 
 final userDbProvider =
     StateNotifierProvider.autoDispose<UserDbStateNotifier, UserDbState>((ref) {
-      return UserDbStateNotifier(
-        cloudDbRepository: ref.read(cloudDbRepositoryProviderObject),
-      );
+      return UserDbStateNotifier(cloudDbRepository: getIt<CloudDbRepository>());
     });
 
 class UserDbStateNotifier extends StateNotifier<UserDbState> {

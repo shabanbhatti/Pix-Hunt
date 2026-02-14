@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
 import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
@@ -24,6 +26,7 @@ class IntroPage extends StatelessWidget {
   final Animation<double> btnFadeAnimation;
   @override
   Widget build(BuildContext context) {
+    log('Intro page build called');
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(

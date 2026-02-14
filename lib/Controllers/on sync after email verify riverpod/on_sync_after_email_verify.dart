@@ -1,13 +1,12 @@
 import 'dart:developer';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/providers/app_provider_objects.dart';
+import 'package:pix_hunt_project/core/injectors/injectors.dart';
 import 'package:pix_hunt_project/repository/cloud_db_repository.dart';
 
 final onSyncAfterEmailVerifyProvider =
     StateNotifierProvider<OnSyncAfterEmailVerifyStateNotifier, String>((ref) {
       return OnSyncAfterEmailVerifyStateNotifier(
-        cloudDbRepository: ref.read(cloudDbRepositoryProviderObject),
+        cloudDbRepository: getIt<CloudDbRepository>(),
       );
     });
 

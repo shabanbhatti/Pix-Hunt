@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -49,7 +51,7 @@ class _UpdateNamePageState extends ConsumerState<UpdateNamePage> {
 
   @override
   Widget build(BuildContext context) {
-    print('UPDATE name BUILD CALLED');
+    log('Update name build called');
     var lng = AppLocalizations.of(context);
     ref.listen(authProvider('update_name'), (previous, next) {
       if (next is AuthLoadedSuccessfuly) {

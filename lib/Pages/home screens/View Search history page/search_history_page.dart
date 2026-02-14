@@ -41,17 +41,13 @@ class _ViewSearchHistoryPageState extends ConsumerState<ViewSearchHistoryPage>
 
   @override
   Widget build(BuildContext context) {
-    log('View search history page');
+    log('View search history page build called');
     ref.listen(searchHistoryStreamProvider, (previous, next) {
       if (next.hasValue) {
         animationController.forward();
       }
     });
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0.5,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      ),
       body: Center(
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
@@ -60,20 +56,18 @@ class _ViewSearchHistoryPageState extends ConsumerState<ViewSearchHistoryPage>
               title: AppLocalizations.of(context)!.searchHistory,
             ),
 
-            SliverSafeArea(
-              sliver: Consumer(
-                builder: (context, ref, child) {
-                  var myRef = ref.watch(searchHistoryStreamProvider);
-                  return myRef.when(
-                    data: (data) => _data(data),
-                    error:
-                        (error, stackTrace) => SliverFillRemaining(
-                          child: Center(child: Text(error.toString())),
-                        ),
-                    loading: () => _loading(),
-                  );
-                },
-              ),
+            Consumer(
+              builder: (context, ref, child) {
+                var myRef = ref.watch(searchHistoryStreamProvider);
+                return myRef.when(
+                  data: (data) => _data(data),
+                  error:
+                      (error, stackTrace) => SliverFillRemaining(
+                        child: Center(child: Text(error.toString())),
+                      ),
+                  loading: () => _loading(),
+                );
+              },
             ),
           ],
         ),

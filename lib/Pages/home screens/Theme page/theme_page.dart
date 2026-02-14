@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/Theme%20riverpod/theme_riverpod.dart';
@@ -10,7 +13,7 @@ class ThemePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var lng = AppLocalizations.of(context);
-    print('Theme Build CALLED');
+    log('Theme page build called');
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -27,11 +30,10 @@ class ThemePage extends StatelessWidget {
                 trailing: Consumer(
                   builder: (context, ref, child) {
                     var value = ref.watch(themeProvider).isDark;
-                    return Switch(
-                      activeThumbColor: Colors.green,
-                      inactiveThumbColor: Colors.grey,
-                      thumbColor: WidgetStatePropertyAll(Colors.white),
-                      activeTrackColor: Colors.indigo,
+                    return CupertinoSwitch(
+                      // activeThumbColor: Colors.green,
+
+                      // thumbColor: WidgetStatePropertyAll(Colors.white),
                       value: value,
                       onChanged: (value) {
                         ref.read(themeProvider.notifier).toggeled();

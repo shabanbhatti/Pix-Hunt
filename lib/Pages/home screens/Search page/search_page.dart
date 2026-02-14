@@ -2,11 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/APi%20Riverpod/api_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/api%20Riverpod/api_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/on%20sync%20after%20email%20verify%20riverpod/on_sync_after_email_verify.dart';
 import 'package:pix_hunt_project/Models/pexer.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Search%20page/Widgets/search_photos_pages_widget.dart';
-import 'package:pix_hunt_project/Pages/home%20screens/View%20home%20cetagory%20Page/view_page.dart';
 import 'package:pix_hunt_project/core/Widgets/card_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/loading_card_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/sliverappbar_with_textfield.dart';
@@ -63,8 +62,8 @@ class _SearchPageState extends ConsumerState<SearchPage>
 
   @override
   Widget build(BuildContext context) {
-    print('SEARCH PAGE INIT CALLED');
-    var lng = AppLocalizations.of(context);
+    log('Search page build called');
+
     ref.listen(apiProvider, (previous, next) {
       if (next is ApiLoading) {
         animationController.reverse();
@@ -100,7 +99,10 @@ class _SearchPageState extends ConsumerState<SearchPage>
                   builder: (context, value, child) {
                     if (value.isNotEmpty) {
                       return SliverPadding(
-                        padding: const EdgeInsetsGeometry.only(left: 10),
+                        padding: const EdgeInsetsGeometry.only(
+                          left: 10,
+                          top: 10,
+                        ),
                         sliver: SliverToBoxAdapter(
                           child: Row(
                             children: [
@@ -143,9 +145,7 @@ class _SearchPageState extends ConsumerState<SearchPage>
                       return SliverFillRemaining(
                         child: Center(
                           child: Text(
-                            myRef.message.contains(hardcodeError)
-                                ? lng?.noInternetConnection ?? ''
-                                : myRef.message,
+                            myRef.message,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),

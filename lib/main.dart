@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,6 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/Theme%20riverpod/theme_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/language%20riverpod/language_riverpod.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/decide%20page/decide_page.dart';
+import 'package:pix_hunt_project/core/Utils/internet_checker_util.dart';
+import 'package:pix_hunt_project/core/injectors/injectors.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:pix_hunt_project/routes/ogr.dart';
 import 'package:pix_hunt_project/firebase_options.dart';
@@ -19,13 +19,14 @@ var navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
+  await initGetIt();
+
+  var internetChecker = getIt<InternetCheckerUtil>();
+  await internetChecker.checkInternet();
 
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
-    );
-    await FirebaseAppCheck.instance.activate(
-      appleProvider: AppleProvider.debug,
     );
   } catch (e) {
     print('Firebase init error: $e');

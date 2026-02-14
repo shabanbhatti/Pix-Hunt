@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
@@ -173,13 +172,10 @@ class CloudDbRepository {
     try {
       String uid = authService.firebaseAuth.currentUser!.uid;
       String email = authService.firebaseAuth.currentUser!.email ?? '';
-      log('Loading......');
+
       await cloudDbService.syncEmailAfterVerification(email, uid);
-      log('LOADED SUCCESS');
     } on FirebaseAuthException catch (e) {
       await SpService.setBool('logged', false);
-      log(e.code);
-      log(e.toString());
       throw Exception(e.code);
     }
   }

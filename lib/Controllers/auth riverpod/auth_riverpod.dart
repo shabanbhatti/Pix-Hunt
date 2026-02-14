@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_state.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
 import 'package:pix_hunt_project/core/errors/failures/failures.dart';
-import 'package:pix_hunt_project/providers/app_provider_objects.dart';
+import 'package:pix_hunt_project/core/injectors/injectors.dart';
 import 'package:pix_hunt_project/repository/auth_repository.dart';
 
 final authProvider =
@@ -10,9 +10,7 @@ final authProvider =
       ref,
       key,
     ) {
-      return AuthStateNotifier(
-        authRepository: ref.read(authRepositoryProviderObject),
-      );
+      return AuthStateNotifier(authRepository: getIt<AuthRepository>());
     });
 
 class AuthStateNotifier extends StateNotifier<AuthState> {

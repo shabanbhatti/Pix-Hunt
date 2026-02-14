@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -168,6 +170,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
 
   @override
   Widget build(BuildContext context) {
+    log('Sign up page build called');
     var lng = AppLocalizations.of(context);
     ref.listen(authProvider('create'), (previous, next) {
       if (next is AuthLoadedSuccessfuly) {

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/Fav%20page%20Stream%20riverpod/fav_riverpod.dart';
@@ -51,7 +53,7 @@ class _FavPageState extends ConsumerState<FavPage>
 
   @override
   Widget build(BuildContext context) {
-    print('FAV PAGE BUILD CALLED');
+    log('Favourite page build called');
     ref.listen<AsyncValue<List<FavItemModalClass>>>(favStreamProvider, (
       _,
       next,
@@ -77,7 +79,7 @@ class _FavPageState extends ConsumerState<FavPage>
               controller: controller,
               focusNode: focusNode,
               isForSearchPage: false,
-              isBottomNaviSearchPage: false,
+              isBottomNaviSearchPage: true,
             ),
             SliverSafeArea(
               top: false,

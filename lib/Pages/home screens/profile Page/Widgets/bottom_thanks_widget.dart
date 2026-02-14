@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pix_hunt_project/core/Utils/extensions.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
@@ -25,7 +24,7 @@ class BottomThanksWidget extends StatelessWidget {
         ),
         Text(
           ' ${AppLocalizations.of(context)!.forVisiting}🎉',
-          style: TextStyle(fontSize: 12),
+          style: const TextStyle(fontSize: 12),
         ),
       ],
     );

@@ -1,15 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/APi%20Riverpod/api_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/api%20Riverpod/api_riverpod.dart';
 import 'package:pix_hunt_project/Models/pexer.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20home%20cetagory%20Page/Widgets/photo_pages_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/card_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/custom_sliver_appbar.dart';
 import 'package:pix_hunt_project/core/Widgets/loading_card_widget.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-
-String hardcodeError =
-    "Something went wrong: Exception: Failed host lookup: 'api.pexels.com";
 
 class ViewContentPage extends ConsumerStatefulWidget {
   const ViewContentPage({
@@ -66,7 +65,7 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
 
   @override
   Widget build(BuildContext context) {
-    print('VIEW CONTENT PAGE CALLED');
+    log('View Home cetagory page build called');
     ref.listen(apiProvider, (previous, next) {
       // print('PREVIOUS: ${previous.runtimeType} | NEXT: ${next.runtimeType}');
       if (next is ApiLoadedSuccessfuly) {
@@ -113,16 +112,13 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
                       } else if (myRef is ApiLoadedSuccessfuly) {
                         return _cardData(myRef.pexer, scale);
                       } else if (myRef is ApiError) {
-                        print(myRef.message);
                         return SliverFillRemaining(
                           child: Center(
                             child: Text(
-                              myRef.message.contains(hardcodeError)
-                                  ? 'No internet connection.'
-                                  : myRef.message,
+                              myRef.message,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.indigo,
+                                color: Colors.orange,
                               ),
                             ),
                           ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -108,6 +110,7 @@ class _ForgetPassPageState extends ConsumerState<ForgetPassPage>
 
   @override
   Widget build(BuildContext context) {
+    log('Forgot password page build called');
     var lng = AppLocalizations.of(context);
     ref.listen(authProvider('forgot'), (previous, next) {
       if (next is AuthLoadedSuccessfuly) {

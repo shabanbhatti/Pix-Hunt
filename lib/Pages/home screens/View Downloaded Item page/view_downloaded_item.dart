@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +40,7 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
   @override
   Widget build(BuildContext context) {
     var lng = AppLocalizations.of(context);
-    print('Downloaded Item BUILD CALLED');
+    log('View Downloaded items page build called');
     return Scaffold(
       body: Center(
         child: CustomScrollView(

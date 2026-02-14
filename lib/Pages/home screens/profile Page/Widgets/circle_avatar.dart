@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -39,13 +38,10 @@ class _CircleAvatarWidgetState extends ConsumerState<CircleAvatarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('CIRCLE AVATAR DRAWER BUILD CALLED');
     ref.listen(userImgProvider, (previous, next) {
-      log('PREVIOUS: ${previous.runtimeType} | NEXT: ${next.runtimeType}');
       if (next is ErrorState) {
         ToastUtils.showToast(next.error, color: Colors.red);
       }
-      log(next.runtimeType.toString());
     });
     return Consumer(
       builder: (context, ref, child) {
@@ -53,8 +49,6 @@ class _CircleAvatarWidgetState extends ConsumerState<CircleAvatarWidget> {
         if (myRef is LoadingState) {
           return _loading();
         } else if (myRef is LoadedState) {
-          // log(myRef.imgPath);
-
           return _circleAvatarWidget(
             context,
             imgPath: myRef.imgPathUrl,
@@ -104,106 +98,119 @@ Widget _circleAvatarWidget(
   required void Function(File file) onChangePic,
   required void Function() onRemovePic,
 }) {
-  log('IMG PATH: ${imgPath.isEmpty}');
-  return Container(
-    height: 150,
-    width: 150,
+  return Padding(
+    padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
+    child: Container(
+      height: 120,
+      width: 120,
 
-    child: Stack(
-      children: [
-        Hero(
-          tag: 'user_image',
-          child: Container(
-            height: 150,
-            width: 150,
+      child: Stack(
+        children: [
+          Hero(
+            tag: 'user_image',
+            child: Container(
+              height: 120,
+              width: 120,
 
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            decoration: ShapeDecoration(
-              shape: const CircleBorder(),
-              color:
-                  (imgPath.isEmpty) ? Colors.pink : Colors.grey.withAlpha(100),
-            ),
-            alignment: Alignment.center,
-            child:
-                (imgPath.isEmpty)
-                    ? ValueListenableBuilder(
-                      valueListenable: nameInitialNotifier,
-                      builder: (context, value, child) {
-                        return Text(
-                          value.initials,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 35,
-                            color: Colors.white,
-                          ),
-                        );
-                      },
-                    )
-                    : GestureDetector(
-                      onLongPress: () {
-                        Navigator.pushNamed(
-                          context,
-                          ViewUserImgPage.pageName,
-                          arguments:
-                              {'imgUrl': imgPath} as Map<String, dynamic>,
-                        );
-                      },
-                      onTap: () {
-                        showUserImageOptionsSheet(
-                          context,
-                          open: () {
-                            Navigator.pop(context);
-                            Navigator.of(context).pushNamed(
-                              ViewUserImgPage.pageName,
-                              arguments:
-                                  {'imgUrl': imgPath} as Map<String, dynamic>,
-                            );
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              decoration: ShapeDecoration(
+                shape: const CircleBorder(),
+                color:
+                    (imgPath.isEmpty)
+                        ? Colors.pink
+                        : Colors.grey.withAlpha(100),
+              ),
+              alignment: Alignment.center,
+              child:
+                  (imgPath.isEmpty)
+                      ? ValueListenableBuilder(
+                        valueListenable: nameInitialNotifier,
+                        builder: (context, value, child) {
+                          return Text(
+                            value.initials,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 35,
+                              color: Colors.white,
+                            ),
+                          );
+                        },
+                      )
+                      : GestureDetector(
+                        onLongPress: () {
+                          Navigator.pushNamed(
+                            context,
+                            ViewUserImgPage.pageName,
+                            arguments:
+                                {'imgUrl': imgPath} as Map<String, dynamic>,
+                          );
+                        },
+                        onTap: () {
+                          showUserImageOptionsSheet(
+                            context,
+                            open: () {
+                              Navigator.pop(context);
+                              Navigator.of(context).pushNamed(
+                                ViewUserImgPage.pageName,
+                                arguments:
+                                    {'imgUrl': imgPath} as Map<String, dynamic>,
+                              );
+                            },
+                            changePic: () async {
+                              var file = await ImagePickerUtils.pickImage();
+                              if (file != null) {
+                                onChangePic(file);
+                              }
+                              Navigator.pop(context);
+                            },
+                            remove: () {
+                              onRemovePic();
+                              Navigator.pop(context);
+                            },
+                          );
+                        },
+                        child: CachedNetworkImage(
+                          imageUrl: imgPath,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                          errorWidget: (context, url, error) {
+                            return const Icon(Icons.error, color: Colors.red);
                           },
-                          changePic: () async {
-                            var file = await ImagePickerUtils.pickImage();
-                            if (file != null) {
-                              onChangePic(file);
-                            }
-                            Navigator.pop(context);
-                          },
-                          remove: () {
-                            onRemovePic();
-                            Navigator.pop(context);
-                          },
-                        );
-                      },
-                      child: CachedNetworkImage(
-                        imageUrl: imgPath,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: double.infinity,
+                        ),
                       ),
-                    ),
+            ),
           ),
-        ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Padding(
-            padding: const EdgeInsetsGeometry.all(5),
-            child: GestureDetector(
-              onTap: () async {
-                var file = await ImagePickerUtils.pickImage();
-                if (file != null) {
-                  onInsertImage(file);
-                }
-              },
-              child: CircleAvatar(
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                child: Icon(
-                  CupertinoIcons.camera_fill,
-                  color: Theme.of(context).primaryColor,
-                  size: 22,
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsetsGeometry.all(0),
+              child: GestureDetector(
+                onTap: () async {
+                  var file = await ImagePickerUtils.pickImage();
+                  if (file != null) {
+                    onInsertImage(file);
+                  }
+                },
+                child: Builder(
+                  builder: (contextx) {
+                    return CircleAvatar(
+                      radius: 20,
+                      backgroundColor:
+                          Theme.of(contextx).scaffoldBackgroundColor,
+                      child: Icon(
+                        CupertinoIcons.camera_fill,
+                        color: Theme.of(contextx).primaryColor,
+                        size: 22,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }

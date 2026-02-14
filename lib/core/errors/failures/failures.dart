@@ -6,3 +6,11 @@ abstract class Failures {
 class AuthFailure extends Failures {
   const AuthFailure({required super.message});
 }
+
+class ApiFailure extends Failures {
+  ApiFailure({required super.message});
+}
+
+class RandomFailure extends Failures {
+  RandomFailure({required super.message});
+}

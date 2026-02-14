@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -41,6 +43,7 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
 
   @override
   Widget build(BuildContext context) {
+    log('Download history page build called');
     var lng = AppLocalizations.of(context);
     ref.listen(downloadHistoryStreamProvider, (previous, next) {
       if (next.hasValue) {
@@ -51,50 +54,36 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
       body: Center(
         child: CustomScrollView(
           slivers: [
-            SliverAppBar(
+            CupertinoSliverNavigationBar(
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              leading: IconButton(
-                onPressed: () {
+              leading: GestureDetector(
+                onTap: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(Icons.arrow_back_ios_new_outlined),
+                child: Icon(Icons.arrow_back_ios_new_outlined),
               ),
-              title: Text(lng?.downloadHistory ?? '', style: const TextStyle()),
-              floating: true,
-              snap: true,
-              actions: [
-                Padding(
-                  padding: EdgeInsetsGeometry.only(right: 15, left: 15),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          EasyLoading.show(
-                            indicator: CupertinoActivityIndicator(
-                              color: Colors.white,
-                            ),
-                            status: 'Clearing all history...',
-                            dismissOnTap: false,
-                          );
-                          ref
-                              .read(userDbProvider.notifier)
-                              .deleteAllDownloadedHistory();
+              largeTitle: Text(
+                lng?.downloadHistory ?? '',
+                style: const TextStyle(),
+              ),
+              trailing: GestureDetector(
+                onTap: () {
+                  EasyLoading.show(
+                    indicator: CupertinoActivityIndicator(color: Colors.white),
+                    status: 'Clearing all history...',
+                    dismissOnTap: false,
+                  );
+                  ref
+                      .read(userDbProvider.notifier)
+                      .deleteAllDownloadedHistory();
 
-                          EasyLoading.dismiss();
-                        },
-                        child: Text(
-                          lng?.clearAll ?? '',
-                          style: TextStyle(
-                            color: Colors.indigo,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  EasyLoading.dismiss();
+                },
+                child: Text(
+                  lng?.clearAll ?? '',
+                  style: TextStyle(color: Colors.indigo),
                 ),
-              ],
+              ),
             ),
             SliverSafeArea(
               top: false,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/APi%20Riverpod/api_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/api%20Riverpod/api_riverpod.dart';
 import 'package:pix_hunt_project/Models/pexer.dart';
 
 class PhotoPagesWidget extends StatelessWidget {

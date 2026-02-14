@@ -1,27 +1,23 @@
-import 'dart:convert';
+import 'dart:developer';
 
-import 'package:http/http.dart';
+import 'package:dio/dio.dart';
 import 'package:pix_hunt_project/Models/pexer.dart';
-import 'package:pix_hunt_project/core/constants/constants_env.dart';
+import 'package:pix_hunt_project/core/errors/failures/failures.dart';
 
 class ApiService {
-  String api(String search, String pageNumber) {
-    return 'https://api.pexels.com/v1/search?query=$search&per_page=500&page=$pageNumber';
-  }
+  final Dio dio;
+  const ApiService({required this.dio});
 
-  Future<Pexer> fetchImages({String? search, int? pageNumber}) async {
-    var responce = await get(
-      Uri.parse(api(search!, pageNumber.toString())),
-      headers: {'Authorization': EnvUtils.apiKey ?? ''},
+  Future<Pexer> fetchImages(String? search, int? pageNumber) async {
+    log('Called');
+    var responce = await dio.get(
+      'search?query=$search&per_page=500&page=$pageNumber',
     );
-
-    print(responce.body);
-    Map<String, dynamic> decodeRes = jsonDecode(responce.body);
-
+    var pexer = responce.data;
     if (responce.statusCode == 200 || responce.statusCode == 201) {
-      return Pexer.fromJson(decodeRes);
+      return Pexer.fromJson(pexer);
     } else {
-      return throw Exception('Erro 404 found');
+      throw RandomFailure(message: 'Something went wrong');
     }
   }
 }

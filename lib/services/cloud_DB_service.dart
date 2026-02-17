@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
-import 'package:pix_hunt_project/Models/dowloads_items_model.dart';
-import 'package:pix_hunt_project/Models/fav_items.dart';
+import 'package:pix_hunt_project/Models/downloads_image_model.dart';
+import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
 
 class CloudDbService {
@@ -25,51 +25,45 @@ class CloudDbService {
     return auth;
   }
 
-  Future<void> addFavouriteItems(
-    FavItemModalClass favItemModalClass,
-    String uid,
-  ) async {
+  Future<void> addToBookmark(Photos favItemModalClass, String uid) async {
     await firestore
         .collection('users')
         .doc(uid)
-        .collection('fav_items')
-        .doc(favItemModalClass.id)
+        .collection('bookmarks')
+        .doc(favItemModalClass.id.toString())
         .set(favItemModalClass.toMap());
   }
 
-  Future<void> deleteFavourites(
-    FavItemModalClass favItemModalClass,
-    String uid,
-  ) async {
+  Future<void> deleteFavourites(Photos favItemModalClass, String uid) async {
     await firestore
         .collection('users')
         .doc(uid)
-        .collection('fav_items')
-        .doc(favItemModalClass.id)
+        .collection('bookmarks')
+        .doc(favItemModalClass.id.toString())
         .delete();
   }
 
   Future<void> addDownloadedPhotos(
-    DownloadsItem downloadedItems,
+    DownloadsImageModel downloadImageModel,
     String uid,
   ) async {
     await firestore
         .collection('users')
         .doc(uid)
         .collection('downloaded_items')
-        .doc(downloadedItems.id)
-        .set(downloadedItems.toMap());
+        .doc(downloadImageModel.id)
+        .set(downloadImageModel.toMap());
   }
 
   Future<void> deleteDownloadedHistory(
-    DownloadsItem downloadedItems,
+    DownloadsImageModel downloadImageModel,
     String uid,
   ) async {
     await firestore
         .collection('users')
         .doc(uid)
         .collection('downloaded_items')
-        .doc(downloadedItems.id)
+        .doc(downloadImageModel.id)
         .delete();
   }
 
@@ -157,23 +151,20 @@ class CloudDbService {
     });
   }
 
-  Stream<List<FavItemModalClass>> favItemsStreams(String uid) {
+  Stream<List<Photos>> bookmarks(String uid) {
     return firestore
         .collection('users')
         .doc(uid)
-        .collection('fav_items')
+        .collection('bookmarks')
+        .orderBy('created_at', descending: true)
         .snapshots()
         .map(
           (snapshot) =>
-              snapshot.docs
-                  .map(
-                    (doc) => FavItemModalClass.fromMap(doc.data(), id: doc.id),
-                  )
-                  .toList(),
+              snapshot.docs.map((doc) => Photos.fromJson(doc.data())).toList(),
         );
   }
 
-  Stream<List<DownloadsItem>> downloadHistoryStream(String uid) {
+  Stream<List<DownloadsImageModel>> downloadHistoryStream(String uid) {
     return FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
@@ -181,7 +172,9 @@ class CloudDbService {
         .snapshots()
         .map(
           (event) =>
-              event.docs.map((e) => DownloadsItem.fromMap(e.data())).toList(),
+              event.docs
+                  .map((e) => DownloadsImageModel.fromMap(e.data()))
+                  .toList(),
         );
   }
 

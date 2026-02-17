@@ -5,14 +5,15 @@ import 'package:pix_hunt_project/core/Utils/toast.dart';
 class InternetCheckerUtil {
   final InternetConnectionChecker internetChecker;
   const InternetCheckerUtil({required this.internetChecker});
-  Future<void> checkInternet() async {
+  Future<bool> checkInternet({String? message}) async {
     var isConnected = await internetChecker.hasConnection;
     if (!isConnected) {
       ToastUtils.showToast(
-        'No Internet Connection! Please Check Your Internet',
+        message ?? 'No Internet Connection! Please Check Your Internet',
         color: Colors.red,
         duration: 5,
       );
     }
+    return isConnected;
   }
 }

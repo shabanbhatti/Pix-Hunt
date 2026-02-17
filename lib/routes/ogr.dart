@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pix_hunt_project/Models/dowloads_items_model.dart';
-
+import 'package:pix_hunt_project/Models/downloads_image_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Download%20History%20Page/downloads_history_page.dart';
-import 'package:pix_hunt_project/Pages/home%20screens/Favourite%20Page/fav_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/bookmark%20page/bookmark_page.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Forgot%20Password%20Page/forget_pass.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Home%20Page/home.dart';
-import 'package:pix_hunt_project/Pages/initial%20screens/splash%20page/splash_page.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Search%20page/search_page.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Signup%20Page/signup_page.dart';
@@ -14,10 +12,8 @@ import 'package:pix_hunt_project/Pages/home%20screens/View%20Image%20Page/view_i
 import 'package:pix_hunt_project/Pages/home%20screens/update%20email%20page/update_email_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/user_profile.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20Downloaded%20Item%20page/view_downloaded_item.dart';
-
 import 'package:pix_hunt_project/Pages/home%20screens/View%20Search%20history%20page/search_history_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20User%20Image%20page/view_user_img_page.dart';
-
 import 'package:pix_hunt_project/Pages/home%20screens/View%20home%20cetagory%20Page/view_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/update%20name%20page/update_name_page.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/decide%20page/decide_page.dart';
@@ -83,9 +79,9 @@ Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
             ),
       );
 
-    case FavPage.pageName:
+    case BookmarkPage.pageName:
       return AnimatedRouting(
-        child: const FavPage(),
+        child: const BookmarkPage(),
         routeSettings: routeSettings,
       );
 
@@ -148,7 +144,7 @@ Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
     case ViewDownloadedItem.pageName:
       return AnimatedRouting(
         child: ViewDownloadedItem(
-          downloadsItem: routeSettings.arguments as DownloadsItem,
+          downloadImageModel: routeSettings.arguments as DownloadsImageModel,
         ),
         routeSettings: routeSettings,
       );

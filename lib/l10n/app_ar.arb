@@ -1,7 +1,7 @@
 {
   "name": "الاسم",
   "profile": "الملف الشخصي",
-  "favourite": "المفضلة",
+  "bookmark": "الإشارات المرجعية",
   "searchHistory": "سجل البحث",
   "downloadHistory": "سجل التنزيلات",
   "theme": "المظهر",
@@ -25,8 +25,7 @@
   "open": "فتح",
   "cancel": "إلغاء",
   "search": "بحث",
-  "removeFromFavourite": "إزالة من المفضلة",
-  "unfavouritingMessage": "عند الإزالة من المفضلة، سيتم حذف هذا العنصر من قائمة المفضلة.",
+  
   "remove": "إزالة",
   "download": "تنزيل",
   "pixels3k": "3k+ بكسل",
@@ -64,7 +63,7 @@
   "night": "ليل",
   "waterfall": "شلال",
   "searchContentHere": "ابحث هنا",
-  "noFavouriteItems": "لا توجد عناصر مفضلة",
+
   "noInternetConnection": "لا يوجد اتصال بالإنترنت",
   "fieldShouldNotBeEmpty": "لا يجب أن يكون الحقل فارغًا",
   "thanks": "شكرًا",
@@ -99,5 +98,9 @@
   "accountVerificationLinkSent": "تم إرسال رابط التحقق من الحساب إلى بريدك الإلكتروني (تحقق من البريد غير الهام). يرجى تأكيد حسابك.",
   "passwordDoesntMatch": "كلمتا المرور غير متطابقتين",
   "emailNotVerified": "البريد الإلكتروني غير مُفعّل! يرجى التحقق من بريدك الإلكتروني قبل تسجيل الدخول.",
-  "loginYourAccount": "سجّل الدخول إلى حسابك"
+  "loginYourAccount": "سجّل الدخول إلى حسابك",
+  "removeFromBookmark": "إزالة من الإشارات المرجعية",
+  "unbookmarkingMessage": "عند إزالة هذا العنصر من الإشارات المرجعية، سيتم حذفه من قائمة الإشارات المرجعية الخاصة بك.",
+  "noBookmarkItems": "لا توجد إشارات مرجعية بعد",
+  "itemAddedToBookmark": "تمت إضافة العنصر إلى الإشارات المرجعية"
 }

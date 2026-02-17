@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class FavLoadingWidget extends StatelessWidget {
-  const FavLoadingWidget({super.key});
+class BookmarkLoadingWidget extends StatelessWidget {
+  const BookmarkLoadingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

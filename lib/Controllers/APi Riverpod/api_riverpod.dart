@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
-import 'package:pix_hunt_project/Models/pexer.dart';
+import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/core/errors/failures/failures.dart';
 import 'package:pix_hunt_project/core/injectors/injectors.dart';
 import 'package:pix_hunt_project/repository/api_repository.dart';
@@ -32,6 +30,14 @@ class ApiStateNotifier extends StateNotifier<ApiState> {
     } on Failures catch (e) {
       state = ApiError(message: e.message);
       return false;
+    }
+  }
+
+  Future<void> updatePhoto(Photos photos) async {
+    try {
+      await apiRepository.updatePhoto(photos);
+    } on Failures catch (e) {
+      state = ApiError(message: e.message);
     }
   }
 

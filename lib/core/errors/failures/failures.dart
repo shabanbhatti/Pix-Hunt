@@ -11,6 +11,10 @@ class ApiFailure extends Failures {
   ApiFailure({required super.message});
 }
 
+class DatabaseFailure extends Failures {
+  DatabaseFailure({required super.message});
+}
+
 class RandomFailure extends Failures {
   RandomFailure({required super.message});
 }

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
-import 'package:pix_hunt_project/Models/dowloads_items_model.dart';
-import 'package:pix_hunt_project/Models/fav_items.dart';
+import 'package:pix_hunt_project/Models/downloads_image_model.dart';
+import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
 import 'package:pix_hunt_project/core/Utils/img_download.dart';
 import 'package:pix_hunt_project/core/injectors/injectors.dart';
@@ -31,24 +31,24 @@ class UserDbStateNotifier extends StateNotifier<UserDbState> {
     }
   }
 
-  Future<void> addFavouriteItems(FavItemModalClass favItemModalClass) async {
+  Future<void> addFavouriteItems(Photos photos) async {
     try {
-      await cloudDbRepository.addFavItems(favItemModalClass);
+      await cloudDbRepository.addToBookmark(photos);
     } catch (e) {
       state = ErrorUserDb(error: e.toString());
     }
   }
 
-  Future<void> deleteFavourites(FavItemModalClass favItemModalClass) async {
+  Future<void> deleteBookmarkItem(Photos photos) async {
     try {
-      await cloudDbRepository.deleteFav(favItemModalClass);
+      await cloudDbRepository.deleteBookmark(photos);
     } catch (e) {
       state = ErrorUserDb(error: e.toString());
     }
   }
 
   Future<({bool isDownloade, String message})?> addDownloadedPhotos(
-    DownloadsItem downloadedItems,
+    DownloadsImageModel downloadImageModel,
     String downloading,
     String onSuccess,
   ) async {
@@ -57,9 +57,9 @@ class UserDbStateNotifier extends StateNotifier<UserDbState> {
         status: downloading,
         indicator: const CupertinoActivityIndicator(color: Colors.grey),
       );
-      await cloudDbRepository.addDownloadedPhotos(downloadedItems);
+      await cloudDbRepository.addDownloadedPhotos(downloadImageModel);
       var data = await ImageDownloadMethodUtils.downloadImg(
-        downloadedItems.imgUrl,
+        downloadImageModel.imgUrl,
         onSuccess,
       );
 
@@ -72,9 +72,11 @@ class UserDbStateNotifier extends StateNotifier<UserDbState> {
     }
   }
 
-  Future<void> deleteDownloadedHistory(DownloadsItem downloadedItems) async {
+  Future<void> deleteDownloadedHistory(
+    DownloadsImageModel downloadImageModel,
+  ) async {
     try {
-      await cloudDbRepository.deleteDownloadHistory(downloadedItems);
+      await cloudDbRepository.deleteDownloadHistory(downloadImageModel);
     } catch (e) {
       state = ErrorUserDb(error: e.toString());
     }

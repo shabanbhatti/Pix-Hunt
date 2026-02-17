@@ -5,7 +5,7 @@ import 'package:hawk_fab_menu/hawk_fab_menu.dart';
 import 'package:pix_hunt_project/Controllers/User_Image_riverpod.dart/user_img_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/on%20sync%20after%20email%20verify%20riverpod/on_sync_after_email_verify.dart';
-import 'package:pix_hunt_project/Pages/home%20screens/Favourite%20Page/fav_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/bookmark%20page/bookmark_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Home%20Page/Widgets/box_widget.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Home%20Page/Widgets/sliver_appbar.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
@@ -90,11 +90,11 @@ class _HomeState extends ConsumerState<Home> {
             labelColor: Colors.white,
           ),
           HawkFabMenuItem(
-            label: lng?.favourite ?? '',
+            label: lng?.bookmark ?? '',
             ontap: () {
-              Navigator.of(context).pushNamed(FavPage.pageName);
+              Navigator.of(context).pushNamed(BookmarkPage.pageName);
             },
-            icon: const Icon(Icons.favorite, color: Colors.white),
+            icon: const Icon(Icons.bookmark, color: Colors.white),
             labelBackgroundColor: Colors.indigo,
 
             labelColor: Colors.white,

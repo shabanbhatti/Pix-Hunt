@@ -1,7 +1,7 @@
 {
   "name": "نام",
   "profile": "پروفائل",
-  "favourite": "پسندیدہ",
+  "bookmark": "بُک مارکس",
   "searchHistory": "تلاش کی ہسٹری",
   "downloadHistory": "ڈاؤن لوڈ کی ہسٹری",
   "theme": "تھیم",
@@ -25,8 +25,8 @@
   "open": "کھولیں",
   "cancel": "منسوخ کریں",
   "search": "تلاش کریں",
-  "removeFromFavourite": "پسندیدہ سے ہٹائیں",
-  "unfavouritingMessage": "پسندیدہ سے ہٹانے پر یہ آئٹم آپ کی فہرست سے حذف ہو جائے گا۔",
+  
+  
   "remove": "ہٹائیں",
   "download": "ڈاؤن لوڈ",
   "pixels3k": "3k+ پکسلز",
@@ -64,7 +64,7 @@
   "night": "رات",
   "waterfall": "آبشار",
   "searchContentHere": "یہاں تلاش کریں",
-  "noFavouriteItems": "کوئی پسندیدہ آئٹمز نہیں",
+  
   "noInternetConnection": "انٹرنیٹ کنکشن موجود نہیں",
   "fieldShouldNotBeEmpty": "فیلڈ خالی نہیں ہونی چاہیے",
   "thanks": "شکریہ",
@@ -99,5 +99,10 @@
   "accountVerificationLinkSent": "اکاؤنٹ تصدیقی لنک آپ کی ای میل (اسپام فولڈر بھی چیک کریں) پر بھیج دیا گیا ہے۔ براہِ کرم تصدیق کریں۔",
   "passwordDoesntMatch": "پاس ورڈز آپس میں مطابقت نہیں رکھتے",
   "emailNotVerified":  "ای میل کی تصدیق نہیں ہوئی! براہِ کرم لاگ اِن کرنے سے پہلے اپنی ای میل کی تصدیق کریں۔",
-  "loginYourAccount": "اپنے اکاؤنٹ میں لاگ اِن کریں"
+  "loginYourAccount": "اپنے اکاؤنٹ میں لاگ اِن کریں",
+  "removeFromBookmark": "بک مارکس سے ہٹائیں",
+  "unbookmarkingMessage": "بک مارکس سے ہٹانے پر یہ آئٹم آپ کی بک مارکس لسٹ سے حذف ہو جائے گا۔",
+  "noBookmarkItems": "ابھی تک کوئی بک مارکس موجود نہیں",
+  "itemAddedToBookmark": "آئٹم بک مارکس میں شامل کر دیا گیا ہے"
+
 }

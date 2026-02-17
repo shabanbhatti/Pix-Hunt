@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/api%20Riverpod/api_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/on%20sync%20after%20email%20verify%20riverpod/on_sync_after_email_verify.dart';
-import 'package:pix_hunt_project/Models/pexer.dart';
+import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Search%20page/Widgets/search_photos_pages_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/card_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/loading_card_widget.dart';
@@ -185,10 +185,11 @@ class _SearchPageState extends ConsumerState<SearchPage>
   }
 
   Widget _cardData(Pexer pexer) {
+    List<Photos> photosList = pexer.photosList ?? [];
     return SliverPadding(
       padding: const EdgeInsets.all(5),
       sliver: SliverGrid.builder(
-        itemCount: pexer.photos.length,
+        itemCount: photosList.length,
 
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -199,7 +200,7 @@ class _SearchPageState extends ConsumerState<SearchPage>
         itemBuilder: (context, index) {
           return ScaleTransition(
             scale: scale,
-            child: CardWidget(photo: pexer.photos[index], index: index),
+            child: CardWidget(photo: photosList[index], index: index),
           );
         },
       ),

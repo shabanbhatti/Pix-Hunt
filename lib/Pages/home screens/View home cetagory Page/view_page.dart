@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/api%20Riverpod/api_riverpod.dart';
-import 'package:pix_hunt_project/Models/pexer.dart';
+import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20home%20cetagory%20Page/Widgets/photo_pages_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/card_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/custom_sliver_appbar.dart';
@@ -67,7 +67,6 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
   Widget build(BuildContext context) {
     log('View Home cetagory page build called');
     ref.listen(apiProvider, (previous, next) {
-      // print('PREVIOUS: ${previous.runtimeType} | NEXT: ${next.runtimeType}');
       if (next is ApiLoadedSuccessfuly) {
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
           animationController.forward();
@@ -116,9 +115,8 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
                           child: Center(
                             child: Text(
                               myRef.message,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.orange,
                               ),
                             ),
                           ),
@@ -160,14 +158,15 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
   }
 
   Widget _cardData(Pexer pexer, Animation<double> scale) {
+    List<Photos> photosList = pexer.photosList ?? [];
     return SliverPadding(
       padding: const EdgeInsetsGeometry.symmetric(horizontal: 5, vertical: 10),
       sliver: SliverGrid.builder(
-        itemCount: pexer.photos.length,
+        itemCount: photosList.length,
         itemBuilder:
             (context, index) => ScaleTransition(
               scale: scale,
-              child: CardWidget(photo: pexer.photos[index], index: index),
+              child: CardWidget(photo: photosList[index], index: index),
             ),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,

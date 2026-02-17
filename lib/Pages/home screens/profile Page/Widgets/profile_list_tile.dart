@@ -13,15 +13,13 @@ class DrawerListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      // shape: Border(
-      //   bottom: (title == 'Log out') ? BorderSide.none : BorderSide(width: 1, color:  Theme.of(context).primaryColor),
-      // ),
       leading: CircleAvatar(
         backgroundColor: Colors.indigo,
+
         child: Icon(leading, color: Colors.white),
       ),
       title: Text(title),
-      trailing: Icon(Icons.arrow_forward_ios),
+      trailing: const Icon(Icons.arrow_forward_ios),
       onTap: onTap,
     );
   }

@@ -5,15 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
-import 'package:pix_hunt_project/Models/dowloads_items_model.dart';
+import 'package:pix_hunt_project/Models/downloads_image_model.dart';
 import 'package:pix_hunt_project/core/Utils/date_format_util.dart';
 import 'package:pix_hunt_project/core/Widgets/custom_dialog_boxes.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class ViewDownloadedItem extends StatefulWidget {
-  const ViewDownloadedItem({super.key, required this.downloadsItem});
+  const ViewDownloadedItem({super.key, required this.downloadImageModel});
   static const pageName = '/view_downloaded_item';
-  final DownloadsItem downloadsItem;
+  final DownloadsImageModel downloadImageModel;
 
   @override
   State<ViewDownloadedItem> createState() => _ViewDownloadedItemState();
@@ -79,7 +79,7 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
                                 ref
                                     .read(userDbProvider.notifier)
                                     .deleteDownloadedHistory(
-                                      widget.downloadsItem,
+                                      widget.downloadImageModel,
                                     );
 
                                 Navigator.pop(context);
@@ -113,7 +113,7 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
                   alignment: Alignment.center,
                   children: [
                     CachedNetworkImage(
-                      imageUrl: widget.downloadsItem.imgUrl,
+                      imageUrl: widget.downloadImageModel.imgUrl,
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: double.infinity,
@@ -133,24 +133,24 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
                       const SizedBox(height: 20),
                       _listtile(
                         title: lng?.imageTitle ?? '',
-                        value: widget.downloadsItem.title,
+                        value: widget.downloadImageModel.title,
                       ),
                       const Divider(),
                       _listtile(
                         title: lng?.pixels ?? '',
-                        value: widget.downloadsItem.pixels,
+                        value: widget.downloadImageModel.pixels,
                       ),
                       const Divider(),
                       _listtile(
                         title: lng?.date ?? '',
                         value: DateFormatUtil.dateFormat(
-                          widget.downloadsItem.date,
+                          widget.downloadImageModel.date,
                         ),
                       ),
                       const Divider(),
                       _listtile(
                         title: lng?.url ?? '',
-                        value: widget.downloadsItem.imgUrl,
+                        value: widget.downloadImageModel.imgUrl,
                       ),
                       const Divider(),
                       _listtile(

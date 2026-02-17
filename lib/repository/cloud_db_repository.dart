@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
-import 'package:pix_hunt_project/Models/dowloads_items_model.dart';
-import 'package:pix_hunt_project/Models/fav_items.dart';
+import 'package:pix_hunt_project/Models/downloads_image_model.dart';
+import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
 import 'package:pix_hunt_project/services/auth_service.dart';
 import 'package:pix_hunt_project/services/cloud_DB_service.dart';
@@ -29,16 +29,16 @@ class CloudDbRepository {
     }
   }
 
-  Future<void> addFavItems(FavItemModalClass favItem) async {
+  Future<void> addToBookmark(Photos favItem) async {
     String uid = authService.firebaseAuth.currentUser!.uid;
     try {
-      await cloudDbService.addFavouriteItems(favItem, uid);
+      await cloudDbService.addToBookmark(favItem, uid);
     } on FirebaseException catch (e) {
       throw Exception(e.code);
     }
   }
 
-  Future<void> deleteFav(FavItemModalClass favItem) async {
+  Future<void> deleteBookmark(Photos favItem) async {
     String uid = authService.firebaseAuth.currentUser!.uid;
     try {
       await cloudDbService.deleteFavourites(favItem, uid);
@@ -47,19 +47,23 @@ class CloudDbRepository {
     }
   }
 
-  Future<void> addDownloadedPhotos(DownloadsItem downloadItems) async {
+  Future<void> addDownloadedPhotos(
+    DownloadsImageModel downloadImagesModel,
+  ) async {
     String uid = authService.firebaseAuth.currentUser!.uid;
     try {
-      await cloudDbService.addDownloadedPhotos(downloadItems, uid);
+      await cloudDbService.addDownloadedPhotos(downloadImagesModel, uid);
     } on FirebaseException catch (e) {
       throw Exception(e.code);
     }
   }
 
-  Future<void> deleteDownloadHistory(DownloadsItem downloadItems) async {
+  Future<void> deleteDownloadHistory(
+    DownloadsImageModel downloadImagesModel,
+  ) async {
     String uid = authService.firebaseAuth.currentUser!.uid;
     try {
-      await cloudDbService.deleteDownloadedHistory(downloadItems, uid);
+      await cloudDbService.deleteDownloadedHistory(downloadImagesModel, uid);
     } on FirebaseException catch (e) {
       throw Exception(e.code);
     }
@@ -110,16 +114,16 @@ class CloudDbRepository {
     }
   }
 
-  Stream<List<FavItemModalClass>> favItemsStreams() {
+  Stream<List<Photos>> getAllBookmarks() {
     try {
       String uid = authService.firebaseAuth.currentUser!.uid;
-      return cloudDbService.favItemsStreams(uid);
+      return cloudDbService.bookmarks(uid);
     } on FirebaseException catch (e) {
       throw Exception(e.code);
     }
   }
 
-  Stream<List<DownloadsItem>> downloadHistoryStream() {
+  Stream<List<DownloadsImageModel>> downloadHistoryStream() {
     try {
       String uid = authService.firebaseAuth.currentUser!.uid;
       return cloudDbService.downloadHistoryStream(uid);

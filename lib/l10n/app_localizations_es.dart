@@ -15,7 +15,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get profile => 'Perfil';
 
   @override
-  String get favourite => 'Favoritos';
+  String get bookmark => 'Marcadores';
 
   @override
   String get searchHistory => 'Historial de búsqueda';
@@ -87,11 +87,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get search => 'Buscar';
 
   @override
-  String get removeFromFavourite => 'Quitar de favoritos';
+  String get removeFromBookmark => 'Eliminar de marcadores';
 
   @override
-  String get unfavouritingMessage =>
-      'Al quitar de favoritos, este elemento se eliminará de su lista de favoritos.';
+  String get unbookmarkingMessage =>
+      'Al eliminar este elemento de los marcadores, se eliminará de tu lista de marcadores.';
+
+  @override
+  String get noBookmarkItems => 'Aún no hay marcadores';
+
+  @override
+  String get itemAddedToBookmark => 'Elemento añadido a marcadores';
 
   @override
   String get remove => 'Quitar';
@@ -205,9 +211,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get searchContentHere => 'Buscar contenido aquí';
 
   @override
-  String get noFavouriteItems => 'No hay favoritos';
-
-  @override
   String get noInternetConnection => 'Sin conexión a internet';
 
   @override
@@ -230,9 +233,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get imageSavedToGallery => 'Imagen guardada en la galería';
-
-  @override
-  String get itemAddedToFavorite => 'Elemento añadido a favoritos';
 
   @override
   String get noSearchHistory => 'No hay historial de búsqueda';

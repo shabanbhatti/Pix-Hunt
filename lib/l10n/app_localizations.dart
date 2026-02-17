@@ -116,11 +116,11 @@ abstract class AppLocalizations {
   /// **'Profile'**
   String get profile;
 
-  /// No description provided for @favourite.
+  /// No description provided for @bookmark.
   ///
   /// In en, this message translates to:
-  /// **'Favourite'**
-  String get favourite;
+  /// **'Bookmarks'**
+  String get bookmark;
 
   /// No description provided for @searchHistory.
   ///
@@ -260,17 +260,29 @@ abstract class AppLocalizations {
   /// **'Search'**
   String get search;
 
-  /// No description provided for @removeFromFavourite.
+  /// No description provided for @removeFromBookmark.
   ///
   /// In en, this message translates to:
-  /// **'Remove from Favourite'**
-  String get removeFromFavourite;
+  /// **'Remove from Bookmark'**
+  String get removeFromBookmark;
 
-  /// No description provided for @unfavouritingMessage.
+  /// No description provided for @unbookmarkingMessage.
   ///
   /// In en, this message translates to:
-  /// **'By removing from favourites, this item will be deleted from your favourites list.'**
-  String get unfavouritingMessage;
+  /// **'By removing from Bookmark, this item will be deleted from your Bookmarks.'**
+  String get unbookmarkingMessage;
+
+  /// No description provided for @noBookmarkItems.
+  ///
+  /// In en, this message translates to:
+  /// **'No Bookmarks Yet'**
+  String get noBookmarkItems;
+
+  /// No description provided for @itemAddedToBookmark.
+  ///
+  /// In en, this message translates to:
+  /// **'Item added to Bookmarks'**
+  String get itemAddedToBookmark;
 
   /// No description provided for @remove.
   ///
@@ -494,12 +506,6 @@ abstract class AppLocalizations {
   /// **'Search content here'**
   String get searchContentHere;
 
-  /// No description provided for @noFavouriteItems.
-  ///
-  /// In en, this message translates to:
-  /// **'No Favourite Items'**
-  String get noFavouriteItems;
-
   /// No description provided for @noInternetConnection.
   ///
   /// In en, this message translates to:
@@ -547,12 +553,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Image saved to gallery'**
   String get imageSavedToGallery;
-
-  /// No description provided for @itemAddedToFavorite.
-  ///
-  /// In en, this message translates to:
-  /// **'Item added to favourites'**
-  String get itemAddedToFavorite;
 
   /// No description provided for @noSearchHistory.
   ///

@@ -1,7 +1,7 @@
 {
   "name": "姓名",
   "profile": "个人资料",
-  "favourite": "收藏",
+  "bookmark": "收藏",
   "searchHistory": "搜索历史",
   "downloadHistory": "下载历史",
   "theme": "主题",
@@ -25,8 +25,7 @@
   "open": "打开",
   "cancel": "取消",
   "search": "搜索",
-  "removeFromFavourite": "从收藏中移除",
-  "unfavouritingMessage": "移除收藏后，此项目将从您的收藏列表中删除。",
+  
   "remove": "移除",
   "download": "下载",
   "pixels3k": "3k+ 像素",
@@ -64,7 +63,7 @@
   "night": "夜晚",
   "waterfall": "瀑布",
   "searchContentHere": "在此搜索内容",
-  "noFavouriteItems": "没有收藏的项目",
+  
   "noInternetConnection": "无网络连接",
   "fieldShouldNotBeEmpty": "字段不能为空",
   "thanks": "谢谢",
@@ -99,6 +98,11 @@
   "accountVerificationLinkSent": "账户验证链接已发送到您的邮箱（请检查垃圾邮件）。请完成验证。",
   "passwordDoesntMatch": "两次输入的密码不匹配",
   "emailNotVerified": "电子邮件尚未验证！请在登录前验证您的电子邮件。",
-  "loginYourAccount": "登录您的账户"
+  "loginYourAccount": "登录您的账户",
+  "removeFromBookmark": "从收藏中移除",
+  "unbookmarkingMessage": "从收藏中移除后，此项目将从您的收藏列表中删除。",
+  "noBookmarkItems": "还没有收藏内容",
+  "itemAddedToBookmark": "项目已添加到收藏"
+
 
 }

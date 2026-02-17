@@ -100,25 +100,28 @@ class _UserProfileState extends ConsumerState<UserProfile>
                       children: [
                         const CircleAvatarWidget(),
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              FadeTransition(
-                                opacity: fade,
-                                child: ScaleTransition(
-                                  scale: scale,
-                                  child: _userName(),
+                          child: Padding(
+                            padding: EdgeInsetsGeometry.only(left: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FadeTransition(
+                                  opacity: fade,
+                                  child: ScaleTransition(
+                                    scale: scale,
+                                    child: _userName(),
+                                  ),
                                 ),
-                              ),
 
-                              FadeTransition(
-                                opacity: fade,
-                                child: ScaleTransition(
-                                  scale: scale,
-                                  child: _userEmail(),
+                                FadeTransition(
+                                  opacity: fade,
+                                  child: ScaleTransition(
+                                    scale: scale,
+                                    child: _userEmail(),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -173,7 +176,7 @@ class _UserProfileState extends ConsumerState<UserProfile>
 
 Widget _userName() {
   return Padding(
-    padding: EdgeInsets.symmetric(vertical: 15),
+    padding: EdgeInsets.only(top: 15),
     child: Consumer(
       builder: (context, ref, child) {
         var myRef = ref.watch(userDbProvider);

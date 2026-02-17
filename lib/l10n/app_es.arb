@@ -1,7 +1,7 @@
 {
   "name": "Nombre",
   "profile": "Perfil",
-  "favourite": "Favoritos",
+  "bookmark": "Marcadores",
   "searchHistory": "Historial de búsqueda",
   "downloadHistory": "Historial de descargas",
   "theme": "Tema",
@@ -25,8 +25,7 @@
   "open": "Abrir",
   "cancel": "Cancelar",
   "search": "Buscar",
-  "removeFromFavourite": "Quitar de favoritos",
-  "unfavouritingMessage": "Al quitar de favoritos, este elemento se eliminará de su lista de favoritos.",
+  
   "remove": "Quitar",
   "download": "Descargar",
   "pixels3k": "3k+ Píxeles",
@@ -64,7 +63,7 @@
   "night": "Noche",
   "waterfall": "Cascada",
   "searchContentHere": "Buscar contenido aquí",
-  "noFavouriteItems": "No hay favoritos",
+  
   "noInternetConnection": "Sin conexión a internet",
   "fieldShouldNotBeEmpty": "El campo no debe estar vacío",
   "thanks": "Gracias",
@@ -99,5 +98,10 @@
   "accountVerificationLinkSent": "Se ha enviado un enlace de verificación a su correo (revise la carpeta de spam). Por favor verifique su cuenta.",
   "passwordDoesntMatch": "Las contraseñas no coinciden",
   "emailNotVerified": "¡El correo electrónico no está verificado! Por favor, verifica tu correo antes de iniciar sesión.",
-  "loginYourAccount": "Inicia sesión en tu cuenta"
+  "loginYourAccount": "Inicia sesión en tu cuenta",
+   "removeFromBookmark": "Eliminar de marcadores",
+  "unbookmarkingMessage": "Al eliminar este elemento de los marcadores, se eliminará de tu lista de marcadores.",
+  "noBookmarkItems": "Aún no hay marcadores",
+  "itemAddedToBookmark": "Elemento añadido a marcadores"
+
 }

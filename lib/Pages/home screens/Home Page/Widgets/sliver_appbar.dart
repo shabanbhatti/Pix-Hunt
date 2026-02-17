@@ -4,6 +4,7 @@ import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart'
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_state.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Home%20Page/Widgets/circle_avatar_home_widget.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/bookmark%20page/bookmark_page.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Search%20page/search_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/user_profile.dart';
@@ -45,6 +46,22 @@ class HomeSliverAppbar extends ConsumerWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Padding(
+                padding: const EdgeInsetsGeometry.symmetric(horizontal: 7),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      navigatorKey.currentContext!,
+                      BookmarkPage.pageName,
+                    );
+                  },
+                  child: const Icon(
+                    Icons.bookmark,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
               IconButton(
                 onPressed: () {
                   Navigator.pushNamed(

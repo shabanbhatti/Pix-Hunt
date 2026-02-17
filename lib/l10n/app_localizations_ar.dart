@@ -15,7 +15,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profile => 'الملف الشخصي';
 
   @override
-  String get favourite => 'المفضلة';
+  String get bookmark => 'الإشارات المرجعية';
 
   @override
   String get searchHistory => 'سجل البحث';
@@ -87,11 +87,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get search => 'بحث';
 
   @override
-  String get removeFromFavourite => 'إزالة من المفضلة';
+  String get removeFromBookmark => 'إزالة من الإشارات المرجعية';
 
   @override
-  String get unfavouritingMessage =>
-      'عند الإزالة من المفضلة، سيتم حذف هذا العنصر من قائمة المفضلة.';
+  String get unbookmarkingMessage =>
+      'عند إزالة هذا العنصر من الإشارات المرجعية، سيتم حذفه من قائمة الإشارات المرجعية الخاصة بك.';
+
+  @override
+  String get noBookmarkItems => 'لا توجد إشارات مرجعية بعد';
+
+  @override
+  String get itemAddedToBookmark => 'تمت إضافة العنصر إلى الإشارات المرجعية';
 
   @override
   String get remove => 'إزالة';
@@ -205,9 +211,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get searchContentHere => 'ابحث هنا';
 
   @override
-  String get noFavouriteItems => 'لا توجد عناصر مفضلة';
-
-  @override
   String get noInternetConnection => 'لا يوجد اتصال بالإنترنت';
 
   @override
@@ -230,9 +233,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get imageSavedToGallery => 'تم حفظ الصورة في المعرض';
-
-  @override
-  String get itemAddedToFavorite => 'تمت إضافة العنصر إلى المفضلة';
 
   @override
   String get noSearchHistory => 'لا يوجد سجل بحث';

@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
@@ -7,7 +6,6 @@ import 'package:pix_hunt_project/Pages/home%20screens/Home%20Page/home.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Intro%20Page/intro_page.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/splash%20page/splash_page.dart';
-import 'package:pix_hunt_project/core/Utils/internet_checker_util.dart';
 import 'package:pix_hunt_project/services/shared_preference_service.dart';
 
 class DecidePage extends ConsumerStatefulWidget {
@@ -37,7 +35,7 @@ class _DecidePageState extends ConsumerState<DecidePage>
   @override
   void initState() {
     super.initState();
-  
+
     animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -125,7 +123,6 @@ class _DecidePageState extends ConsumerState<DecidePage>
   @override
   void dispose() {
     animationController.dispose();
-    // InternetCheckerUtil().stopListening();
     super.dispose();
   }
 

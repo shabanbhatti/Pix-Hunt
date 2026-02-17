@@ -38,8 +38,8 @@ void removeFavoritesItemsDialog(BuildContext context, VoidCallback onDelete) {
     builder: (contextz) {
       var lng = AppLocalizations.of(contextz);
       return AlertDialog(
-        title: Text(lng?.removeFromFavourite ?? ''),
-        content: Text(lng?.unfavouritingMessage ?? ''),
+        title: Text(lng?.removeFromBookmark ?? ''),
+        content: Text(lng?.unbookmarkingMessage ?? ''),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),

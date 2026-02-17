@@ -15,7 +15,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profile => 'Profile';
 
   @override
-  String get favourite => 'Favourite';
+  String get bookmark => 'Bookmarks';
 
   @override
   String get searchHistory => 'Search History';
@@ -87,11 +87,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get search => 'Search';
 
   @override
-  String get removeFromFavourite => 'Remove from Favourite';
+  String get removeFromBookmark => 'Remove from Bookmark';
 
   @override
-  String get unfavouritingMessage =>
-      'By removing from favourites, this item will be deleted from your favourites list.';
+  String get unbookmarkingMessage =>
+      'By removing from Bookmark, this item will be deleted from your Bookmarks.';
+
+  @override
+  String get noBookmarkItems => 'No Bookmarks Yet';
+
+  @override
+  String get itemAddedToBookmark => 'Item added to Bookmarks';
 
   @override
   String get remove => 'Remove';
@@ -205,9 +211,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchContentHere => 'Search content here';
 
   @override
-  String get noFavouriteItems => 'No Favourite Items';
-
-  @override
   String get noInternetConnection => 'No Internet Connection';
 
   @override
@@ -230,9 +233,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get imageSavedToGallery => 'Image saved to gallery';
-
-  @override
-  String get itemAddedToFavorite => 'Item added to favourites';
 
   @override
   String get noSearchHistory => 'No Search History';

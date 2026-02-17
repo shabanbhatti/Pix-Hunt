@@ -15,7 +15,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get profile => 'پروفائل';
 
   @override
-  String get favourite => 'پسندیدہ';
+  String get bookmark => 'بُک مارکس';
 
   @override
   String get searchHistory => 'تلاش کی ہسٹری';
@@ -87,11 +87,17 @@ class AppLocalizationsUr extends AppLocalizations {
   String get search => 'تلاش کریں';
 
   @override
-  String get removeFromFavourite => 'پسندیدہ سے ہٹائیں';
+  String get removeFromBookmark => 'بک مارکس سے ہٹائیں';
 
   @override
-  String get unfavouritingMessage =>
-      'پسندیدہ سے ہٹانے پر یہ آئٹم آپ کی فہرست سے حذف ہو جائے گا۔';
+  String get unbookmarkingMessage =>
+      'بک مارکس سے ہٹانے پر یہ آئٹم آپ کی بک مارکس لسٹ سے حذف ہو جائے گا۔';
+
+  @override
+  String get noBookmarkItems => 'ابھی تک کوئی بک مارکس موجود نہیں';
+
+  @override
+  String get itemAddedToBookmark => 'آئٹم بک مارکس میں شامل کر دیا گیا ہے';
 
   @override
   String get remove => 'ہٹائیں';
@@ -205,9 +211,6 @@ class AppLocalizationsUr extends AppLocalizations {
   String get searchContentHere => 'یہاں تلاش کریں';
 
   @override
-  String get noFavouriteItems => 'کوئی پسندیدہ آئٹمز نہیں';
-
-  @override
   String get noInternetConnection => 'انٹرنیٹ کنکشن موجود نہیں';
 
   @override
@@ -230,9 +233,6 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get imageSavedToGallery => 'تصویر گیلری میں محفوظ ہو گئی';
-
-  @override
-  String get itemAddedToFavorite => 'آئٹم پسندیدہ میں شامل کر دیا گیا';
 
   @override
   String get noSearchHistory => 'کوئی تلاش کی ہسٹری نہیں';

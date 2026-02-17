@@ -43,7 +43,7 @@ class SliverappbarWithTextField extends StatelessWidget {
       ),
       largeTitle: Text(
         (isBottomNaviSearchPage)
-            ? AppLocalizations.of(context)?.favourite ?? ''
+            ? AppLocalizations.of(context)?.bookmark ?? ''
             : AppLocalizations.of(context)?.search ?? '',
       ),
 

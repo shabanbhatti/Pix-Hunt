@@ -1,30 +1,25 @@
-// 1. Firebase References
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Models/fav_items.dart';
+import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/core/injectors/injectors.dart';
 import 'package:pix_hunt_project/repository/cloud_db_repository.dart';
 
-final favStreamProvider = StreamProvider.autoDispose<List<FavItemModalClass>>((
-  ref,
-) {
+final favStreamProvider = StreamProvider.autoDispose<List<Photos>>((ref) {
   var cloudRep = getIt<CloudDbRepository>();
 
-  return cloudRep.favItemsStreams();
+  return cloudRep.getAllBookmarks();
 });
 
 final searchListProvider =
-    StateNotifierProvider<SearchListStateNotifier, List<FavItemModalClass>>((
-      ref,
-    ) {
+    StateNotifierProvider<SearchListStateNotifier, List<Photos>>((ref) {
       return SearchListStateNotifier();
     });
 
-class SearchListStateNotifier extends StateNotifier<List<FavItemModalClass>> {
+class SearchListStateNotifier extends StateNotifier<List<Photos>> {
   SearchListStateNotifier() : super([]);
 
-  List<FavItemModalClass> originalItems = [];
+  List<Photos> originalItems = [];
 
-  void updateOriginalList(List<FavItemModalClass> newItems) {
+  void updateOriginalList(List<Photos> newItems) {
     originalItems = newItems;
     state = newItems;
   }
@@ -34,12 +29,10 @@ class SearchListStateNotifier extends StateNotifier<List<FavItemModalClass>> {
       state = [...originalItems];
     } else {
       state =
-          originalItems
-              .where(
-                (item) =>
-                    item.title.toLowerCase().contains(query.toLowerCase()),
-              )
-              .toList();
+          originalItems.where((item) {
+            String title = item.title ?? '';
+            return title.toLowerCase().contains(query.toLowerCase());
+          }).toList();
     }
   }
 }

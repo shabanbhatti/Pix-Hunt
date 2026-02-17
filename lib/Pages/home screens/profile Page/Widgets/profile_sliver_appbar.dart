@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/language%20riverpod/language_riverpod.dart';
-import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/Widgets/circle_avatar.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class ProfileSliverAppbar extends ConsumerWidget {
   const ProfileSliverAppbar({super.key});
@@ -28,13 +25,44 @@ class ProfileSliverAppbar extends ConsumerWidget {
             ref.read(languageProvider.notifier).languageToggled(value);
           }
         },
+        child: Icon(Icons.public),
         itemBuilder:
             (context) => const [
-              PopupMenuItem(value: 'en', child: Text('🇺🇸 English')),
-              PopupMenuItem(value: 'es', child: Text('🇪🇸 Spanish')),
-              PopupMenuItem(value: 'ar', child: Text('🇸🇦 Arabic')),
-              PopupMenuItem(value: 'ur', child: Text('🇵🇰 Urdu')),
-              PopupMenuItem(value: 'zh', child: Text('🇨🇳 Chinese')),
+              PopupMenuItem(
+                value: 'en',
+                child: ListTile(
+                  leading: Text('🇺🇸', style: TextStyle(fontSize: 20)),
+                  title: Text('English'),
+                ),
+              ),
+              PopupMenuItem(
+                value: 'es',
+                child: ListTile(
+                  leading: Text('🇪🇸', style: TextStyle(fontSize: 20)),
+                  title: Text('Spanish'),
+                ),
+              ),
+              PopupMenuItem(
+                value: 'ar',
+                child: ListTile(
+                  leading: Text('🇸🇦', style: TextStyle(fontSize: 20)),
+                  title: Text('Arabic'),
+                ),
+              ),
+              PopupMenuItem(
+                value: 'ur',
+                child: ListTile(
+                  leading: Text('🇵🇰', style: TextStyle(fontSize: 20)),
+                  title: Text('Urdu'),
+                ),
+              ),
+              PopupMenuItem(
+                value: 'zh',
+                child: ListTile(
+                  leading: Text('🇨🇳', style: TextStyle(fontSize: 20)),
+                  title: Text('Chinese'),
+                ),
+              ),
             ],
       ),
     );

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Download%20History%20Page/downloads_history_page.dart';
-import 'package:pix_hunt_project/Pages/home%20screens/Favourite%20Page/fav_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/bookmark%20page/bookmark_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Theme%20page/theme_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20Search%20history%20page/search_history_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/Widgets/profile_list_tile.dart';
@@ -22,10 +22,10 @@ class ProfileListtileWidget extends StatelessWidget {
         Builder(
           builder: (contextz) {
             return DrawerListTile(
-              leading: CupertinoIcons.heart_fill,
-              title: AppLocalizations.of(contextz)!.favourite,
+              leading: CupertinoIcons.bookmark_fill,
+              title: AppLocalizations.of(contextz)!.bookmark,
               onTap: () {
-                Navigator.of(context).pushNamed(FavPage.pageName);
+                Navigator.of(context).pushNamed(BookmarkPage.pageName);
               },
             );
           },

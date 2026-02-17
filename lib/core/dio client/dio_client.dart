@@ -11,6 +11,9 @@ class DioClient {
       BaseOptions(
         baseUrl: 'https://api.pexels.com/v1/',
         headers: {'Authorization': EnvUtils.apiKey ?? ''},
+        connectTimeout: const Duration(seconds: 15),
+        sendTimeout: const Duration(seconds: 20),
+        receiveTimeout: const Duration(seconds: 30),
       ),
     );
     dio.interceptors.add(

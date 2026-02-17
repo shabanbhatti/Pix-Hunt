@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/api%20Riverpod/api_riverpod.dart';
-import 'package:pix_hunt_project/Models/pexer.dart';
+import 'package:pix_hunt_project/Models/pictures_model.dart';
 
 class PhotoPagesWidget extends StatelessWidget {
   const PhotoPagesWidget({
@@ -89,7 +89,7 @@ class PhotoPagesWidget extends StatelessWidget {
                       curve: Curves.easeInOut,
                     );
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_circle_right,
                     size: 40,
                     color: Colors.indigo,

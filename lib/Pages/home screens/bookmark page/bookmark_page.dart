@@ -1,24 +1,23 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/Fav%20page%20Stream%20riverpod/fav_riverpod.dart';
-import 'package:pix_hunt_project/Models/fav_items.dart';
-import 'package:pix_hunt_project/Pages/home%20screens/Favourite%20Page/Widgets/fav_card_widget.dart';
-import 'package:pix_hunt_project/Pages/home%20screens/Favourite%20Page/Widgets/fav_loading_widget.dart';
+import 'package:pix_hunt_project/Models/pictures_model.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/bookmark%20page/Widgets/bookmark_card_widget.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/bookmark%20page/Widgets/bookmark_loading_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/sliverappbar_with_textfield.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class FavPage extends ConsumerStatefulWidget {
-  const FavPage({super.key});
+class BookmarkPage extends ConsumerStatefulWidget {
+  const BookmarkPage({super.key});
   static const pageName = '/fav_page';
 
   @override
-  ConsumerState<FavPage> createState() => _FavPageState();
+  ConsumerState<BookmarkPage> createState() => _BookmarkPageState();
 }
 
-class _FavPageState extends ConsumerState<FavPage>
+class _BookmarkPageState extends ConsumerState<BookmarkPage>
     with SingleTickerProviderStateMixin {
   TextEditingController controller = TextEditingController();
   FocusNode focusNode = FocusNode();
@@ -53,11 +52,8 @@ class _FavPageState extends ConsumerState<FavPage>
 
   @override
   Widget build(BuildContext context) {
-    log('Favourite page build called');
-    ref.listen<AsyncValue<List<FavItemModalClass>>>(favStreamProvider, (
-      _,
-      next,
-    ) {
+    log('Bookmark page build called');
+    ref.listen<AsyncValue<List<Photos>>>(favStreamProvider, (_, next) {
       next.whenData((data) {
         ref.read(searchListProvider.notifier).updateOriginalList(data);
       });
@@ -138,20 +134,21 @@ class _FavPageState extends ConsumerState<FavPage>
     );
   }
 
-  Widget _myCardWidget(List<FavItemModalClass> list, Animation<double> scale) {
-    var searchRef = list.reversed.toList();
+  Widget _myCardWidget(List<Photos> list, Animation<double> scale) {
+    var searchRef = list;
+    ;
     if (searchRef.isEmpty) {
       return SliverFillRemaining(
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.favorite),
+              const Icon(Icons.bookmark),
               Padding(
-                padding: EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 10),
                 child: Text(
-                  ' ${AppLocalizations.of(context)!.noFavouriteItems} ',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  ' ${AppLocalizations.of(context)!.noBookmarkItems} ',
+                  style: const TextStyle(fontWeight: FontWeight.normal),
                 ),
               ),
             ],
@@ -167,7 +164,7 @@ class _FavPageState extends ConsumerState<FavPage>
           itemBuilder: (context, index) {
             return ScaleTransition(
               scale: scale,
-              child: FavCardWidget(favItem: searchRef[index]),
+              child: BookmarkCardWidget(photos: searchRef[index]),
             );
           },
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -198,7 +195,7 @@ Widget _loading() {
         mainAxisExtent: 290,
       ),
       itemBuilder: (context, index) {
-        return const Skeletonizer(child: FavLoadingWidget());
+        return const Skeletonizer(child: BookmarkLoadingWidget());
       },
     ),
   );

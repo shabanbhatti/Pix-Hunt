@@ -1,29 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/api%20Riverpod/api_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
-
-import 'package:pix_hunt_project/Models/fav_items.dart';
+import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/view%20card%20detail%20page/view_card_detail_page.dart';
 
 import 'package:pix_hunt_project/core/Utils/bottom%20sheets/half_size_bottom_sheet_util.dart';
+import 'package:pix_hunt_project/core/Utils/date_format_util.dart';
 import 'package:pix_hunt_project/core/Widgets/custom_dialog_boxes.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class FavCardWidget extends StatelessWidget {
-  const FavCardWidget({super.key, required this.favItem});
+class BookmarkCardWidget extends StatelessWidget {
+  const BookmarkCardWidget({super.key, required this.photos});
 
-  final FavItemModalClass favItem;
+  final Photos photos;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.of(
-        //   context,
-        // ).pushNamed(ViewCardDetailsPage.pageName, arguments: favItem);
         openHalfBottomSheet(
           context,
-          child: ViewCardDetailsPage(favItemModalClass: favItem),
+          child: ViewCardDetailsPage(photos: photos),
         );
       },
       child: Padding(
@@ -45,7 +43,7 @@ class FavCardWidget extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: CachedNetworkImage(
-                      imageUrl: favItem.mediumPhotoUrl,
+                      imageUrl: photos.mediumImgUrl ?? '',
                       fit: BoxFit.cover,
                       fadeInDuration: const Duration(milliseconds: 300),
                       placeholder:
@@ -63,11 +61,11 @@ class FavCardWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Spacer(flex: 1),
+
                 Expanded(
                   flex: 10,
                   child: Text(
-                    favItem.title,
+                    photos.describtion ?? '',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -75,7 +73,7 @@ class FavCardWidget extends StatelessWidget {
                 Expanded(
                   flex: 5,
                   child: Text(
-                    favItem.photographer,
+                    photos.photographer ?? '',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontWeight: FontWeight.bold),
@@ -86,23 +84,45 @@ class FavCardWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Consumer(
-                        builder: (context, ref, child) {
-                          return IconButton(
-                            onPressed: () {
-                              removeFavoritesItemsDialog(context, () {
-                                ref
-                                    .read(userDbProvider.notifier)
-                                    .deleteFavourites(favItem);
-                              });
-                            },
-                            icon: const Icon(
-                              Icons.favorite,
-                              color: Colors.indigo,
-                              size: 30,
+                      Spacer(flex: 2),
+                      Expanded(
+                        flex: 5,
+                        child: Padding(
+                          padding: EdgeInsetsGeometry.only(left: 10),
+                          child: Text(
+                            DateFormatUtil.dateFormat(photos.createdAt ?? ''),
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
                             ),
-                          );
-                        },
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Consumer(
+                          builder: (context, ref, child) {
+                            return IconButton(
+                              onPressed: () {
+                                removeFavoritesItemsDialog(context, () async {
+                                  await ref
+                                      .read(apiProvider.notifier)
+                                      .updatePhoto(
+                                        photos.copyWith(isBookMarkedx: false),
+                                      );
+                                  await ref
+                                      .read(userDbProvider.notifier)
+                                      .deleteBookmarkItem(photos);
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.bookmark,
+                                color: Colors.indigo,
+                                size: 30,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ],
                   ),

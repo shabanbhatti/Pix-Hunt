@@ -15,7 +15,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get profile => '个人资料';
 
   @override
-  String get favourite => '收藏';
+  String get bookmark => '收藏';
 
   @override
   String get searchHistory => '搜索历史';
@@ -87,10 +87,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get search => '搜索';
 
   @override
-  String get removeFromFavourite => '从收藏中移除';
+  String get removeFromBookmark => '从收藏中移除';
 
   @override
-  String get unfavouritingMessage => '移除收藏后，此项目将从您的收藏列表中删除。';
+  String get unbookmarkingMessage => '从收藏中移除后，此项目将从您的收藏列表中删除。';
+
+  @override
+  String get noBookmarkItems => '还没有收藏内容';
+
+  @override
+  String get itemAddedToBookmark => '项目已添加到收藏';
 
   @override
   String get remove => '移除';
@@ -204,9 +210,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get searchContentHere => '在此搜索内容';
 
   @override
-  String get noFavouriteItems => '没有收藏的项目';
-
-  @override
   String get noInternetConnection => '无网络连接';
 
   @override
@@ -229,9 +232,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get imageSavedToGallery => '图片已保存到相册';
-
-  @override
-  String get itemAddedToFavorite => '已添加到收藏';
 
   @override
   String get noSearchHistory => '没有搜索历史';

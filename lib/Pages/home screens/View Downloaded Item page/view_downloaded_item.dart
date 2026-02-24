@@ -4,10 +4,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/cloud%20db%20controller/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Models/downloads_image_model.dart';
 import 'package:pix_hunt_project/core/Utils/date_format_util.dart';
-import 'package:pix_hunt_project/core/Widgets/custom_dialog_boxes.dart';
+import 'package:pix_hunt_project/core/Utils/dialog%20boxes/delete_dialog_boxes.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class ViewDownloadedItem extends StatefulWidget {
@@ -55,7 +56,7 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
                     Navigator.pop(context);
                   },
                   child: CircleAvatar(
-                    backgroundColor: Colors.indigo.withAlpha(150),
+                    backgroundColor: ConstantColors.appColor.withAlpha(150),
                     radius: 5,
                     child: const Icon(
                       CupertinoIcons.back,
@@ -86,7 +87,8 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor: Colors.indigo.withAlpha(150),
+                              backgroundColor: ConstantColors.appColor
+                                  .withAlpha(150),
                               radius: 23,
                               child: const Icon(
                                 CupertinoIcons.delete,

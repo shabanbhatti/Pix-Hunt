@@ -103,6 +103,6 @@
   "removeFromBookmark": "بک مارکس سے ہٹائیں",
   "unbookmarkingMessage": "بک مارکس سے ہٹانے پر یہ آئٹم آپ کی بک مارکس لسٹ سے حذف ہو جائے گا۔",
   "noBookmarkItems": "ابھی تک کوئی بک مارکس موجود نہیں",
-  "itemAddedToBookmark": "آئٹم بک مارکس میں شامل کر دیا گیا ہے"
-
+  "itemAddedToBookmark": "آئٹم بک مارکس میں شامل کر دیا گیا ہے",
+"nameAtLeast4Char": "نام کم از کم 4 حروف پر مشتمل ہونا چاہیے"
 }

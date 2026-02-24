@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20home%20cetagory%20Page/view_page.dart';
+import 'package:pix_hunt_project/core/typedefs/typedefs.dart';
 
 class BoxWidget extends StatelessWidget {
   const BoxWidget({super.key, required this.record});
 
-  final ({String title, String imgPath}) record;
+  final BoxModel record;
   @override
   Widget build(BuildContext context) {
     return Padding(

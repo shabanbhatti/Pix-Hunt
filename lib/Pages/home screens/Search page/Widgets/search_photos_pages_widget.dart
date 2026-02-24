@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/api%20Riverpod/api_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/api%20controller/api_riverpod.dart';
 import 'package:pix_hunt_project/Models/pictures_model.dart';
 
 class SearchPhotosPagesWidget extends StatelessWidget {
@@ -28,19 +28,19 @@ class SearchPhotosPagesWidget extends StatelessWidget {
                     if (pexer.page == 5) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: controller.text, pageNumber: 4);
+                          .fetchData(search: controller.text, pageNumber: 4);
                     } else if (pexer.page == 4) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: controller.text, pageNumber: 3);
+                          .fetchData(search: controller.text, pageNumber: 3);
                     } else if (pexer.page == 3) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: controller.text, pageNumber: 2);
+                          .fetchData(search: controller.text, pageNumber: 2);
                     } else if (pexer.page == 2) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: controller.text, pageNumber: 1);
+                          .fetchData(search: controller.text, pageNumber: 1);
                     }
 
                     scrollController.animateTo(
@@ -72,7 +72,7 @@ class SearchPhotosPagesWidget extends StatelessWidget {
                     if (pexer.page == 1) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: controller.text, pageNumber: 2)
+                          .fetchData(search: controller.text, pageNumber: 2)
                           .then((value) {
                             scrollController.animateTo(
                               0,
@@ -83,15 +83,15 @@ class SearchPhotosPagesWidget extends StatelessWidget {
                     } else if (pexer.page == 2) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: controller.text, pageNumber: 3);
+                          .fetchData(search: controller.text, pageNumber: 3);
                     } else if (pexer.page == 3) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: controller.text, pageNumber: 4);
+                          .fetchData(search: controller.text, pageNumber: 4);
                     } else if (pexer.page == 4) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: controller.text, pageNumber: 5);
+                          .fetchData(search: controller.text, pageNumber: 5);
                     }
 
                     scrollController.animateTo(

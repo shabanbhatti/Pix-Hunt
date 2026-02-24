@@ -3,11 +3,13 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_state.dart';
+import 'package:pix_hunt_project/Controllers/auth%20controller/auth_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/auth%20controller/auth_state.dart';
 import 'package:pix_hunt_project/core/Utils/toast.dart';
-import 'package:pix_hunt_project/core/Widgets/Signup%20&%20login%20text%20form%20field/text_form_field.dart';
+import 'package:pix_hunt_project/core/Utils/validations_textfields_utils.dart';
+import 'package:pix_hunt_project/core/Widgets/custom%20textfields/custom_textfield_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class ForgetPassPage extends ConsumerStatefulWidget {
@@ -178,8 +180,14 @@ class _ForgetPassPageState extends ConsumerState<ForgetPassPage>
                           scale: scaleEmailField,
                           child: FadeTransition(
                             opacity: fadeEmailField,
-                            child: EmailField(
-                              isForName: false,
+                            child: CustomTextfieldWidget(
+                              validator: (value) {
+                                return ValidationsTextfieldsUtils.emailValidation(
+                                  value,
+                                  context,
+                                );
+                              },
+
                               controller: controller,
                               focusNode: focusNode,
                               label: lng?.email ?? '',
@@ -204,7 +212,7 @@ class _ForgetPassPageState extends ConsumerState<ForgetPassPage>
                                 style: TextStyle(
                                   fontSize: 12,
 
-                                  color: Color.fromARGB(255, 77, 91, 172),
+                                  color: ConstantColors.appColor,
                                 ),
                               ),
                             ),

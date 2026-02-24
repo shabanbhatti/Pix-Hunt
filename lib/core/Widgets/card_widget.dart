@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/APi%20Riverpod/api_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/api%20controller/api_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/cloud%20db%20controller/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/view%20card%20detail%20page/view_card_detail_page.dart';
 import 'package:pix_hunt_project/core/Utils/bottom%20sheets/half_size_bottom_sheet_util.dart';
 import 'package:pix_hunt_project/core/Utils/internet_checker_util.dart';
 
 import 'package:pix_hunt_project/core/Utils/toast.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/core/injectors/injectors.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -145,7 +146,6 @@ class _CardWidgetState extends ConsumerState<CardWidget> {
 
                                   ToastUtils.showToast(
                                     '${lng?.itemAddedToBookmark ?? ''}',
-                                    color: Colors.green,
                                   );
                                 } else {
                                   isToggeled.value = false;
@@ -169,7 +169,10 @@ class _CardWidgetState extends ConsumerState<CardWidget> {
                                   ? Icons.bookmark_outlined
                                   : Icons.bookmark_outline_rounded,
 
-                              color: (value ?? false) ? Colors.indigo : null,
+                              color:
+                                  (value ?? false)
+                                      ? ConstantColors.appColor
+                                      : null,
                               size: 25,
                             ),
                           );

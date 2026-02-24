@@ -302,6 +302,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get nameIsRequired => 'الاسم مطلوب';
 
   @override
+  String get nameAtLeast4Char => 'يجب أن يكون الاسم مكونًا من 4 أحرف على الأقل';
+
+  @override
   String get passwordShouldContainOneCapitalLetter =>
       'يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل';
 

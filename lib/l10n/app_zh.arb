@@ -102,7 +102,8 @@
   "removeFromBookmark": "从收藏中移除",
   "unbookmarkingMessage": "从收藏中移除后，此项目将从您的收藏列表中删除。",
   "noBookmarkItems": "还没有收藏内容",
-  "itemAddedToBookmark": "项目已添加到收藏"
+  "itemAddedToBookmark": "项目已添加到收藏",
+  "nameAtLeast4Char": "姓名至少应包含4个字符"
 
 
 }

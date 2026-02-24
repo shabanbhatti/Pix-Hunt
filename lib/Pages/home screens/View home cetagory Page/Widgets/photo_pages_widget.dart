@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/api%20Riverpod/api_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/api%20controller/api_riverpod.dart';
 import 'package:pix_hunt_project/Models/pictures_model.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 
 class PhotoPagesWidget extends StatelessWidget {
   const PhotoPagesWidget({
@@ -28,19 +29,19 @@ class PhotoPagesWidget extends StatelessWidget {
                     if (pexer.page == 5) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: title, pageNumber: 4);
+                          .fetchData(search: title, pageNumber: 4);
                     } else if (pexer.page == 4) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: title, pageNumber: 3);
+                          .fetchData(search: title, pageNumber: 3);
                     } else if (pexer.page == 3) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: title, pageNumber: 2);
+                          .fetchData(search: title, pageNumber: 2);
                     } else if (pexer.page == 2) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: title, pageNumber: 1);
+                          .fetchData(search: title, pageNumber: 1);
                     }
                     scrollController.animateTo(
                       0,
@@ -51,7 +52,7 @@ class PhotoPagesWidget extends StatelessWidget {
                   icon: const Icon(
                     Icons.arrow_circle_left,
                     size: 40,
-                    color: Colors.indigo,
+                    color: ConstantColors.appColor,
                   ),
                 );
               },
@@ -68,19 +69,19 @@ class PhotoPagesWidget extends StatelessWidget {
                     if (pexer.page == 1) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: title, pageNumber: 2);
+                          .fetchData(search: title, pageNumber: 2);
                     } else if (pexer.page == 2) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: title, pageNumber: 3);
+                          .fetchData(search: title, pageNumber: 3);
                     } else if (pexer.page == 3) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: title, pageNumber: 4);
+                          .fetchData(search: title, pageNumber: 4);
                     } else if (pexer.page == 4) {
                       apiProviderREF
                           .read(apiProvider.notifier)
-                          .fetchApi(search: title, pageNumber: 5);
+                          .fetchData(search: title, pageNumber: 5);
                     }
 
                     scrollController.animateTo(
@@ -92,7 +93,7 @@ class PhotoPagesWidget extends StatelessWidget {
                   icon: const Icon(
                     Icons.arrow_circle_right,
                     size: 40,
-                    color: Colors.indigo,
+                    color: ConstantColors.appColor,
                   ),
                 )
                 : const SizedBox(height: 10, width: 50);

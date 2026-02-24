@@ -3,12 +3,15 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_state.dart';
+import 'package:pix_hunt_project/Controllers/auth%20controller/auth_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/auth%20controller/auth_state.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
 import 'package:pix_hunt_project/core/Utils/toast.dart';
-import 'package:pix_hunt_project/core/Widgets/Signup%20&%20login%20text%20form%20field/text_form_field.dart';
+import 'package:pix_hunt_project/core/Utils/validations_textfields_utils.dart';
+import 'package:pix_hunt_project/core/Widgets/custom%20textfields/custom_textfield_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
+import 'package:pix_hunt_project/core/Widgets/custom%20textfields/password_textfield_widget.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class SignupPage extends ConsumerStatefulWidget {
@@ -243,8 +246,14 @@ class _SignupPageState extends ConsumerState<SignupPage>
                         scale: scaleNameField,
                         child: FadeTransition(
                           opacity: fadeNameField,
-                          child: EmailField(
-                            isForName: true,
+                          child: CustomTextfieldWidget(
+                            validator:
+                                (value) =>
+                                    ValidationsTextfieldsUtils.nameValidation(
+                                      value,
+                                      context,
+                                    ),
+
                             controller: nameController,
                             focusNode: nameFocusNode,
                             label: lng?.name ?? '',
@@ -262,8 +271,14 @@ class _SignupPageState extends ConsumerState<SignupPage>
                         scale: scaleEmailField,
                         child: FadeTransition(
                           opacity: fadeEmailField,
-                          child: EmailField(
-                            isForName: false,
+                          child: CustomTextfieldWidget(
+                            validator:
+                                (value) =>
+                                    ValidationsTextfieldsUtils.emailValidation(
+                                      value,
+                                      context,
+                                    ),
+
                             controller: emailController,
                             focusNode: emailFocusNode,
                             label: lng?.email ?? '',
@@ -281,10 +296,18 @@ class _SignupPageState extends ConsumerState<SignupPage>
                         scale: scalePasswordField,
                         child: FadeTransition(
                           opacity: fadePasswordField,
-                          child: PasswordField(
+                          child: CustomPasswordTextFieldWidget(
+                            label: lng?.password ?? '',
+                            isObscure: ValueNotifier(true),
                             controller: passwordController,
                             focusNode: passwordFocusNode,
 
+                            validator:
+                                (value) =>
+                                    ValidationsTextfieldsUtils.passwordValidation(
+                                      value,
+                                      context,
+                                    ),
                             onFieldSubmitted:
                                 (p0) => FocusScope.of(
                                   context,
@@ -297,7 +320,10 @@ class _SignupPageState extends ConsumerState<SignupPage>
                         scale: scaleConfirmPasswordField,
                         child: FadeTransition(
                           opacity: fadeConfirmPasswordField,
-                          child: ConfirmPasswordField(
+                          child: CustomPasswordTextFieldWidget(
+                            isObscure: ValueNotifier(true),
+                            label: lng?.confirmPassword ?? '',
+
                             controller: confirmPassController,
                             focusNode: confirmPassFocusNode,
                             onFieldSubmitted:
@@ -327,7 +353,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                               style: TextStyle(
                                 fontSize: 12,
 
-                                color: Color.fromARGB(255, 77, 91, 172),
+                                color: ConstantColors.appColor,
                               ),
                             ),
                           ),

@@ -1,22 +1,22 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_state.dart';
+import 'package:pix_hunt_project/Controllers/auth%20controller/auth_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/auth%20controller/auth_state.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Forgot%20Password%20Page/forget_pass.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Home%20Page/home.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/widgets/login_sliver_appbar.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/widgets/login_title_widget.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Signup%20Page/signup_page.dart';
+import 'package:pix_hunt_project/core/Utils/validations_textfields_utils.dart';
+import 'package:pix_hunt_project/core/Widgets/custom%20textfields/custom_textfield_widget.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/core/constants/constant_imgs.dart';
 import 'package:pix_hunt_project/core/Utils/toast.dart';
-import 'package:pix_hunt_project/core/Widgets/Signup%20&%20login%20text%20form%20field/text_form_field.dart';
 import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
-import 'package:pix_hunt_project/main.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -232,7 +232,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
                         scale: scaleCreateAccount,
                         child: FadeTransition(
                           opacity: fadeCreateAccount,
-                          child: _signupbutton(),
+                          child: _signupbutton(context),
                         ),
                       ),
 
@@ -260,7 +260,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
                                   }
                                 },
                                 child: const Image(
-                                  image: AssetImage(google_logo),
+                                  image: AssetImage(ConstantImgs.google_logo),
                                   height: 50,
                                   fit: BoxFit.fill,
                                 ),
@@ -324,29 +324,27 @@ class _LoginPageState extends ConsumerState<LoginPage>
   }
 }
 
-Widget _signupbutton() {
+Widget _signupbutton(BuildContext context) {
   return Builder(
-    builder: (context) {
+    builder: (contextx) {
       return Padding(
         padding: const EdgeInsets.only(top: 25, bottom: 20),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(AppLocalizations.of(context)?.ifYouDontHaveAccount ?? ''),
+            Text(AppLocalizations.of(contextx)?.ifYouDontHaveAccount ?? ''),
             GestureDetector(
               onTap: () {
-                Navigator.of(
-                  navigatorKey.currentContext!,
-                ).pushNamed(SignupPage.pageName);
+                Navigator.of(context).pushNamed(SignupPage.pageName);
               },
               child: Padding(
                 padding: EdgeInsetsGeometry.only(left: 10, right: 10),
                 child: Text(
-                  AppLocalizations.of(context)?.createAccount ?? '',
+                  AppLocalizations.of(contextx)?.createAccount ?? '',
                   style: TextStyle(
-                    decorationColor: Color.fromARGB(255, 77, 91, 172),
+                    decorationColor: ConstantColors.appColor,
                     decoration: TextDecoration.underline,
-                    color: Color.fromARGB(255, 77, 91, 172),
+                    color: ConstantColors.appColor,
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic,
                   ),
@@ -372,8 +370,10 @@ class _LoginEmailTextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var lng = AppLocalizations.of(context);
-    return EmailField(
-      isForName: false,
+    return CustomTextfieldWidget(
+      validator:
+          (value) => ValidationsTextfieldsUtils.emailValidation(value, context),
+
       controller: controller,
       focusNode: focusNode,
       label: lng?.email ?? '',
@@ -396,10 +396,14 @@ class _LoginPasswordTextFieldWidget extends StatelessWidget {
   final FocusNode btnFocusNode;
   @override
   Widget build(BuildContext context) {
-    return PasswordField(
+    return CustomTextfieldWidget(
       controller: controller,
       focusNode: focusNode,
-
+      label: AppLocalizations.of(context)?.password ?? '',
+      prefixIcon: Icons.lock,
+      validator:
+          (value) =>
+              ValidationsTextfieldsUtils.passwordValidation(value, context),
       onFieldSubmitted:
           (p0) => FocusScope.of(context).requestFocus(btnFocusNode),
     );
@@ -418,16 +422,15 @@ class _ForgotButton extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.of(
-                navigatorKey.currentContext!,
-              ).pushNamed(ForgetPassPage.pageName);
+              Navigator.of(context).pushNamed(ForgetPassPage.pageName);
             },
             child: Text(
               AppLocalizations.of(context)?.forgotPassword ?? '',
               style: const TextStyle(
-                decorationColor: Color.fromARGB(255, 77, 91, 172),
+                decorationColor: ConstantColors.appColor,
                 decoration: TextDecoration.underline,
-                color: Color.fromARGB(255, 77, 91, 172),
+                color: ConstantColors.appColor,
+                fontWeight: FontWeight.bold,
                 fontSize: 15,
               ),
             ),

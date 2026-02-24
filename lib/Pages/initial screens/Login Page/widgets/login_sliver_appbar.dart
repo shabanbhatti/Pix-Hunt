@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/Theme%20riverpod/theme_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/language%20riverpod/language_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/Theme%20controller/theme_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/language%20controller/language_riverpod.dart';
 
 class LoginSliverAppbar extends ConsumerWidget {
   const LoginSliverAppbar({super.key});
@@ -14,14 +14,17 @@ class LoginSliverAppbar extends ConsumerWidget {
         Consumer(
           builder: (context, themeRef, _) {
             var theme = themeRef.watch(themeProvider);
-            return GestureDetector(
-              onTap: () {
-                ref.read(themeProvider.notifier).toggeled();
-              },
-              child:
-                  (theme.isDark)
-                      ? Icon(Icons.light_mode)
-                      : Icon(Icons.dark_mode),
+            return Padding(
+              padding: EdgeInsetsGeometry.symmetric(horizontal: 15),
+              child: GestureDetector(
+                onTap: () {
+                  ref.read(themeProvider.notifier).toggeled();
+                },
+                child:
+                    (theme.isDark)
+                        ? const Icon(Icons.light_mode)
+                        : const Icon(Icons.dark_mode),
+              ),
             );
           },
         ),
@@ -31,6 +34,7 @@ class LoginSliverAppbar extends ConsumerWidget {
               ref.read(languageProvider.notifier).languageToggled(value);
             }
           },
+          child: const Icon(Icons.public, size: 25),
           itemBuilder:
               (context) => const [
                 PopupMenuItem(
@@ -40,6 +44,7 @@ class LoginSliverAppbar extends ConsumerWidget {
                     title: Text('English'),
                   ),
                 ),
+                PopupMenuDivider(),
                 PopupMenuItem(
                   value: 'es',
                   child: ListTile(
@@ -47,6 +52,7 @@ class LoginSliverAppbar extends ConsumerWidget {
                     title: Text('Spanish'),
                   ),
                 ),
+                PopupMenuDivider(),
                 PopupMenuItem(
                   value: 'ar',
                   child: ListTile(
@@ -54,6 +60,7 @@ class LoginSliverAppbar extends ConsumerWidget {
                     title: Text('Arabic'),
                   ),
                 ),
+                PopupMenuDivider(),
                 PopupMenuItem(
                   value: 'ur',
                   child: ListTile(
@@ -61,6 +68,7 @@ class LoginSliverAppbar extends ConsumerWidget {
                     title: Text('Urdu'),
                   ),
                 ),
+                PopupMenuDivider(),
                 PopupMenuItem(
                   value: 'zh',
                   child: ListTile(

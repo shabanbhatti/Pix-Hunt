@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/Search%20history%20stream%20riverpd/search_history_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/cloud%20db%20controller/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20home%20cetagory%20Page/view_page.dart';
 import 'package:pix_hunt_project/core/Widgets/custom_sliver_appbar.dart';

@@ -1,13 +1,13 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
+import 'package:pix_hunt_project/core/constants/constants_sharedPref_keys.dart';
 import 'package:pix_hunt_project/core/errors/exceptions/firebase_auth_exceptions.dart';
 import 'package:pix_hunt_project/core/errors/failures/failures.dart';
+import 'package:pix_hunt_project/core/injectors/injectors.dart';
 import 'package:pix_hunt_project/services/auth_service.dart';
 import 'package:pix_hunt_project/services/cloud_DB_service.dart';
-import 'package:pix_hunt_project/services/shared_preference_service.dart';
+import 'package:pix_hunt_project/core/services/shared_preference_service.dart';
 
 class AuthRepository {
   final AuthService authService;
@@ -43,6 +43,7 @@ class AuthRepository {
     required String password,
   }) async {
     try {
+      var spService = getIt<SharedPreferencesService>();
       var isLogin = await authService.loginAccount(
         email: email,
         password: password,
@@ -50,7 +51,7 @@ class AuthRepository {
       var uid = await authService.getCurrentUserUid();
       var user = await cloudDbService.getUserData(uid);
 
-      SpService.setString('username', user.name ?? '');
+      spService.setString(ConstantsSharedprefKeys.usernameKey, user.name ?? '');
       return isLogin;
     } on FirebaseAuthException catch (e) {
       var message = handleFirebaseAuthException(e);
@@ -60,9 +61,10 @@ class AuthRepository {
 
   Future<void> signOut() async {
     try {
+      var spService = getIt<SharedPreferencesService>();
       await authService.logout();
-      await SpService.setBool(SpService.loggedKEY, false);
-      await SpService.remove(SpService.userImgKEY);
+      await spService.setBool(ConstantsSharedprefKeys.loggedKEY, false);
+      await spService.remove(ConstantsSharedprefKeys.userImgKEY);
     } on FirebaseAuthException catch (e) {
       var message = handleFirebaseAuthException(e);
       throw AuthFailure(message: message);
@@ -80,10 +82,11 @@ class AuthRepository {
 
   Future<bool?> googleSignIn() async {
     try {
+      var spService = getIt<SharedPreferencesService>();
       var create = await authService.signInWithGOOGLE();
       if (create != null) {
         await cloudDbService.addUser(create, create.uid.toString());
-        SpService.setString('username', create.name ?? '');
+        spService.setString(ConstantsSharedprefKeys.usernameKey, create.name ?? '');
         return true;
       } else {
         return null;

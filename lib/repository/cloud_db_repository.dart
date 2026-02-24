@@ -6,7 +6,6 @@ import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
 import 'package:pix_hunt_project/services/auth_service.dart';
 import 'package:pix_hunt_project/services/cloud_DB_service.dart';
-import 'package:pix_hunt_project/services/shared_preference_service.dart';
 import 'package:pix_hunt_project/services/storage_service.dart';
 
 class CloudDbRepository {
@@ -179,7 +178,6 @@ class CloudDbRepository {
 
       await cloudDbService.syncEmailAfterVerification(email, uid);
     } on FirebaseAuthException catch (e) {
-      await SpService.setBool('logged', false);
       throw Exception(e.code);
     }
   }

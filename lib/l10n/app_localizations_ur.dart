@@ -302,6 +302,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get nameIsRequired => 'نام لازمی ہے';
 
   @override
+  String get nameAtLeast4Char => 'نام کم از کم 4 حروف پر مشتمل ہونا چاہیے';
+
+  @override
   String get passwordShouldContainOneCapitalLetter =>
       'پاس ورڈ میں کم از کم ایک بڑا حرف ہونا چاہیے';
 

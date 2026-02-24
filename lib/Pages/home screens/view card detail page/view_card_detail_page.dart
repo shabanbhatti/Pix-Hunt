@@ -1,31 +1,30 @@
 import 'dart:developer';
-
 import 'package:animated_item/animated_item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
-import 'package:pix_hunt_project/Models/downloads_image_model.dart';
+import 'package:pix_hunt_project/Controllers/ads%20controller/interstitial_add_controller.dart';
 import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20Image%20Page/view_img_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/view%20card%20detail%20page/widgets/card_detail_download_btn.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/view%20card%20detail%20page/widgets/photographer_detail_card.dart';
-import 'package:pix_hunt_project/core/Utils/internet_checker_util.dart';
-import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
-import 'package:pix_hunt_project/core/injectors/injectors.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
+import 'package:pix_hunt_project/core/typedefs/typedefs.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
-class ViewCardDetailsPage extends StatefulWidget {
+class ViewCardDetailsPage extends ConsumerStatefulWidget {
   const ViewCardDetailsPage({super.key, required this.photos});
   static const pageName = '/view_detail_page';
   final Photos photos;
 
   @override
-  State<ViewCardDetailsPage> createState() => _ViewCardDetailsPageState();
+  ConsumerState<ViewCardDetailsPage> createState() =>
+      _ViewCardDetailsPageState();
 }
 
-class _ViewCardDetailsPageState extends State<ViewCardDetailsPage>
+class _ViewCardDetailsPageState extends ConsumerState<ViewCardDetailsPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController animationController;
   late final Animation<double> scaleTitle,
@@ -40,8 +39,8 @@ class _ViewCardDetailsPageState extends State<ViewCardDetailsPage>
       fadeDownloadBtn;
 
   late final PageController pageController;
-  late final ValueNotifier<({String imgPath, String pixels})> firstNotifier;
-  late final List<({String imgPath, String pixels})> dataList;
+  late final ValueNotifier<ImageModel> firstNotifier;
+  late final List<ImageModel> dataList;
 
   @override
   void initState() {
@@ -71,6 +70,7 @@ class _ViewCardDetailsPageState extends State<ViewCardDetailsPage>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       animationController.forward();
+      ref.read(interstitialAdProvider.notifier).initInterstitialAds();
     });
   }
 
@@ -126,7 +126,12 @@ class _ViewCardDetailsPageState extends State<ViewCardDetailsPage>
                 _buildPhotographerCard(),
                 _buildPageView(),
                 _buildThumbnailList(),
-                _buildDownloadButton(),
+                ViewCardDetailDownloadBtn(
+                  firstNotifier: firstNotifier,
+                  scaleDownloadBtn: scaleDownloadBtn,
+                  fadeDownloadBtn: fadeDownloadBtn,
+                  photos: widget.photos,
+                ),
               ],
             ),
           ),
@@ -140,7 +145,10 @@ class _ViewCardDetailsPageState extends State<ViewCardDetailsPage>
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            EasyLoading.dismiss();
+            Navigator.pop(context);
+          },
           icon: const Icon(CupertinoIcons.xmark_circle_fill, size: 30),
         ),
       ],
@@ -285,7 +293,7 @@ class _ViewCardDetailsPageState extends State<ViewCardDetailsPage>
                   borderRadius: const BorderRadius.all(Radius.circular(7)),
                   border:
                       isSelected
-                          ? Border.all(color: Colors.indigo, width: 2)
+                          ? Border.all(color: ConstantColors.appColor, width: 2)
                           : null,
                 ),
                 child: Padding(
@@ -324,70 +332,5 @@ class _ViewCardDetailsPageState extends State<ViewCardDetailsPage>
         ),
       ),
     );
-  }
-
-  Widget _buildDownloadButton() {
-    return SliverSafeArea(
-      top: false,
-      sliver: SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        sliver: SliverToBoxAdapter(
-          child: Consumer(
-            builder: (context, ref, _) {
-              return ValueListenableBuilder(
-                valueListenable: firstNotifier,
-                builder: (context, value, _) {
-                  return ScaleTransition(
-                    scale: scaleDownloadBtn,
-                    child: FadeTransition(
-                      opacity: fadeDownloadBtn,
-                      child: AppMainBtn(
-                        widgetOrTitle: WidgetOrTitle.title,
-                        btnTitle:
-                            '${AppLocalizations.of(context)?.download ?? ''} (${value.pixels})',
-                        onTap: () async => _downloadImage(ref, value),
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
-  Future<void> _downloadImage(
-    ref,
-    ({String imgPath, String pixels}) value,
-  ) async {
-    var internet = await getIt<InternetCheckerUtil>().checkInternet();
-    if (!internet) return;
-
-    String id = DateTime.now().microsecondsSinceEpoch.toString();
-    var result = await ref
-        .read(userDbProvider.notifier)
-        .addDownloadedPhotos(
-          DownloadsImageModel(
-            photographer: widget.photos.photographer ?? '',
-            title: widget.photos.title ?? '',
-            imgUrl: value.imgPath,
-            pixels: value.pixels,
-            id: id,
-            date: DateTime.now().toString(),
-          ),
-          AppLocalizations.of(context)?.downloading ?? '',
-          AppLocalizations.of(context)?.imageSavedToGallery ?? '',
-        );
-
-    if (result != null) {
-      Fluttertoast.showToast(
-        msg: result.message,
-        backgroundColor: Colors.green,
-        timeInSecForIosWeb: 3,
-        gravity: ToastGravity.TOP,
-      );
-    }
   }
 }

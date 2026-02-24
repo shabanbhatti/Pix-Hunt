@@ -1,11 +1,12 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/Fav%20page%20Stream%20riverpod/fav_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/bookmark%20stream%20controller/bookmark_riverpod.dart';
 import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/bookmark%20page/Widgets/bookmark_card_widget.dart';
-import 'package:pix_hunt_project/Pages/home%20screens/bookmark%20page/Widgets/bookmark_loading_widget.dart';
+import 'package:pix_hunt_project/core/Widgets/loading%20widgets/custom_loading_card_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/sliverappbar_with_textfield.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -53,7 +54,7 @@ class _BookmarkPageState extends ConsumerState<BookmarkPage>
   @override
   Widget build(BuildContext context) {
     log('Bookmark page build called');
-    ref.listen<AsyncValue<List<Photos>>>(favStreamProvider, (_, next) {
+    ref.listen<AsyncValue<List<Photos>>>(bookmarkStreamProvider, (_, next) {
       next.whenData((data) {
         ref.read(searchListProvider.notifier).updateOriginalList(data);
       });
@@ -96,7 +97,7 @@ class _BookmarkPageState extends ConsumerState<BookmarkPage>
                                 overflow: TextOverflow.ellipsis,
                                 value,
                                 style: TextStyle(
-                                  color: Colors.indigo,
+                                  color: ConstantColors.appColor,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -115,7 +116,7 @@ class _BookmarkPageState extends ConsumerState<BookmarkPage>
               top: false,
               sliver: Consumer(
                 builder: (context, ref, child) {
-                  var myRef = ref.watch(favStreamProvider);
+                  var myRef = ref.watch(bookmarkStreamProvider);
 
                   return myRef.when(
                     data: (data) {
@@ -195,7 +196,7 @@ Widget _loading() {
         mainAxisExtent: 290,
       ),
       itemBuilder: (context, index) {
-        return const Skeletonizer(child: BookmarkLoadingWidget());
+        return const Skeletonizer(child: CustomLoadingCardsWidget());
       },
     ),
   );

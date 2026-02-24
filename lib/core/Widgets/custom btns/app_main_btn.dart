@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
+import 'package:pix_hunt_project/core/typedefs/typedefs.dart';
 
 enum WidgetOrTitle { widget, title }
 
@@ -10,12 +12,14 @@ class AppMainBtn extends StatelessWidget {
     required this.widgetOrTitle,
     this.btnValueWidget,
     this.btnTitle,
+    this.color,
   });
-  final void Function() onTap;
+  final OnPressed onTap;
   final FocusNode? focusNode;
   final WidgetOrTitle widgetOrTitle;
   final Widget? btnValueWidget;
   final String? btnTitle;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -24,7 +28,7 @@ class AppMainBtn extends StatelessWidget {
       child: ElevatedButton(
         focusNode: focusNode,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.indigo,
+          backgroundColor: color ?? ConstantColors.appColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),

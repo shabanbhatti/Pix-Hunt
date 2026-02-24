@@ -97,6 +97,7 @@
   "invalidEmail": "Enter a valid email address",
   "passwordResetLinkSent":"Password reset link sent to your email (spam).",
   "nameIsRequired": "Name is required",
+  "nameAtLeast4Char": "Name should be at lease 4 characters",
   "passwordShouldContainOneCapitalLetter": "Password must contain at least one capital letter",
   "passwordShouldContainOneNumber": "Password must contain at least one number",
   "accountVerificationLinkSent": "An account verification link has been sent to your email (check SPAM folder). Please verify your email.",

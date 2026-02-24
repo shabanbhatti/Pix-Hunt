@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/api%20Riverpod/api_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/api%20controller/api_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/cloud%20db%20controller/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/view%20card%20detail%20page/view_card_detail_page.dart';
 
 import 'package:pix_hunt_project/core/Utils/bottom%20sheets/half_size_bottom_sheet_util.dart';
 import 'package:pix_hunt_project/core/Utils/date_format_util.dart';
-import 'package:pix_hunt_project/core/Widgets/custom_dialog_boxes.dart';
+import 'package:pix_hunt_project/core/Utils/dialog%20boxes/remove_bookmark_dialog_box.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class BookmarkCardWidget extends StatelessWidget {
@@ -33,7 +34,7 @@ class BookmarkCardWidget extends StatelessWidget {
             color: Colors.grey.withAlpha(50),
           ),
           child: Padding(
-            padding: EdgeInsets.all(7),
+            padding: const EdgeInsets.all(7),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -84,11 +85,11 @@ class BookmarkCardWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Spacer(flex: 2),
+                      const Spacer(flex: 2),
                       Expanded(
                         flex: 5,
                         child: Padding(
-                          padding: EdgeInsetsGeometry.only(left: 10),
+                          padding: const EdgeInsetsGeometry.only(left: 10),
                           child: Text(
                             DateFormatUtil.dateFormat(photos.createdAt ?? ''),
                             style: TextStyle(
@@ -104,7 +105,7 @@ class BookmarkCardWidget extends StatelessWidget {
                           builder: (context, ref, child) {
                             return IconButton(
                               onPressed: () {
-                                removeFavoritesItemsDialog(context, () async {
+                                removeBookmarkItemDialog(context, () async {
                                   await ref
                                       .read(apiProvider.notifier)
                                       .updatePhoto(
@@ -117,7 +118,7 @@ class BookmarkCardWidget extends StatelessWidget {
                               },
                               icon: const Icon(
                                 Icons.bookmark,
-                                color: Colors.indigo,
+                                color: ConstantColors.appColor,
                                 size: 30,
                               ),
                             );

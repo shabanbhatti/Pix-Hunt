@@ -4,14 +4,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/User_Image_riverpod.dart/user_img_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/User%20image%20controller/user_img_riverpod.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20User%20Image%20page/view_user_img_page.dart';
 import 'package:pix_hunt_project/core/Utils/extensions.dart';
 import 'package:pix_hunt_project/core/Utils/image_picker_utils.dart';
 import 'package:pix_hunt_project/core/Utils/toast.dart';
-import 'package:pix_hunt_project/core/Widgets/View%20user%20image%20bottom%20sheet/user_img_bottom_sheet.dart';
+import 'package:pix_hunt_project/core/Utils/bottom%20sheets/user_img_bottom_sheet.dart';
+import 'package:pix_hunt_project/core/constants/constants_sharedPref_keys.dart';
+import 'package:pix_hunt_project/core/injectors/injectors.dart';
 
-import 'package:pix_hunt_project/services/shared_preference_service.dart';
+import 'package:pix_hunt_project/core/services/shared_preference_service.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CircleAvatarWidget extends ConsumerStatefulWidget {
@@ -32,7 +34,10 @@ class _CircleAvatarWidgetState extends ConsumerState<CircleAvatarWidget> {
   }
 
   void getUsername() async {
-    var username = await SpService.getString('username');
+    var spService = getIt<SharedPreferencesService>();
+    var username = await spService.getString(
+      ConstantsSharedprefKeys.usernameKey,
+    );
     usernameNotifier.value = username ?? 'No Username';
   }
 
@@ -64,14 +69,76 @@ class _CircleAvatarWidgetState extends ConsumerState<CircleAvatarWidget> {
             },
           );
         } else {
-          return GestureDetector(
-            onTap: () async {
-              var file = await ImagePickerUtils.pickImage();
-              if (file != null) {
-                ref.read(userImgProvider.notifier).insertImage(file);
-              }
-            },
-            child: const Text('data'),
+          return Center(
+            child: Padding(
+              padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
+              child: Container(
+                height: 120,
+                width: 120,
+
+                child: Stack(
+                  children: [
+                    Hero(
+                      tag: 'user_image',
+                      child: Container(
+                        height: 120,
+                        width: 120,
+
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        decoration: ShapeDecoration(
+                          shape: const CircleBorder(),
+                          color: Colors.pink,
+                        ),
+                        alignment: Alignment.center,
+                        child: ValueListenableBuilder(
+                          valueListenable: usernameNotifier,
+                          builder: (context, value, child) {
+                            return Text(
+                              value.initials,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 35,
+                                color: Colors.white,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsetsGeometry.all(0),
+                        child: GestureDetector(
+                          onTap: () async {
+                            var file = await ImagePickerUtils.pickImage();
+                            if (file != null) {
+                              ref
+                                  .read(userImgProvider.notifier)
+                                  .insertImage(file);
+                            }
+                          },
+                          child: Builder(
+                            builder: (contextx) {
+                              return CircleAvatar(
+                                radius: 20,
+                                backgroundColor:
+                                    Theme.of(contextx).scaffoldBackgroundColor,
+                                child: Icon(
+                                  CupertinoIcons.camera_fill,
+                                  color: Theme.of(contextx).primaryColor,
+                                  size: 22,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           );
         }
       },
@@ -80,11 +147,12 @@ class _CircleAvatarWidgetState extends ConsumerState<CircleAvatarWidget> {
 }
 
 Widget _loading() {
-  return Center(
+  return Padding(
+    padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
     child: ClipOval(
       child: Skeletonizer(
         enabled: true,
-        child: Container(color: Colors.grey[300], height: 150, width: 150),
+        child: Container(color: Colors.grey[300], height: 120, width: 120),
       ),
     ),
   );

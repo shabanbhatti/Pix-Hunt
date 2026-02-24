@@ -680,6 +680,12 @@ abstract class AppLocalizations {
   /// **'Name is required'**
   String get nameIsRequired;
 
+  /// No description provided for @nameAtLeast4Char.
+  ///
+  /// In en, this message translates to:
+  /// **'Name should be at lease 4 characters'**
+  String get nameAtLeast4Char;
+
   /// No description provided for @passwordShouldContainOneCapitalLetter.
   ///
   /// In en, this message translates to:

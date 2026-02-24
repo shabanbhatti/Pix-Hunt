@@ -297,6 +297,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get nameIsRequired => '姓名为必填项';
 
   @override
+  String get nameAtLeast4Char => '姓名至少应包含4个字符';
+
+  @override
   String get passwordShouldContainOneCapitalLetter => '密码必须包含至少一个大写字母';
 
   @override

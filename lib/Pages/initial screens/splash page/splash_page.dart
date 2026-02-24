@@ -1,9 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 
 import 'package:pix_hunt_project/core/constants/constant_imgs.dart';
-import 'package:shimmer/shimmer.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({
@@ -31,11 +32,13 @@ class _SplashPageState extends State<SplashScreen> {
       body: Center(
         child: SafeArea(
           child: CustomScrollView(
+            physics: NeverScrollableScrollPhysics(),
             slivers: [
               SliverFillRemaining(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const SizedBox(height: 20),
                     Hero(
                       tag: 'into_to_login',
 
@@ -44,28 +47,17 @@ class _SplashPageState extends State<SplashScreen> {
                         child: FadeTransition(
                           opacity: widget.fadeIntroIcon,
                           child: Image.asset(
-                            app_logo,
-                            fit: BoxFit.fitWidth,
-                            height: 150,
+                            ConstantImgs.app_logo,
+                            fit: BoxFit.fitHeight,
+                            height: 200,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Shimmer.fromColors(
-                      baseColor: Theme.of(context).primaryColor,
-                      highlightColor: const Color.fromARGB(255, 132, 132, 132),
-                      period: const Duration(seconds: 1),
-                      child: FadeTransition(
-                        opacity: widget.fadeIntroText,
-                        child: const Text(
-                          'PIX hunt',
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                    const SizedBox(height: 30),
+                    const SpinKitSquareCircle(
+                      size: 30,
+                      color: ConstantColors.appColor,
                     ),
                   ],
                 ),

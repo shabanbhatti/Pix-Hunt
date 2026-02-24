@@ -2,12 +2,15 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/api%20Riverpod/api_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/ads%20controller/interstitial_add_controller.dart';
+import 'package:pix_hunt_project/Controllers/api%20controller/api_riverpod.dart';
 import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20home%20cetagory%20Page/Widgets/photo_pages_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/card_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/custom_sliver_appbar.dart';
-import 'package:pix_hunt_project/core/Widgets/loading_card_widget.dart';
+import 'package:pix_hunt_project/core/Widgets/loading%20widgets/custom_loading_card_widget.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
+import 'package:pix_hunt_project/core/typedefs/typedefs.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ViewContentPage extends ConsumerStatefulWidget {
@@ -18,7 +21,7 @@ class ViewContentPage extends ConsumerStatefulWidget {
   });
   static const pageName = '/view_content';
 
-  final ({String title, String imgPath}) constListProducts;
+  final BoxModel constListProducts;
   final String? title;
   @override
   ConsumerState<ViewContentPage> createState() => _ViewContentPageState();
@@ -43,13 +46,14 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
       Future.microtask(() {
         ref
             .read(apiProvider.notifier)
-            .fetchApi(search: widget.constListProducts.title, pageNumber: 1);
+            .fetchData(search: widget.constListProducts.title, pageNumber: 1);
+        ref.read(interstitialAdProvider.notifier).initInterstitialAds();
       });
     } else {
       Future.microtask(() {
         ref
             .read(apiProvider.notifier)
-            .fetchApi(search: widget.title, pageNumber: 1);
+            .fetchData(search: widget.title, pageNumber: 1);
       });
     }
   }
@@ -76,19 +80,19 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
     return Scaffold(
       body: Center(
         child: RefreshIndicator(
-          color: Colors.indigo,
+          color: ConstantColors.appColor,
           onRefresh: () {
             if (widget.title == null) {
               return ref
                   .read(apiProvider.notifier)
-                  .fetchApi(
+                  .fetchFromApi(
                     search: widget.constListProducts.title,
                     pageNumber: 1,
                   );
             } else {
               return ref
                   .read(apiProvider.notifier)
-                  .fetchApi(search: widget.title, pageNumber: 1);
+                  .fetchFromApi(search: widget.title, pageNumber: 1);
             }
           },
           child: Scrollbar(
@@ -189,7 +193,8 @@ Widget _loading() {
     sliver: SliverGrid.builder(
       itemCount: lodingList.length,
       itemBuilder:
-          (context, index) => const Skeletonizer(child: const LoadingWidget()),
+          (context, index) =>
+              const Skeletonizer(child: const CustomLoadingCardsWidget()),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 5,

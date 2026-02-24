@@ -14,7 +14,9 @@ import 'package:pix_hunt_project/services/api_service.dart';
 import 'package:pix_hunt_project/services/auth_service.dart';
 import 'package:pix_hunt_project/services/cloud_DB_service.dart';
 import 'package:pix_hunt_project/services/local_database_service.dart';
+import 'package:pix_hunt_project/core/services/shared_preference_service.dart';
 import 'package:pix_hunt_project/services/storage_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -61,5 +63,10 @@ Future<void> initGetIt() async {
       cloudDbService: getIt<CloudDbService>(),
       storageService: getIt<StorageService>(),
     ),
+  );
+
+  SharedPreferences sp = await SharedPreferences.getInstance();
+  getIt.registerLazySingleton(
+    () => SharedPreferencesService(sharedPreferences: sp),
   );
 }

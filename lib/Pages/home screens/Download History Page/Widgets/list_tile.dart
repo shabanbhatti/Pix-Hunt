@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:pix_hunt_project/core/typedefs/typedefs.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomListTile1 extends StatelessWidget {
@@ -15,8 +16,8 @@ class CustomListTile1 extends StatelessWidget {
   final String imgUrl;
   final String title;
   final String photographer;
-  final void Function() onTap;
-  final void Function() onLongTap;
+  final OnPressed onTap;
+  final OnPressed onLongTap;
   final String date;
   @override
   Widget build(BuildContext context) {

@@ -1,12 +1,14 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/auth%20controller/auth_riverpod.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Home%20Page/home.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Intro%20Page/intro_page.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/splash%20page/splash_page.dart';
-import 'package:pix_hunt_project/services/shared_preference_service.dart';
+import 'package:pix_hunt_project/core/constants/constants_sharedPref_keys.dart';
+import 'package:pix_hunt_project/core/injectors/injectors.dart';
+import 'package:pix_hunt_project/core/services/shared_preference_service.dart';
 
 class DecidePage extends ConsumerStatefulWidget {
   const DecidePage({super.key});
@@ -129,7 +131,8 @@ class _DecidePageState extends ConsumerState<DecidePage>
   ValueNotifier<bool> isIntroNotifier = ValueNotifier(false);
 
   void whichPage() async {
-    var isIntro = await SpService.getBool('intro');
+    var spService = getIt<SharedPreferencesService>();
+    var isIntro = await spService.getBool(ConstantsSharedprefKeys.introPageKey);
     if (isIntro) {
       isIntroNotifier.value = isIntro;
       loadPage();

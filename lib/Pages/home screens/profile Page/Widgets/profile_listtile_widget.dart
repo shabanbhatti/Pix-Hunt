@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/auth%20controller/auth_riverpod.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Download%20History%20Page/downloads_history_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/bookmark%20page/bookmark_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Theme%20page/theme_page.dart';
@@ -9,7 +9,7 @@ import 'package:pix_hunt_project/Pages/home%20screens/View%20Search%20history%20
 import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/Widgets/profile_list_tile.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/update%20email%20page/update_email_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/update%20name%20page/update_name_page.dart';
-import 'package:pix_hunt_project/core/Widgets/custom_dialog_boxes.dart';
+import 'package:pix_hunt_project/core/Utils/dialog%20boxes/logout_dialog_box.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class ProfileListtileWidget extends StatelessWidget {

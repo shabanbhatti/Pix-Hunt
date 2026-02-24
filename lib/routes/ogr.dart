@@ -10,7 +10,7 @@ import 'package:pix_hunt_project/Pages/initial%20screens/Signup%20Page/signup_pa
 import 'package:pix_hunt_project/Pages/home%20screens/Theme%20page/theme_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20Image%20Page/view_img_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/update%20email%20page/update_email_page.dart';
-import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/user_profile.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/profile_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20Downloaded%20Item%20page/view_downloaded_item.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20Search%20history%20page/search_history_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20User%20Image%20page/view_user_img_page.dart';
@@ -61,11 +61,10 @@ Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
 
     case Home.pageName:
       return AnimatedRouting(child: const Home(), routeSettings: routeSettings);
-    // const UserProfile()
-    case UserProfile.pageName:
+    case ProfilePage.pageName:
       return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) {
-          return const UserProfile();
+          return const ProfilePage();
         },
 
         transitionDuration: const Duration(milliseconds: 300),

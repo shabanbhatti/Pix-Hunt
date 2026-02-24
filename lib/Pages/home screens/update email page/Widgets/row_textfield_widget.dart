@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class RowTextfieldWidget extends StatefulWidget {
@@ -60,12 +61,12 @@ class _RowTextfieldWidgetState extends State<RowTextfieldWidget> {
                             },
                             icon: const Icon(
                               Icons.visibility,
-                              color: Colors.indigo,
+                              color: ConstantColors.appColor,
                             ),
                           )
                           : null,
                   hintStyle: const TextStyle(color: Colors.grey),
-                  focusColor: Colors.indigo,
+                  focusColor: ConstantColors.appColor,
                 ),
               ),
             ),

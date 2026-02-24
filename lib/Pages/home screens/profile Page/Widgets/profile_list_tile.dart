@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
+import 'package:pix_hunt_project/core/typedefs/typedefs.dart';
 
 class DrawerListTile extends StatelessWidget {
   const DrawerListTile({
@@ -9,12 +11,12 @@ class DrawerListTile extends StatelessWidget {
   });
   final IconData leading;
   final String title;
-  final void Function() onTap;
+  final OnPressed onTap;
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: Colors.indigo,
+        backgroundColor: ConstantColors.appColor,
 
         child: Icon(leading, color: Colors.white),
       ),

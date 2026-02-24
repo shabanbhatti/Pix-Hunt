@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/User_Image_riverpod.dart/user_img_riverpod.dart';
-import 'package:pix_hunt_project/core/constants/constant_imgs.dart';
+import 'package:pix_hunt_project/Controllers/User%20image%20controller/user_img_riverpod.dart';
 import 'package:pix_hunt_project/core/Utils/extensions.dart';
-import 'package:pix_hunt_project/services/shared_preference_service.dart';
+import 'package:pix_hunt_project/core/constants/constants_sharedPref_keys.dart';
+import 'package:pix_hunt_project/core/injectors/injectors.dart';
+import 'package:pix_hunt_project/core/services/shared_preference_service.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CircleAvatarHomeWidget extends ConsumerStatefulWidget {
@@ -24,7 +25,8 @@ class _CircleAvatarWidgetState extends ConsumerState<CircleAvatarHomeWidget> {
   }
 
   Future<void> loadUsername() async {
-    var name = await SpService.getString('username');
+    var spService = getIt<SharedPreferencesService>();
+    var name = await spService.getString(ConstantsSharedprefKeys.usernameKey);
     usernameNotifier.value = name ?? '';
   }
 
@@ -53,7 +55,19 @@ class _CircleAvatarWidgetState extends ConsumerState<CircleAvatarHomeWidget> {
                   } else if (myRef is LoadedState) {
                     return _data(myRef.imgPathUrl);
                   } else {
-                    return Image.asset(user_img);
+                    return ValueListenableBuilder(
+                      valueListenable: usernameNotifier,
+                      builder: (context, value, child) {
+                        return Text(
+                          value.initials,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                            color: Colors.white,
+                          ),
+                        );
+                      },
+                    );
                   }
                 },
               ),

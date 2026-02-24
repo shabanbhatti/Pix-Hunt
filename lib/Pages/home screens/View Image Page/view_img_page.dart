@@ -3,11 +3,12 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pix_hunt_project/core/typedefs/typedefs.dart';
 
 class ViewImagePage extends StatefulWidget {
   const ViewImagePage({super.key, required this.imgRecord});
   static const pageName = '/view_fav_image';
-  final ({String imgPath, String pixels}) imgRecord;
+  final ImageModel imgRecord;
 
   @override
   State<ViewImagePage> createState() => _ViewImagePageState();

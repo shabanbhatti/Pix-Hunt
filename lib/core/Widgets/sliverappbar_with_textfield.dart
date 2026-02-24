@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:pix_hunt_project/Controllers/api%20Riverpod/api_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/api%20controller/api_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/cloud%20db%20controller/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
 
-import 'package:pix_hunt_project/core/Widgets/custom_search_text_field.dart';
+import 'package:pix_hunt_project/core/Widgets/custom%20textfields/custom_search_text_field.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class SliverappbarWithTextField extends StatelessWidget {
@@ -32,9 +32,7 @@ class SliverappbarWithTextField extends StatelessWidget {
     print('SLIVER APP BAR CALLED');
     return CupertinoSliverNavigationBar(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      // toolbarHeight: 140,
 
-      // pinned: true,
       leading: GestureDetector(
         onTap: () {
           Navigator.pop(context);
@@ -62,7 +60,7 @@ class SliverappbarWithTextField extends StatelessWidget {
                       flex: 30,
                       child: Consumer(
                         builder: (context, apiProviderRef, child) {
-                          return MyTextField(
+                          return CustomSearchTextField(
                             controller: controller,
                             focusNode: focusNode,
                             label: AppLocalizations.of(context)!.search,
@@ -76,7 +74,7 @@ class SliverappbarWithTextField extends StatelessWidget {
                                           .toString();
                                   await apiProviderRef
                                       .read(apiProvider.notifier)
-                                      .fetchApi(
+                                      .fetchData(
                                         search: controller.text,
                                         pageNumber: 1,
                                       )

@@ -3,15 +3,17 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_state.dart';
-import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/auth%20controller/auth_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/auth%20controller/auth_state.dart';
+import 'package:pix_hunt_project/Controllers/cloud%20db%20controller/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/update%20email%20page/Widgets/row_textfield_widget.dart';
 import 'package:pix_hunt_project/core/Utils/toast.dart';
 import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
 import 'package:pix_hunt_project/core/Widgets/custom_sliver_appbar.dart';
+import 'package:pix_hunt_project/core/constants/constants_sharedPref_keys.dart';
+import 'package:pix_hunt_project/core/injectors/injectors.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
-import 'package:pix_hunt_project/services/shared_preference_service.dart';
+import 'package:pix_hunt_project/core/services/shared_preference_service.dart';
 
 class UpdateNamePage extends ConsumerStatefulWidget {
   const UpdateNamePage({super.key});
@@ -114,11 +116,15 @@ class _UpdateNamePageState extends ConsumerState<UpdateNamePage> {
             var nameValidate = nameKey.currentState!.validate();
 
             if (nameValidate) {
+              var spService = getIt<SharedPreferencesService>();
               await ref
                   .read(authProvider('update_name').notifier)
                   .updateName(nameController.text);
               await ref.read(userDbProvider.notifier).fetchUserDbData();
-              await SpService.setString('username', nameController.text.trim());
+              await spService.setString(
+                ConstantsSharedprefKeys.usernameKey,
+                nameController.text.trim(),
+              );
             }
           },
         );

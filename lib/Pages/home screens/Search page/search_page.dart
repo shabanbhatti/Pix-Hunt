@@ -2,13 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/api%20Riverpod/api_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/api%20controller/api_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/on%20sync%20after%20email%20verify%20riverpod/on_sync_after_email_verify.dart';
 import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Search%20page/Widgets/search_photos_pages_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/card_widget.dart';
-import 'package:pix_hunt_project/core/Widgets/loading_card_widget.dart';
+import 'package:pix_hunt_project/core/Widgets/loading%20widgets/custom_loading_card_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/sliverappbar_with_textfield.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -115,7 +116,7 @@ class _SearchPageState extends ConsumerState<SearchPage>
                                   overflow: TextOverflow.ellipsis,
                                   value,
                                   style: const TextStyle(
-                                    color: Colors.indigo,
+                                    color: ConstantColors.appColor,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -231,7 +232,8 @@ Widget _loading() {
     sliver: SliverGrid.builder(
       itemCount: lodingList.length,
       itemBuilder:
-          (context, index) => const Skeletonizer(child: const LoadingWidget()),
+          (context, index) =>
+              const Skeletonizer(child: const CustomLoadingCardsWidget()),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 5,

@@ -4,6 +4,8 @@ void openHalfBottomSheet(BuildContext context, {required Widget child}) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
+    enableDrag: false,
+    isDismissible: false,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(05)),
     ),

@@ -302,6 +302,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nameIsRequired => 'Name is required';
 
   @override
+  String get nameAtLeast4Char => 'Name should be at lease 4 characters';
+
+  @override
   String get passwordShouldContainOneCapitalLetter =>
       'Password must contain at least one capital letter';
 

@@ -4,13 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/Downloads%20Stream%20RIverpod/download_stream_riv.dart';
-import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/downloads%20stream%20controller/download_stream_riv.dart';
+import 'package:pix_hunt_project/Controllers/cloud%20db%20controller/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Download%20History%20Page/Widgets/list_tile.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20Downloaded%20Item%20page/view_downloaded_item.dart';
 import 'package:pix_hunt_project/core/Utils/date_format_util.dart';
-import 'package:pix_hunt_project/core/Widgets/custom_dialog_boxes.dart';
-import 'package:pix_hunt_project/core/Widgets/custom_show_bottom_sheets.dart';
+import 'package:pix_hunt_project/core/Utils/dialog%20boxes/delete_dialog_boxes.dart';
+import 'package:pix_hunt_project/core/Utils/bottom%20sheets/options_bottom_sheet.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -81,7 +82,7 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
                 },
                 child: Text(
                   lng?.clearAll ?? '',
-                  style: TextStyle(color: Colors.indigo),
+                  style: TextStyle(color: ConstantColors.appColor),
                 ),
               ),
             ),
@@ -104,7 +105,7 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
                                     ' ${lng?.noDownloads ?? ''}',
 
                                     style: TextStyle(
-                                      // color: Colors.indigo,
+                                      // color: ConstantColors.appColor,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -141,7 +142,7 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
                                     );
                                   },
                                   onLongTap: () {
-                                    customBottomSheet(
+                                    showOptionsSheet(
                                       context,
                                       open: () {
                                         Navigator.pop(context);

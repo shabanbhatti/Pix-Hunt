@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/auth%20riverpod/auth_state.dart';
-import 'package:pix_hunt_project/Controllers/cloud%20db%20Riverpod/user_db_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/auth%20controller/auth_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/auth%20controller/auth_state.dart';
+import 'package:pix_hunt_project/Controllers/cloud%20db%20controller/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Home%20Page/Widgets/circle_avatar_home_widget.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/bookmark%20page/bookmark_page.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Search%20page/search_page.dart';
-import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/user_profile.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/profile_page.dart';
 import 'package:pix_hunt_project/core/Utils/extensions.dart';
 import 'package:pix_hunt_project/core/Utils/get_greeting_hours_method.dart';
-import 'package:pix_hunt_project/main.dart';
+import 'package:pix_hunt_project/core/constants/constant_imgs.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeSliverAppbar extends ConsumerWidget {
@@ -35,7 +35,7 @@ class HomeSliverAppbar extends ConsumerWidget {
         builder:
             (context) => InkWell(
               onTap: () {
-                Navigator.of(context).pushNamed(UserProfile.pageName);
+                Navigator.of(context).pushNamed(ProfilePage.pageName);
               },
               child: const CircleAvatarHomeWidget(),
             ),
@@ -50,10 +50,7 @@ class HomeSliverAppbar extends ConsumerWidget {
                 padding: const EdgeInsetsGeometry.symmetric(horizontal: 7),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(
-                      navigatorKey.currentContext!,
-                      BookmarkPage.pageName,
-                    );
+                    Navigator.pushNamed(context, BookmarkPage.pageName);
                   },
                   child: const Icon(
                     Icons.bookmark,
@@ -64,10 +61,7 @@ class HomeSliverAppbar extends ConsumerWidget {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(
-                    navigatorKey.currentContext!,
-                    SearchPage.pageName,
-                  );
+                  Navigator.pushNamed(context, SearchPage.pageName);
                 },
                 icon: const Icon(Icons.search, size: 30, color: Colors.white),
               ),
@@ -93,7 +87,7 @@ class HomeSliverAppbar extends ConsumerWidget {
                   Opacity(
                     opacity: 0.75,
                     child: Image.asset(
-                      'assets/images/wallpaper.jpg',
+                      ConstantImgs.home_appbar_wallpaper,
                       fit: BoxFit.fill,
                       height: mqSize.height,
                       width: mqSize.width,

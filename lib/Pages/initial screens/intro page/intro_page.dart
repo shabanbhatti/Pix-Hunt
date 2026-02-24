@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
 import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
 import 'package:pix_hunt_project/core/constants/constant_imgs.dart';
-import 'package:pix_hunt_project/services/shared_preference_service.dart';
+import 'package:pix_hunt_project/core/constants/constants_sharedPref_keys.dart';
+
+import 'package:pix_hunt_project/core/injectors/injectors.dart';
+import 'package:pix_hunt_project/core/services/shared_preference_service.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({
@@ -35,7 +38,7 @@ class IntroPage extends StatelessWidget {
             Opacity(
               opacity: 0.5,
               child: Image.asset(
-                mountains_back,
+                ConstantImgs.mountains_back,
                 height: double.infinity,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -87,7 +90,8 @@ class IntroPage extends StatelessWidget {
                               opacity: btnFadeAnimation,
                               child: AppMainBtn(
                                 onTap: () async {
-                                  await SpService.setBool('intro', true);
+                                  var spService = getIt<SharedPreferencesService>();
+                                  await spService.setBool(ConstantsSharedprefKeys.introPageKey, true);
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                     LoginPage.pageName,
                                     (route) => false,

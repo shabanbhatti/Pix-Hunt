@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pix_hunt_project/core/Utils/extensions.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class BottomThanksWidget extends StatelessWidget {
@@ -17,7 +18,7 @@ class BottomThanksWidget extends StatelessWidget {
         Text(
           value.firstTwoWords(),
           style: const TextStyle(
-            color: Colors.indigo,
+            color: ConstantColors.appColor,
             fontWeight: FontWeight.bold,
             fontSize: 12,
           ),

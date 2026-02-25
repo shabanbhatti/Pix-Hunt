@@ -322,4 +322,12 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get emailNotVerified =>
       'ای میل کی تصدیق نہیں ہوئی! براہِ کرم لاگ اِن کرنے سے پہلے اپنی ای میل کی تصدیق کریں۔';
+
+  @override
+  String get updateEmailBtnDetail =>
+      'بٹن پر ٹیپ کریں تاکہ آپ کے نئے ای میل ایڈریس پر تصدیقی لنک موصول ہو جائے۔ براہِ کرم لنک کھولیں اور تصدیق کا عمل مکمل کریں۔';
+
+  @override
+  String get updateNameBtnDetail =>
+      'اس بٹن کو دبائیں تاکہ آپ اپنا نام اپڈیٹ کر سکیں۔';
 }

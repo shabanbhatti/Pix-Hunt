@@ -157,7 +157,7 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
                       const Divider(),
                       _listtile(
                         title: lng?.status ?? '',
-                        value: 'Save to gallery',
+                        value: 'Saved to gallery',
                       ),
                       const Divider(),
                     ],

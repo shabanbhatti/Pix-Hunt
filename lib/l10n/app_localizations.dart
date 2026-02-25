@@ -715,6 +715,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Email is not verified! Please verify your email before login'**
   String get emailNotVerified;
+
+  /// No description provided for @updateEmailBtnDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the button to receive a verification link on your new email address. Please open the link and complete the verification process.'**
+  String get updateEmailBtnDetail;
+
+  /// No description provided for @updateNameBtnDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Press this button to update your name.'**
+  String get updateNameBtnDetail;
 }
 
 class _AppLocalizationsDelegate

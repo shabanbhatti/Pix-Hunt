@@ -70,7 +70,6 @@ class _ViewCardDetailsPageState extends ConsumerState<ViewCardDetailsPage>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       animationController.forward();
-      ref.read(interstitialAdProvider.notifier).initInterstitialAds();
     });
   }
 

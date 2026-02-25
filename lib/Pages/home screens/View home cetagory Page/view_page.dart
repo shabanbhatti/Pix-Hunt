@@ -38,8 +38,8 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
       vsync: this,
       duration: const Duration(seconds: 1),
     );
-    scale = Tween<double>(begin: 0.7, end: 1.0).animate(
-      CurvedAnimation(parent: animationController, curve: Curves.bounceOut),
+    scale = Tween<double>(begin: 0.5, end: 1.0).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.easeInOutBack),
     );
 
     if (widget.title == null) {

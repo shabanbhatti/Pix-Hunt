@@ -103,6 +103,7 @@
   "unbookmarkingMessage": "Al eliminar este elemento de los marcadores, se eliminará de tu lista de marcadores.",
   "noBookmarkItems": "Aún no hay marcadores",
   "itemAddedToBookmark": "Elemento añadido a marcadores",
-  "nameAtLeast4Char": "El nombre debe tener al menos 4 caracteres"
-
+  "nameAtLeast4Char": "El nombre debe tener al menos 4 caracteres",
+"updateEmailBtnDetail": "Toque el botón para recibir un enlace de verificación en su nueva dirección de correo electrónico. Por favor, abra el enlace y complete el proceso de verificación.",
+"updateNameBtnDetail": "Presione este botón para actualizar su nombre."
 }

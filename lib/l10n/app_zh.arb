@@ -103,7 +103,7 @@
   "unbookmarkingMessage": "从收藏中移除后，此项目将从您的收藏列表中删除。",
   "noBookmarkItems": "还没有收藏内容",
   "itemAddedToBookmark": "项目已添加到收藏",
-  "nameAtLeast4Char": "姓名至少应包含4个字符"
-
-
+  "nameAtLeast4Char": "姓名至少应包含4个字符",
+  "updateEmailBtnDetail": "点击按钮以在您的新电子邮件地址上接收验证链接。请打开该链接并完成验证过程。",
+  "updateNameBtnDetail": "按此按钮以更新您的姓名。"
 }

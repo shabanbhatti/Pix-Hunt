@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:pix_hunt_project/core/typedefs/typedefs.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 abstract class ConstantStaticProductsHomeUtils {
-  static List<({String title, String imgPath})> product1(BuildContext context) {
+  static  List<BoxModel> product1(BuildContext context) {
     var lng = AppLocalizations.of(context);
     return [
       (title: lng?.nature ?? '', imgPath: 'nature.jpg'),
@@ -13,7 +14,7 @@ abstract class ConstantStaticProductsHomeUtils {
     ];
   }
 
-  static List<({String title, String imgPath})> product2(BuildContext context) {
+  static List<BoxModel> product2(BuildContext context) {
     var lng = AppLocalizations.of(context);
     return [
       (title: lng?.mountains ?? '', imgPath: 'mountains.jpg'),
@@ -23,7 +24,7 @@ abstract class ConstantStaticProductsHomeUtils {
     ];
   }
 
-  static List<({String title, String imgPath})> product3(BuildContext context) {
+  static List<BoxModel> product3(BuildContext context) {
     var lng = AppLocalizations.of(context);
     return [
       (title: lng?.universe ?? '', imgPath: 'universe.jpg'),
@@ -33,7 +34,7 @@ abstract class ConstantStaticProductsHomeUtils {
     ];
   }
 
-  static List<({String title, String imgPath})> product4(BuildContext context) {
+  static List<BoxModel> product4(BuildContext context) {
     var lng = AppLocalizations.of(context);
     return [
       (title: lng?.mosque ?? '', imgPath: 'mosque.jpg'),
@@ -42,7 +43,7 @@ abstract class ConstantStaticProductsHomeUtils {
     ];
   }
 
-  static List<({String title, String imgPath})> product5(BuildContext context) {
+  static List<BoxModel> product5(BuildContext context) {
     var lng = AppLocalizations.of(context);
     return [
       (title: lng?.mysticPlaces ?? '', imgPath: 'mystric.jpg'),
@@ -51,7 +52,7 @@ abstract class ConstantStaticProductsHomeUtils {
     ];
   }
 
-  static List<({String title, String imgPath})> product6(BuildContext context) {
+  static List<BoxModel> product6(BuildContext context) {
     var lng = AppLocalizations.of(context);
     return [
       (title: lng?.village ?? '', imgPath: 'village.jpeg'),

@@ -313,4 +313,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get emailNotVerified => '电子邮件尚未验证！请在登录前验证您的电子邮件。';
+
+  @override
+  String get updateEmailBtnDetail => '点击按钮以在您的新电子邮件地址上接收验证链接。请打开该链接并完成验证过程。';
+
+  @override
+  String get updateNameBtnDetail => '按此按钮以更新您的姓名。';
 }

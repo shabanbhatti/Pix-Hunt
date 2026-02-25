@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20controller/auth_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20controller/auth_state.dart';
-
-import 'package:pix_hunt_project/Pages/home%20screens/update%20email%20page/Widgets/row_textfield_widget.dart';
 import 'package:pix_hunt_project/core/Utils/toast.dart';
+import 'package:pix_hunt_project/core/Utils/validations_textfields_utils.dart';
 import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
+import 'package:pix_hunt_project/core/Widgets/custom%20textfields/custom_textfield_widget.dart';
+import 'package:pix_hunt_project/core/Widgets/custom%20textfields/password_textfield_widget.dart';
 
 import 'package:pix_hunt_project/core/Widgets/custom_sliver_appbar.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class UpdateEmailPage extends ConsumerStatefulWidget {
@@ -21,17 +23,105 @@ class UpdateEmailPage extends ConsumerStatefulWidget {
   ConsumerState<UpdateEmailPage> createState() => _UpdateIdentityPageState();
 }
 
-class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage> {
+class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage>
+    with SingleTickerProviderStateMixin {
   TextEditingController emailController = TextEditingController();
-  GlobalKey<FormState> emailKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   TextEditingController passController = TextEditingController();
-  GlobalKey<FormState> passKey = GlobalKey<FormState>();
+
+  FocusNode emailFocusNode = FocusNode();
+  FocusNode passwordFocusNode = FocusNode();
+  FocusNode btnFocusNode = FocusNode();
+
+  ValueNotifier<bool> isObscure = ValueNotifier(true);
+  late AnimationController animationController;
+  late Animation<double> scaleEmail;
+  late Animation<double> fadeEmail;
+  late Animation<double> scalePassword;
+  late Animation<double> fadePassword;
+  late Animation<double> scaleUpdateBtnDetail;
+  late Animation<double> fadeUpdateBtnDetail;
+  late Animation<double> scaleUpdateBtn;
+  late Animation<double> fadeUpdateBtn;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+    fadeEmail = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.0, 0.25),
+      ),
+    );
+
+    scaleEmail = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.0, 0.25),
+      ),
+    );
+
+    fadePassword = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.25, 0.50),
+      ),
+    );
+
+    scalePassword = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.25, 0.50),
+      ),
+    );
+
+    fadeUpdateBtnDetail = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.50, 0.75),
+      ),
+    );
+
+    scaleUpdateBtnDetail = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.50, 0.75),
+      ),
+    );
+
+    fadeUpdateBtn = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.75, 1.0),
+      ),
+    );
+
+    scaleUpdateBtn = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.75, 1.0),
+      ),
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      animationController.forward();
+    });
+  }
 
   @override
   void dispose() {
     passController.dispose();
+    animationController.dispose();
+    isObscure.dispose();
     emailController.dispose();
+    emailFocusNode.dispose();
+    btnFocusNode.dispose();
+    passwordFocusNode.dispose();
     super.dispose();
   }
 
@@ -57,67 +147,137 @@ class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage> {
           SliverSafeArea(
             top: false,
             sliver: SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               sliver: SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    RowTextfieldWidget(
-                      controller: emailController,
-                      title: lng?.newEmail ?? '',
-
-                      formKey: emailKey,
-                      isObscure: false,
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: RowTextfieldWidget(
-                        controller: passController,
-                        title: lng?.password ?? '',
-                        isObscure: true,
-                        formKey: passKey,
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      ScaleTransition(
+                        scale: scaleEmail,
+                        child: FadeTransition(
+                          opacity: fadeEmail,
+                          child: CustomTextfieldWidget(
+                            controller: emailController,
+                            focusNode: emailFocusNode,
+                            label: lng?.newEmail ?? '',
+                            prefixIcon: Icons.email,
+                            onFieldSubmitted: (v) {
+                              FocusScope.of(
+                                context,
+                              ).requestFocus(passwordFocusNode);
+                            },
+                            validator: (v) {
+                              return ValidationsTextfieldsUtils.emailValidation(
+                                v,
+                                context,
+                              );
+                            },
+                          ),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 40),
-                      child: _updateButton(),
-                    ),
-                  ],
+
+                      ScaleTransition(
+                        scale: scalePassword,
+                        child: FadeTransition(
+                          opacity: fadePassword,
+                          child: CustomPasswordTextFieldWidget(
+                            controller: passController,
+                            focusNode: passwordFocusNode,
+                            isObscure: isObscure,
+                            validator: (v) {
+                              return ValidationsTextfieldsUtils.passwordValidation(
+                                v,
+                                context,
+                              );
+                            },
+                            onFieldSubmitted: (v) {
+                              FocusScope.of(context).requestFocus(btnFocusNode);
+                            },
+                            label: lng?.password ?? '',
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsGeometry.only(bottom: 10, top: 0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: ScaleTransition(
+                            scale: scaleUpdateBtnDetail,
+                            child: FadeTransition(
+                              opacity: fadeUpdateBtnDetail,
+                              child: Text(
+                                '*${lng?.updateEmailBtnDetail ?? ''}',
+                                style: TextStyle(
+                                  fontSize: 12,
+
+                                  color: ConstantColors.appColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Consumer(
+                        builder: (context, ref, child) {
+                          var myRef = ref.watch(authProvider('update'));
+                          return ScaleTransition(
+                            scale: scaleUpdateBtn,
+                            child: FadeTransition(
+                              opacity: fadeUpdateBtn,
+                              child: AppMainBtn(
+                                focusNode: btnFocusNode,
+                                widgetOrTitle: WidgetOrTitle.widget,
+                                btnValueWidget:
+                                    (myRef is AuthLoading)
+                                        ? const CupertinoActivityIndicator(
+                                          color: Colors.white,
+                                        )
+                                        : Text(
+                                          AppLocalizations.of(
+                                                context,
+                                              )?.updateEmail ??
+                                              '',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                onTap:
+                                    (myRef is AuthLoading)
+                                        ? () {}
+                                        : () {
+                                          var emailValidate =
+                                              formKey.currentState
+                                                  ?.validate() ??
+                                              false;
+
+                                          if (emailValidate) {
+                                            ref
+                                                .read(
+                                                  authProvider(
+                                                    'update',
+                                                  ).notifier,
+                                                )
+                                                .updateEmail(
+                                                  emailController.text,
+                                                  passController.text,
+                                                );
+                                          }
+                                        },
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _updateButton() {
-    return Consumer(
-      builder: (context, ref, child) {
-        var myRef = ref.watch(authProvider('update'));
-        return AppMainBtn(
-          widgetOrTitle: WidgetOrTitle.widget,
-          btnValueWidget:
-              (myRef is AuthLoading)
-                  ? CupertinoActivityIndicator(color: Colors.white)
-                  : Text(
-                    AppLocalizations.of(context)?.updateEmail ?? '',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-          onTap: () {
-            // var nameValidate = nameKey.currentState!.validate();
-            var emailValidate = emailKey.currentState!.validate();
-            var passValidate = passKey.currentState!.validate();
-
-            if (emailValidate && passValidate) {
-              ref
-                  .read(authProvider('update').notifier)
-                  .updateEmail(emailController.text, passController.text);
-            }
-          },
-        );
-      },
     );
   }
 }

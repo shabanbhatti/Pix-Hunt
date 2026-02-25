@@ -4,12 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:pix_hunt_project/core/Utils/ads_unitID_utils.dart';
 
-final interstitialAdProvider = StateNotifierProvider.autoDispose<
-  InterstitialAddNotifier,
-  InterstitialAdsState
->((ref) {
-  return InterstitialAddNotifier();
-});
+final interstitialAdProvider =
+    StateNotifierProvider<InterstitialAddNotifier, InterstitialAdsState>((ref) {
+      return InterstitialAddNotifier();
+    });
 
 class InterstitialAddNotifier extends StateNotifier<InterstitialAdsState> {
   InterstitialAddNotifier() : super(InitialInterstitialAdsState());

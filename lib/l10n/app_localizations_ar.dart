@@ -322,4 +322,11 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get emailNotVerified =>
       'البريد الإلكتروني غير مُفعّل! يرجى التحقق من بريدك الإلكتروني قبل تسجيل الدخول.';
+
+  @override
+  String get updateEmailBtnDetail =>
+      'اضغط على الزر لتلقي رابط التحقق على عنوان بريدك الإلكتروني الجديد. يرجى فتح الرابط وإكمال عملية التحقق.';
+
+  @override
+  String get updateNameBtnDetail => 'اضغط على هذا الزر لتحديث اسمك.';
 }

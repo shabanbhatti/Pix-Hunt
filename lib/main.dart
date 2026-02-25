@@ -7,7 +7,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:pix_hunt_project/Controllers/Theme%20controller/theme_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/ads%20controller/interstitial_add_controller.dart';
 import 'package:pix_hunt_project/Controllers/language%20controller/language_riverpod.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/decide%20page/decide_page.dart';
 import 'package:pix_hunt_project/core/Utils/internet_checker_util.dart';

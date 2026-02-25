@@ -5,6 +5,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hawk_fab_menu/hawk_fab_menu.dart';
 import 'package:pix_hunt_project/Controllers/User%20image%20controller/user_img_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/ads%20controller/banner_ads_controller.dart';
+import 'package:pix_hunt_project/Controllers/ads%20controller/interstitial_add_controller.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20controller/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/on%20sync%20after%20email%20verify%20riverpod/on_sync_after_email_verify.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/bookmark%20page/bookmark_page.dart';
@@ -36,6 +37,7 @@ class _HomeState extends ConsumerState<Home> {
           .read(onSyncAfterEmailVerifyProvider.notifier)
           .syncEmailAfterVerification();
       ref.read(userDbProvider.notifier).fetchUserDbData();
+      ref.read(interstitialAdProvider.notifier).initInterstitialAds();
       ref.read(userImgProvider.notifier).getImage();
       ref.read(bannerAdsProvider.notifier).initBannerAds();
     });

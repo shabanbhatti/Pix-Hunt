@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/language%20controller/language_riverpod.dart';
+import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class ProfileSliverAppbar extends ConsumerWidget {
@@ -25,7 +26,11 @@ class ProfileSliverAppbar extends ConsumerWidget {
             ref.read(languageProvider.notifier).languageToggled(value);
           }
         },
-        child: const Icon(Icons.public, size: 25),
+        child: const Icon(
+          Icons.g_translate_outlined,
+          color: ConstantColors.appColor,
+        ),
+
         itemBuilder:
             (context) => const [
               PopupMenuItem(

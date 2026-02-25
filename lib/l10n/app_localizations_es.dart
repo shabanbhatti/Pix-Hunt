@@ -322,4 +322,12 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get emailNotVerified =>
       '¡El correo electrónico no está verificado! Por favor, verifica tu correo antes de iniciar sesión.';
+
+  @override
+  String get updateEmailBtnDetail =>
+      'Toque el botón para recibir un enlace de verificación en su nueva dirección de correo electrónico. Por favor, abra el enlace y complete el proceso de verificación.';
+
+  @override
+  String get updateNameBtnDetail =>
+      'Presione este botón para actualizar su nombre.';
 }

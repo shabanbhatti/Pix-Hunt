@@ -9,6 +9,7 @@ class SharedPreferencesService {
   }
 
   Future<bool> getBool(String key) async {
+    
     return sharedPreferences.getBool(key) ?? false;
   }
 

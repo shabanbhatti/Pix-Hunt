@@ -5,8 +5,20 @@ import 'package:pix_hunt_project/core/errors/failures/failures.dart';
 import 'package:pix_hunt_project/core/injectors/injectors.dart';
 import 'package:pix_hunt_project/repository/auth_repository.dart';
 
+enum AuthKeys {
+  login,
+  logout,
+  signUp,
+  forgotPassword,
+  changePassword,
+  intro,
+  withGoogle,
+  updateEmail,
+  updateName,
+}
+
 final authProvider =
-    StateNotifierProvider.family<AuthStateNotifier, AuthState, String>((
+    StateNotifierProvider.family<AuthStateNotifier, AuthState, AuthKeys>((
       ref,
       key,
     ) {
@@ -51,6 +63,14 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 
   // ---------LOGIN ACCOUNT
 
+  Future<void> onLogin() async {
+    try {
+      await authRepository.onLogin();
+    } on Failures catch (e) {
+      state = AuthError(error: e.message);
+    }
+  }
+
   Future<bool?> loginAccount({
     required String email,
     required String password,
@@ -68,6 +88,18 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     } on Failures catch (e) {
       state = AuthError(error: e.message);
       return null;
+    }
+  }
+
+  Future<void> changePassword(String oldPassword, String newPassword) async {
+    try {
+      state = AuthLoading();
+
+      await authRepository.changePassword(oldPassword, newPassword);
+
+      state = AuthLoadedSuccessfuly();
+    } on Failures catch (e) {
+      state = AuthError(error: e.message);
     }
   }
 

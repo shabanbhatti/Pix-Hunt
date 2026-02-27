@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/auth%20controller/auth_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/auth%20controller/auth_state.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20controller/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Home%20Page/Widgets/circle_avatar_home_widget.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/bookmark%20page/bookmark_page.dart';
-import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Search%20page/search_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/profile_page.dart';
 import 'package:pix_hunt_project/core/Utils/extensions.dart';
@@ -18,22 +15,10 @@ class HomeSliverAppbar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen(authProvider('logout'), (previous, next) {
-      if (next is AuthError) {
-        var error = next.error;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error), backgroundColor: Colors.red),
-        );
-      } else if (next is AuthLoadedSuccessfuly) {
-        Navigator.of(
-          context,
-        ).pushNamedAndRemoveUntil(LoginPage.pageName, (route) => false);
-      }
-    });
     return SliverAppBar(
       leading: Builder(
         builder:
-            (context) => InkWell(
+            (context) => GestureDetector(
               onTap: () {
                 Navigator.of(context).pushNamed(ProfilePage.pageName);
               },
@@ -110,15 +95,14 @@ class HomeSliverAppbar extends ConsumerWidget {
                     child: Consumer(
                       builder: (context, ref, child) {
                         var myRef = ref.watch(userDbProvider);
-
-                        return switch (myRef) {
-                          InitialUserDb() => Text(''),
-                          LoadingUserDb() => Skeletonizer(
+                        if (myRef is LoadingUserDb) {
+                          return Skeletonizer(
                             enabled: true,
                             child: Text('Loading.....'),
-                          ),
-                          LoadedSuccessfulyUserDb(auth: var auth) => Text(
-                            auth.name!.firstTwoWords(),
+                          );
+                        } else if (myRef is LoadedSuccessfulyUserDb) {
+                          return Text(
+                            myRef.auth.name!.firstTwoWords(),
 
                             style: const TextStyle(
                               fontSize: 30,
@@ -133,9 +117,12 @@ class HomeSliverAppbar extends ConsumerWidget {
                                 ),
                               ],
                             ),
-                          ),
-                          ErrorUserDb(error: var error) => Text(error),
-                        };
+                          );
+                        } else if (myRef is ErrorUserDb) {
+                          return Text(myRef.error);
+                        } else {
+                          return const SizedBox();
+                        }
                       },
                     ),
                   ),

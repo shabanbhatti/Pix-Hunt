@@ -7,13 +7,12 @@ import 'package:pix_hunt_project/Controllers/User%20image%20controller/user_img_
 import 'package:pix_hunt_project/Controllers/ads%20controller/banner_ads_controller.dart';
 import 'package:pix_hunt_project/Controllers/ads%20controller/interstitial_add_controller.dart';
 import 'package:pix_hunt_project/Controllers/cloud%20db%20controller/user_db_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/on%20sync%20after%20email%20verify%20riverpod/on_sync_after_email_verify.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/bookmark%20page/bookmark_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Home%20Page/Widgets/box_widget.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Home%20Page/Widgets/sliver_appbar.dart';
-import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Search%20page/search_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/profile%20Page/profile_page.dart';
+import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
 import 'package:pix_hunt_project/core/Utils/toast.dart';
 import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/core/constants/constant_static_products_home_utils.dart';
@@ -31,15 +30,12 @@ class _HomeState extends ConsumerState<Home> {
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref
-          .read(onSyncAfterEmailVerifyProvider.notifier)
-          .syncEmailAfterVerification();
       ref.read(userDbProvider.notifier).fetchUserDbData();
       ref.read(interstitialAdProvider.notifier).initInterstitialAds();
       ref.read(userImgProvider.notifier).getImage();
       ref.read(bannerAdsProvider.notifier).initBannerAds();
+      // ref.read(authProvider(AuthKeys.login).notifier).onLogin();
     });
   }
 
@@ -47,23 +43,19 @@ class _HomeState extends ConsumerState<Home> {
   Widget build(BuildContext context) {
     log('Home page build called');
     var lng = AppLocalizations.of(context);
-    ref.listen(onSyncAfterEmailVerifyProvider, (previous, next) async {
-      var error = next;
-      if (error == 'user-token-expired' ||
-          error ==
-              "[firebase_auth/user-token-expired] The user's credential is no longer valid. The user must sign in again.") {
-        ToastUtils.showToast('Email verified! please login with new email');
-        Navigator.of(
-          context,
-        ).pushNamedAndRemoveUntil(LoginPage.pageName, (route) => false);
-      }
-    });
 
     ref.listen(userDbProvider, (previous, next) {
       if (next is ErrorUserDb) {
         var error = next.error;
 
         ToastUtils.showToast(error, color: Colors.red);
+        if (error == 'Session expired. Please sign in again.') {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            LoginPage.pageName,
+            (route) => false,
+          );
+        }
       }
     });
 
@@ -178,12 +170,15 @@ class _HomeWidget extends StatelessWidget {
                       },
                     ),
                     SliverToBoxAdapter(child: const Divider()),
-                    Consumer(
-                      builder: (context, r, _) {
-                        return _columnList(
-                          ConstantStaticProductsHomeUtils.product2(context),
-                        );
-                      },
+                    SliverPadding(
+                      padding: const EdgeInsetsGeometry.only(bottom: 50),
+                      sliver: Consumer(
+                        builder: (context, r, _) {
+                          return _columnList(
+                            ConstantStaticProductsHomeUtils.product2(context),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),

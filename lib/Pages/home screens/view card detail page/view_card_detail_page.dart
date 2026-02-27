@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/ads%20controller/interstitial_add_controller.dart';
 import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20Image%20Page/view_img_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/view%20card%20detail%20page/widgets/card_detail_download_btn.dart';

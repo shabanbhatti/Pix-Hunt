@@ -104,5 +104,19 @@
   "passwordDoesntMatch": "Passwords do not match",
   "emailNotVerified": "Email is not verified! Please verify your email before login",
   "updateEmailBtnDetail": "Tap the button to receive a verification link on your new email address. Please open the link and complete the verification process.",
-  "updateNameBtnDetail": "Press this button to update your name."
+  "updateNameBtnDetail": "Press this button to update your name.",
+  "newPassword": "New Password",
+  "oldPassword": "Old Password",
+  "changePassword": "Change Password",
+  "changePasswordDetailDes": "Press this button to securely update your account password from the old password to a new one.",
+  "passwordChangeSuccessfully": "Password Changed Successfully",
+   "delete_warning": "By pressing this button, your account, all personal data, and your image history will be permanently deleted.",
+  "account_deletion_title": "Account Deletion",
+  "confirm_deletion": "Confirm Deletion",
+  "delete_account": "Delete Account",
+  "delete_confirmation_message": "Are you sure you want to delete your account permanently?",
+  "account_deleted_success": "Account deleted successfully! We hope you will create another one soon.",
+   "settings": "Settings",
+    "language": "Language",
+    "select_language": "Select Language"
 }

@@ -60,6 +60,18 @@ class AuthService {
     }
   }
 
+  Future<void> changePassword(String oldPassword, String newPassword) async {
+    var user = firebaseAuth.currentUser;
+    if (user != null) {
+      AuthCredential credential = EmailAuthProvider.credential(
+        email: user.email!,
+        password: oldPassword,
+      );
+      await user.reauthenticateWithCredential(credential);
+      await user.updatePassword(newPassword);
+    }
+  }
+
   Future<bool?> loginAccount({
     required String email,
     required String password,
@@ -122,6 +134,29 @@ class AuthService {
       }
 
       throw Exception(e.toString());
+    }
+  }
+
+  Future<void> reAuthenticateUser(String password) async {
+    var user = firebaseAuth.currentUser;
+    if (user != null) {
+      final cred = EmailAuthProvider.credential(
+        email: user.email!,
+        password: password,
+      );
+      await firebaseAuth.currentUser?.reauthenticateWithCredential(cred);
+    }
+  }
+
+  Future<void> deleteAccount(String password) async {
+    var user = firebaseAuth.currentUser;
+    if (user != null) {
+      final cred = EmailAuthProvider.credential(
+        email: user.email!,
+        password: password,
+      );
+      await firebaseAuth.currentUser?.reauthenticateWithCredential(cred);
+      await firebaseAuth.currentUser?.delete();
     }
   }
 }

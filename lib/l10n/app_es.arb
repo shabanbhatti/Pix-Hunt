@@ -105,5 +105,21 @@
   "itemAddedToBookmark": "Elemento añadido a marcadores",
   "nameAtLeast4Char": "El nombre debe tener al menos 4 caracteres",
 "updateEmailBtnDetail": "Toque el botón para recibir un enlace de verificación en su nueva dirección de correo electrónico. Por favor, abra el enlace y complete el proceso de verificación.",
-"updateNameBtnDetail": "Presione este botón para actualizar su nombre."
+"updateNameBtnDetail": "Presione este botón para actualizar su nombre.",
+"newPassword": "Contraseña nueva",
+  "oldPassword": "Contraseña antigua",
+  "changePassword": "Cambiar contraseña",
+  "changePasswordDetailDes": "Presione este botón para actualizar de forma segura su contraseña de la antigua a la nueva.",
+  "passwordChangeSuccessfully": "Contraseña cambiada con éxito",
+  "delete_warning": "Al presionar este botón, su cuenta, todos los datos personales y el historial de imágenes se eliminarán permanentemente.",
+  "account_deletion_title": "Eliminación de Cuenta",
+  "confirm_deletion": "Confirmar Eliminación",
+  "delete_account": "Eliminar Cuenta",
+  "delete_confirmation_message": "¿Está seguro de que desea eliminar su cuenta permanentemente?",
+  "account_deleted_success": "¡Cuenta eliminada con éxito! Esperamos que cree otra pronto.",
+  "settings": "Configuración",
+    "language": "Idioma",
+    "select_language": "Seleccionar idioma"
+
+
 }

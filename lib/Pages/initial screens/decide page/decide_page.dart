@@ -101,7 +101,8 @@ class _DecidePageState extends ConsumerState<DecidePage>
   }
 
   void loadPage() async {
-    var user = await ref.read(authProvider('intro').notifier).isUserNull();
+    var user =
+        await ref.read(authProvider(AuthKeys.intro).notifier).isUserNull();
 
     if (user) {
       Future.delayed(const Duration(seconds: 3), () {

@@ -329,4 +329,50 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get updateNameBtnDetail => 'اضغط على هذا الزر لتحديث اسمك.';
+
+  @override
+  String get newPassword => 'كلمة المرور الجديدة';
+
+  @override
+  String get oldPassword => 'كلمة المرور القديمة';
+
+  @override
+  String get changePassword => 'تغيير كلمة المرور';
+
+  @override
+  String get changePasswordDetailDes =>
+      'اضغط على هذا الزر لتحديث كلمة مرور حسابك بأمان من القديمة إلى الجديدة.';
+
+  @override
+  String get passwordChangeSuccessfully => 'تم تغيير كلمة المرور بنجاح';
+
+  @override
+  String get delete_warning =>
+      'بالضغط على هذا الزر، سيتم حذف حسابك وجميع بياناتك الشخصية وسجل الصور نهائيًا.';
+
+  @override
+  String get account_deletion_title => 'حذف الحساب';
+
+  @override
+  String get confirm_deletion => 'تأكيد الحذف';
+
+  @override
+  String get delete_account => 'حذف الحساب';
+
+  @override
+  String get delete_confirmation_message =>
+      'هل أنت متأكد أنك تريد حذف حسابك نهائيًا؟';
+
+  @override
+  String get account_deleted_success =>
+      'تم حذف الحساب بنجاح! نأمل أن تقوم بإنشاء حساب جديد قريبًا.';
+
+  @override
+  String get settings => 'الإعدادات';
+
+  @override
+  String get language => 'اللغة';
+
+  @override
+  String get select_language => 'اختر اللغة';
 }

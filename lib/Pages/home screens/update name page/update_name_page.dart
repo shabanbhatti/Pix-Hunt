@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20controller/auth_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20controller/auth_state.dart';
@@ -118,10 +119,17 @@ class _UpdateNamePageState extends ConsumerState<UpdateNamePage>
   Widget build(BuildContext context) {
     log('Update name build called');
     var lng = AppLocalizations.of(context);
-    ref.listen(authProvider('update_name'), (previous, next) {
+    ref.listen(authProvider(AuthKeys.updateName), (previous, next) {
+      if (next is AuthLoading) {
+        EasyLoading.show();
+      }
       if (next is AuthLoadedSuccessfuly) {
+        EasyLoading.dismiss();
         ToastUtils.showToast(lng?.nameUpdatedSuccessfully ?? '');
         Navigator.pop(context);
+      }
+      if (next is AuthError) {
+        EasyLoading.dismiss();
       }
     });
 
@@ -185,7 +193,9 @@ class _UpdateNamePageState extends ConsumerState<UpdateNamePage>
                       ),
                       Consumer(
                         builder: (context, ref, child) {
-                          var myRef = ref.watch(authProvider('update_name'));
+                          var myRef = ref.watch(
+                            authProvider(AuthKeys.updateName),
+                          );
                           return ScaleTransition(
                             scale: scaleUpdateBtn,
                             child: FadeTransition(
@@ -222,7 +232,7 @@ class _UpdateNamePageState extends ConsumerState<UpdateNamePage>
                                             await ref
                                                 .read(
                                                   authProvider(
-                                                    'update_name',
+                                                    AuthKeys.updateName,
                                                   ).notifier,
                                                 )
                                                 .updateName(
@@ -236,6 +246,7 @@ class _UpdateNamePageState extends ConsumerState<UpdateNamePage>
                                                   .usernameKey,
                                               nameController.text.trim(),
                                             );
+                                            EasyLoading.dismiss();
                                           }
                                         },
                               ),

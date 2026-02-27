@@ -7,6 +7,10 @@ class AuthFailure extends Failures {
   const AuthFailure({required super.message});
 }
 
+class FirebaseFailure extends Failures {
+  FirebaseFailure({required super.message});
+}
+
 class ApiFailure extends Failures {
   ApiFailure({required super.message});
 }

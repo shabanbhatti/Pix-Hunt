@@ -105,5 +105,21 @@
   "itemAddedToBookmark": "تمت إضافة العنصر إلى الإشارات المرجعية",
   "nameAtLeast4Char": "يجب أن يكون الاسم مكونًا من 4 أحرف على الأقل",
   "updateEmailBtnDetail": "اضغط على الزر لتلقي رابط التحقق على عنوان بريدك الإلكتروني الجديد. يرجى فتح الرابط وإكمال عملية التحقق.",
-  "updateNameBtnDetail": "اضغط على هذا الزر لتحديث اسمك."
+  "updateNameBtnDetail": "اضغط على هذا الزر لتحديث اسمك.",
+   "newPassword": "كلمة المرور الجديدة",
+  "oldPassword": "كلمة المرور القديمة",
+  "changePassword": "تغيير كلمة المرور",
+  "changePasswordDetailDes": "اضغط على هذا الزر لتحديث كلمة مرور حسابك بأمان من القديمة إلى الجديدة.",
+  "passwordChangeSuccessfully": "تم تغيير كلمة المرور بنجاح",
+  "delete_warning": "بالضغط على هذا الزر، سيتم حذف حسابك وجميع بياناتك الشخصية وسجل الصور نهائيًا.",
+  "account_deletion_title": "حذف الحساب",
+  "confirm_deletion": "تأكيد الحذف",
+  "delete_account": "حذف الحساب",
+  "delete_confirmation_message": "هل أنت متأكد أنك تريد حذف حسابك نهائيًا؟",
+  "account_deleted_success": "تم حذف الحساب بنجاح! نأمل أن تقوم بإنشاء حساب جديد قريبًا.",
+   "settings": "الإعدادات",
+    "language": "اللغة",
+    "select_language": "اختر اللغة"
+
+
 }

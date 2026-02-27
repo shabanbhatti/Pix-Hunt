@@ -105,5 +105,19 @@
   "itemAddedToBookmark": "项目已添加到收藏",
   "nameAtLeast4Char": "姓名至少应包含4个字符",
   "updateEmailBtnDetail": "点击按钮以在您的新电子邮件地址上接收验证链接。请打开该链接并完成验证过程。",
-  "updateNameBtnDetail": "按此按钮以更新您的姓名。"
+  "updateNameBtnDetail": "按此按钮以更新您的姓名。",
+  "newPassword": "新密码",
+  "oldPassword": "旧密码",
+  "changePassword": "更改密码",
+  "changePasswordDetailDes": "按此按钮可将您的账户密码从旧密码安全更新为新密码。",
+  "passwordChangeSuccessfully": "密码修改成功",
+  "delete_warning": "按下此按钮后，您的账户、所有个人数据以及图片历史记录将被永久删除。",
+  "account_deletion_title": "删除账户",
+  "confirm_deletion": "确认删除",
+  "delete_account": "删除账户",
+  "delete_confirmation_message": "您确定要永久删除您的账户吗？",
+  "account_deleted_success": "账户删除成功！希望您很快再次创建新账户。",
+   "settings": "设置",
+    "language": "语言",
+    "select_language": "选择语言"
 }

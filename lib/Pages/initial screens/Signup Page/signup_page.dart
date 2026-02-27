@@ -175,7 +175,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
   Widget build(BuildContext context) {
     log('Sign up page build called');
     var lng = AppLocalizations.of(context);
-    ref.listen(authProvider('create'), (previous, next) {
+    ref.listen(authProvider(AuthKeys.signUp), (previous, next) {
       if (next is AuthLoadedSuccessfuly) {
         ToastUtils.showToast(
           lng?.accountVerificationLinkSent ?? '',
@@ -381,7 +381,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
   Widget _signupButton(FocusNode focusNode, GlobalKey<FormState> formKey) {
     return Consumer(
       builder: (context, ref, child) {
-        var myRef = ref.watch(authProvider('create'));
+        var myRef = ref.watch(authProvider(AuthKeys.signUp));
 
         return AppMainBtn(
           focusNode: focusNode,
@@ -397,7 +397,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
             var isValidate = formKey.currentState?.validate();
             if (isValidate!) {
               ref
-                  .read(authProvider('create').notifier)
+                  .read(authProvider(AuthKeys.signUp).notifier)
                   .createAccount(
                     auth: Auth(
                       name: nameController.text.trim(),

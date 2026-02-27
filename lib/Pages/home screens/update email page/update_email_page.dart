@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20controller/auth_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/auth%20controller/auth_state.dart';
@@ -129,10 +130,15 @@ class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage>
   Widget build(BuildContext context) {
     log('Update email page build called');
     var lng = AppLocalizations.of(context);
-    ref.listen(authProvider('update'), (previous, next) async {
+    ref.listen(authProvider(AuthKeys.updateEmail), (previous, next) async {
+      if (next is AuthLoading) {
+        EasyLoading.show();
+      }
       if (next is AuthLoadedSuccessfuly) {
+        EasyLoading.dismiss();
         ToastUtils.showToast(lng?.emailVerificationLink ?? '');
       } else if (next is AuthError) {
+        EasyLoading.dismiss();
         var error = next.error;
 
         ToastUtils.showToast(error, color: Colors.red);
@@ -167,12 +173,13 @@ class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage>
                                 context,
                               ).requestFocus(passwordFocusNode);
                             },
-                            validator: (v) {
-                              return ValidationsTextfieldsUtils.emailValidation(
-                                v,
-                                context,
-                              );
-                            },
+                            // validator: (v) {
+                            //   return ValidationsTextfieldsUtils.emailValidation(
+                            //     v,
+                            //     context,
+                            //   );
+                            // },
+                            validator: null,
                           ),
                         ),
                       ),
@@ -221,7 +228,9 @@ class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage>
 
                       Consumer(
                         builder: (context, ref, child) {
-                          var myRef = ref.watch(authProvider('update'));
+                          var myRef = ref.watch(
+                            authProvider(AuthKeys.updateEmail),
+                          );
                           return ScaleTransition(
                             scale: scaleUpdateBtn,
                             child: FadeTransition(
@@ -256,7 +265,7 @@ class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage>
                                             ref
                                                 .read(
                                                   authProvider(
-                                                    'update',
+                                                    AuthKeys.updateEmail,
                                                   ).notifier,
                                                 )
                                                 .updateEmail(

@@ -6,8 +6,17 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_ar.dart';
+import 'app_localizations_bn.dart';
+import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
+import 'app_localizations_fr.dart';
+import 'app_localizations_it.dart';
+import 'app_localizations_ja.dart';
+import 'app_localizations_ko.dart';
+import 'app_localizations_pt.dart';
+import 'app_localizations_ru.dart';
+import 'app_localizations_tr.dart';
 import 'app_localizations_ur.dart';
 import 'app_localizations_zh.dart';
 
@@ -98,8 +107,18 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ar'),
+    Locale('bn'),
+    Locale('de'),
     Locale('en'),
+    Locale('en', 'GB'),
     Locale('es'),
+    Locale('fr'),
+    Locale('it'),
+    Locale('ja'),
+    Locale('ko'),
+    Locale('pt'),
+    Locale('ru'),
+    Locale('tr'),
     Locale('ur'),
     Locale('zh'),
   ];
@@ -727,6 +746,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Press this button to update your name.'**
   String get updateNameBtnDetail;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// No description provided for @oldPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Old Password'**
+  String get oldPassword;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePassword;
+
+  /// No description provided for @changePasswordDetailDes.
+  ///
+  /// In en, this message translates to:
+  /// **'Press this button to securely update your account password from the old password to a new one.'**
+  String get changePasswordDetailDes;
+
+  /// No description provided for @passwordChangeSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Password Changed Successfully'**
+  String get passwordChangeSuccessfully;
+
+  /// No description provided for @delete_warning.
+  ///
+  /// In en, this message translates to:
+  /// **'By pressing this button, your account, all personal data, and your image history will be permanently deleted.'**
+  String get delete_warning;
+
+  /// No description provided for @account_deletion_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Deletion'**
+  String get account_deletion_title;
+
+  /// No description provided for @confirm_deletion.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Deletion'**
+  String get confirm_deletion;
+
+  /// No description provided for @delete_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get delete_account;
+
+  /// No description provided for @delete_confirmation_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account permanently?'**
+  String get delete_confirmation_message;
+
+  /// No description provided for @account_deleted_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Account deleted successfully! We hope you will create another one soon.'**
+  String get account_deleted_success;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @select_language.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get select_language;
 }
 
 class _AppLocalizationsDelegate
@@ -739,22 +842,66 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['ar', 'en', 'es', 'ur', 'zh'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'ar',
+    'bn',
+    'de',
+    'en',
+    'es',
+    'fr',
+    'it',
+    'ja',
+    'ko',
+    'pt',
+    'ru',
+    'tr',
+    'ur',
+    'zh',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when language+country codes are specified.
+  switch (locale.languageCode) {
+    case 'en':
+      {
+        switch (locale.countryCode) {
+          case 'GB':
+            return AppLocalizationsEnGb();
+        }
+        break;
+      }
+  }
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ar':
       return AppLocalizationsAr();
+    case 'bn':
+      return AppLocalizationsBn();
+    case 'de':
+      return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
     case 'es':
       return AppLocalizationsEs();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'it':
+      return AppLocalizationsIt();
+    case 'ja':
+      return AppLocalizationsJa();
+    case 'ko':
+      return AppLocalizationsKo();
+    case 'pt':
+      return AppLocalizationsPt();
+    case 'ru':
+      return AppLocalizationsRu();
+    case 'tr':
+      return AppLocalizationsTr();
     case 'ur':
       return AppLocalizationsUr();
     case 'zh':

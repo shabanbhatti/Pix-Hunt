@@ -72,4 +72,11 @@ class LocalDatabaseService {
     );
     return data > 0;
   }
+
+  Future<void> deleteAllData() async {
+    final db = await appDatabase.database;
+
+    await db.delete(Pexer.tableName);
+    await db.delete(Photos.tableName);
+  }
 }

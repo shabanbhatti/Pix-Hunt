@@ -330,4 +330,51 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get updateNameBtnDetail =>
       'اس بٹن کو دبائیں تاکہ آپ اپنا نام اپڈیٹ کر سکیں۔';
+
+  @override
+  String get newPassword => 'نیا پاس ورڈ';
+
+  @override
+  String get oldPassword => 'پرانا پاس ورڈ';
+
+  @override
+  String get changePassword => 'پاس ورڈ تبدیل کریں';
+
+  @override
+  String get changePasswordDetailDes =>
+      'اس بٹن پر دبائیں تاکہ آپ کا پرانا پاس ورڈ محفوظ طریقے سے نیا پاس ورڈ میں اپڈیٹ ہو جائے۔';
+
+  @override
+  String get passwordChangeSuccessfully =>
+      'پاس ورڈ کامیابی کے ساتھ تبدیل ہوگیا';
+
+  @override
+  String get delete_warning =>
+      'اس بٹن کو دبانے سے آپ کا اکاؤنٹ، تمام ذاتی ڈیٹا اور تصاویر کی ہسٹری ہمیشہ کے لیے حذف ہو جائے گی۔';
+
+  @override
+  String get account_deletion_title => 'اکاؤنٹ حذف کرنا';
+
+  @override
+  String get confirm_deletion => 'حذف کرنے کی تصدیق کریں';
+
+  @override
+  String get delete_account => 'اکاؤنٹ حذف کریں';
+
+  @override
+  String get delete_confirmation_message =>
+      'کیا آپ واقعی اپنا اکاؤنٹ ہمیشہ کے لیے حذف کرنا چاہتے ہیں؟';
+
+  @override
+  String get account_deleted_success =>
+      'اکاؤنٹ کامیابی سے حذف ہو گیا! امید ہے آپ جلد دوبارہ نیا اکاؤنٹ بنائیں گے۔';
+
+  @override
+  String get settings => 'ترتیبات';
+
+  @override
+  String get language => 'زبان';
+
+  @override
+  String get select_language => 'زبان منتخب کریں';
 }

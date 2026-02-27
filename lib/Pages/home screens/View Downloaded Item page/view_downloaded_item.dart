@@ -76,15 +76,19 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
                         builder: (context, ref, _) {
                           return GestureDetector(
                             onTap: () {
-                              deleteDialogBox(context, () {
-                                ref
-                                    .read(userDbProvider.notifier)
-                                    .deleteDownloadedHistory(
-                                      widget.downloadImageModel,
-                                    );
-
-                                Navigator.pop(context);
-                              });
+                              deleteDialogBox(
+                                context,
+                                describtion: lng?.doYouWantToDelete ?? '',
+                                title: lng?.delete ?? '',
+                                delete: () {
+                                  ref
+                                      .read(userDbProvider.notifier)
+                                      .deleteDownloadedHistory(
+                                        widget.downloadImageModel,
+                                      );
+                                  Navigator.pop(context);
+                                },
+                              );
                             },
                             child: CircleAvatar(
                               backgroundColor: ConstantColors.appColor

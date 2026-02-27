@@ -60,6 +60,7 @@ Future<void> initGetIt() async {
   getIt.registerLazySingleton<CloudDbRepository>(
     () => CloudDbRepository(
       authService: getIt<AuthService>(),
+      localDatabaseService: getIt<LocalDatabaseService>(),
       cloudDbService: getIt<CloudDbService>(),
       storageService: getIt<StorageService>(),
     ),

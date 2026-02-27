@@ -11,6 +11,7 @@ class CustomPasswordTextFieldWidget extends StatelessWidget {
     required this.isObscure,
     required this.onFieldSubmitted,
     required this.label,
+    this.autofocus = false,
   });
   final TextEditingController controller;
   final FocusNode focusNode;
@@ -18,6 +19,7 @@ class CustomPasswordTextFieldWidget extends StatelessWidget {
   final String label;
   final OnSubmitted onFieldSubmitted;
   final OnValidator validator;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class CustomPasswordTextFieldWidget extends StatelessWidget {
             valueListenable: isObscure,
             builder: (context, value, child) {
               return TextFormField(
+                autofocus: autofocus,
                 controller: controller,
                 obscureText: value,
                 validator: validator,

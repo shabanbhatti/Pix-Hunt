@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/ads%20controller/interstitial_add_controller.dart';
 import 'package:pix_hunt_project/Controllers/api%20controller/api_riverpod.dart';
+import 'package:pix_hunt_project/Controllers/cloud%20db%20controller/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20home%20cetagory%20Page/Widgets/photo_pages_widget.dart';
+import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
+import 'package:pix_hunt_project/core/Utils/toast.dart';
 import 'package:pix_hunt_project/core/Widgets/card_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/custom_sliver_appbar.dart';
 import 'package:pix_hunt_project/core/Widgets/loading%20widgets/custom_loading_card_widget.dart';
@@ -75,6 +78,20 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
           animationController.forward();
         });
+      }
+    });
+    ref.listen(userDbProvider, (previous, next) {
+      if (next is ErrorUserDb) {
+        var error = next.error;
+
+        ToastUtils.showToast(error, color: Colors.red);
+        if (error == 'Session expired. Please sign in again.') {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            LoginPage.pageName,
+            (route) => false,
+          );
+        }
       }
     });
     return Scaffold(
@@ -167,11 +184,28 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
       padding: const EdgeInsetsGeometry.symmetric(horizontal: 5, vertical: 10),
       sliver: SliverGrid.builder(
         itemCount: photosList.length,
-        itemBuilder:
-            (context, index) => ScaleTransition(
-              scale: scale,
-              child: CardWidget(photo: photosList[index], index: index),
+        itemBuilder: (context, index) {
+          final start = (index * 0.05).clamp(0.0, 1.0);
+          final end = (start + 0.4).clamp(0.0, 1.0);
+
+          final animation = CurvedAnimation(
+            parent: animationController,
+            curve: Interval(start, end, curve: Curves.easeOutBack),
+          );
+          return FadeTransition(
+            opacity: animation,
+            child: SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(0, 0.25),
+                end: Offset.zero,
+              ).animate(animation),
+              child: ScaleTransition(
+                scale: Tween<double>(begin: 0.85, end: 1.0).animate(animation),
+                child: CardWidget(photo: photosList[index], index: index),
+              ),
             ),
+          );
+        },
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 5,
@@ -195,7 +229,7 @@ Widget _loading() {
       itemBuilder:
           (context, index) =>
               const Skeletonizer(child: const CustomLoadingCardsWidget()),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 5,
         mainAxisSpacing: 5,

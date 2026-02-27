@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:pix_hunt_project/core/typedefs/typedefs.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
-void deleteDialogBox(BuildContext context, OnPressed delete) {
+void deleteDialogBox(
+  BuildContext context, {
+  required OnPressed delete,
+  required String title,
+  required String describtion,
+}) {
   showDialog(
     context: context,
     builder: (contextz) {
@@ -14,18 +19,15 @@ void deleteDialogBox(BuildContext context, OnPressed delete) {
             children: [
               const Icon(Icons.warning, color: Colors.red, size: 40),
               Padding(
-                padding: const EdgeInsetsGeometry.only(left: 10),
+                padding: const EdgeInsetsGeometry.only(left: 10, right: 10),
                 child: Text(
-                  lng?.delete ?? '',
+                  title,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
             ],
           ),
-          content: Text(
-            lng?.doYouWantToDelete ?? '',
-            style: const TextStyle(fontSize: 12),
-          ),
+          content: Text(describtion, style: const TextStyle(fontSize: 12)),
           actions: [
             GestureDetector(
               onTap: () {
@@ -34,7 +36,7 @@ void deleteDialogBox(BuildContext context, OnPressed delete) {
               child: Text(lng?.no ?? ''),
             ),
             Padding(
-              padding: const EdgeInsetsGeometry.only(left: 20),
+              padding: const EdgeInsetsGeometry.only(left: 20, right: 20),
               child: GestureDetector(
                 onTap: () {
                   delete();

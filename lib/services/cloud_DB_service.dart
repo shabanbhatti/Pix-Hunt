@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
 import 'package:pix_hunt_project/Models/downloads_image_model.dart';
@@ -113,6 +111,22 @@ class CloudDbService {
         .delete();
   }
 
+  Future<String?> getEmailFromDb(String uid) async {
+    var doc = await firestore.collection('users').doc(uid).get();
+    var data = doc.data();
+    if (data == null) return null;
+
+    String email = data['email'];
+    return email;
+  }
+
+  Future<void> onLogin(String email, String uid) async {
+    await firestore.collection('users').doc(uid).update({'email': email});
+    await firestore.collection('users').doc(uid).update({
+      'pendingEmail': FieldValue.delete(),
+    });
+  }
+
   Future<void> updateName(String name, String uid) async {
     await firestore.collection('users').doc(uid).update({'name': name});
   }
@@ -140,15 +154,14 @@ class CloudDbService {
   Future<String> getUserImage(String uid) async {
     var url = await firestore.collection('users').doc(uid).get();
     var path = url['imgUrl'] ?? '';
-    log('PATH: $path');
     return path;
   }
 
-  Future<void> syncEmailAfterVerification(String email, String uid) async {
-    await firestore.collection('users').doc(uid).update({
-      'email': email,
-      'pendingEmail': FieldValue.delete(),
-    });
+  Future<String?> getUserImageStoragePath(String uid) async {
+    var doc = await firestore.collection('users').doc(uid).get();
+    var data = doc.data() ?? {};
+    String? path = data['img_paths'] ?? null;
+    return path;
   }
 
   Stream<List<Photos>> bookmarks(String uid) {
@@ -165,7 +178,7 @@ class CloudDbService {
   }
 
   Stream<List<DownloadsImageModel>> downloadHistoryStream(String uid) {
-    return FirebaseFirestore.instance
+    return firestore
         .collection('users')
         .doc(uid)
         .collection('downloaded_items')
@@ -179,7 +192,7 @@ class CloudDbService {
   }
 
   Stream<List<SearchHistory>> searchHitoryStream(String uid) {
-    return FirebaseFirestore.instance
+    return firestore
         .collection('users')
         .doc(uid)
         .collection('search_history')
@@ -188,5 +201,9 @@ class CloudDbService {
           (event) =>
               event.docs.map((e) => SearchHistory.fromMap(e.data())).toList(),
         );
+  }
+
+  Future<void> deleteAccount(String uid) async {
+    await firestore.collection('users').doc(uid).delete();
   }
 }

@@ -153,15 +153,19 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
                                       },
                                       delete: () {
                                         Navigator.pop(context);
-                                        deleteDialogBox(context, () {
-                                          ref
-                                              .read(userDbProvider.notifier)
-                                              .deleteDownloadedHistory(
-                                                data[index],
-                                              );
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
-                                        });
+                                        deleteDialogBox(
+                                          context,
+                                          describtion:
+                                              lng?.doYouWantToDelete ?? '',
+                                          title: lng?.delete ?? '',
+                                          delete: () {
+                                            ref
+                                                .read(userDbProvider.notifier)
+                                                .deleteDownloadedHistory(
+                                                  data[index],
+                                                );
+                                          },
+                                        );
                                       },
                                     );
                                   },

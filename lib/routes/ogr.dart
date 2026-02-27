@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pix_hunt_project/Models/downloads_image_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Download%20History%20Page/downloads_history_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/bookmark%20page/bookmark_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/change%20password%20page/change_password_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/language%20page/language_page.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/setting%20page/setting_page.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Forgot%20Password%20Page/forget_pass.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Home%20Page/home.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
@@ -87,6 +90,26 @@ Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
     case SearchPage.pageName:
       return AnimatedRouting(
         child: const SearchPage(),
+        routeSettings: routeSettings,
+      );
+
+    case ChangePasswordPage.pageName:
+      return AnimatedRouting(
+        child: const ChangePasswordPage(),
+        routeSettings: routeSettings,
+      );
+
+    case LanguagePage.pageName:
+      return AnimatedRouting(
+        child: LanguagePage(
+          languageNotifier: routeSettings.arguments as ValueNotifier<String>,
+        ),
+        routeSettings: routeSettings,
+      );
+
+    case SettingPage.pageName:
+      return AnimatedRouting(
+        child: const SettingPage(),
         routeSettings: routeSettings,
       );
 

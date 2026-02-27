@@ -16,6 +16,9 @@ import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/core/constants/constant_imgs.dart';
 import 'package:pix_hunt_project/core/Utils/toast.dart';
 import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
+import 'package:pix_hunt_project/core/constants/constants_sharedPref_keys.dart';
+import 'package:pix_hunt_project/core/injectors/injectors.dart';
+import 'package:pix_hunt_project/core/services/shared_preference_service.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -46,6 +49,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
   late Animation<double> scaleCreateAccount;
   late Animation<double> fadeCreateAccount;
 
+  ValueNotifier<String> languageNotifier = ValueNotifier('en');
   @override
   void initState() {
     super.initState();
@@ -108,6 +112,17 @@ class _LoginPageState extends ConsumerState<LoginPage>
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       animationController.forward();
     });
+    getCurrentLanguage();
+  }
+
+  void getCurrentLanguage() async {
+    var sharedPreferencesService = getIt<SharedPreferencesService>();
+    var language =
+        await sharedPreferencesService.getString(
+          ConstantsSharedprefKeys.languageKey,
+        ) ??
+        'en';
+    languageNotifier.value = language;
   }
 
   @override
@@ -115,6 +130,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
     emailController.dispose();
     passwordController.dispose();
     animationController.dispose();
+    languageNotifier.dispose();
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
     super.dispose();
@@ -123,7 +139,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
   @override
   Widget build(BuildContext context) {
     log('Login page build called');
-    ref.listen(authProvider('login'), (previous, next) {
+    ref.listen(authProvider(AuthKeys.login), (previous, next) {
       if (next is AuthLoading) {
         EasyLoading.show(
           indicator: Column(
@@ -144,6 +160,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
       }
       if (next is AuthLoadedSuccessfuly) {
         EasyLoading.dismiss();
+        ref.read(authProvider(AuthKeys.login).notifier).onLogin();
       }
       if (next is AuthError) {
         EasyLoading.dismiss();
@@ -152,7 +169,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
       }
     });
 
-    ref.listen(authProvider('google'), (previous, next) {
+    ref.listen(authProvider(AuthKeys.withGoogle), (previous, next) {
       if (next is AuthError) {
         var error = next.error;
         ToastUtils.showToast(error, color: Colors.red);
@@ -166,7 +183,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
             key: formKey,
             child: CustomScrollView(
               slivers: [
-                const LoginSliverAppbar(),
+                LoginSliverAppbar(languageNotifier: languageNotifier),
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
@@ -246,7 +263,11 @@ class _LoginPageState extends ConsumerState<LoginPage>
                                 onTap: () async {
                                   var isLogged =
                                       await ref
-                                          .read(authProvider('login').notifier)
+                                          .read(
+                                            authProvider(
+                                              AuthKeys.login,
+                                            ).notifier,
+                                          )
                                           .signInWithGOOGLE();
                                   if (isLogged == null) return;
 
@@ -283,7 +304,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
   Widget _loginButton(FocusNode focusNode, GlobalKey<FormState> formKey) {
     return Consumer(
       builder: (context, ref, child) {
-        var myRef = ref.watch(authProvider('login'));
+        var myRef = ref.watch(authProvider(AuthKeys.login));
         return AppMainBtn(
           focusNode: focusNode,
           widgetOrTitle: WidgetOrTitle.widget,
@@ -298,7 +319,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
             var isValidate = formKey.currentState?.validate();
             if (isValidate!) {
               var login = await ref
-                  .read(authProvider('login').notifier)
+                  .read(authProvider(AuthKeys.login).notifier)
                   .loginAccount(
                     email: emailController.text.trim(),
                     password: passwordController.text.trim(),
@@ -373,7 +394,6 @@ class _LoginEmailTextFieldWidget extends StatelessWidget {
     return CustomTextfieldWidget(
       validator:
           (value) => ValidationsTextfieldsUtils.emailValidation(value, context),
-
       controller: controller,
       focusNode: focusNode,
       label: lng?.email ?? '',

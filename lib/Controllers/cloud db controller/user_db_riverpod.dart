@@ -7,6 +7,7 @@ import 'package:pix_hunt_project/Models/downloads_image_model.dart';
 import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
 import 'package:pix_hunt_project/core/Utils/img_download.dart';
+import 'package:pix_hunt_project/core/errors/failures/failures.dart';
 import 'package:pix_hunt_project/core/injectors/injectors.dart';
 import 'package:pix_hunt_project/core/typedefs/typedefs.dart';
 import 'package:pix_hunt_project/repository/cloud_db_repository.dart';
@@ -27,24 +28,32 @@ class UserDbStateNotifier extends StateNotifier<UserDbState> {
       var auth = await cloudDbRepository.getUserData();
 
       state = LoadedSuccessfulyUserDb(auth: auth);
-    } catch (e) {
-      state = ErrorUserDb(error: e.toString());
+    } on Failures catch (e) {
+      state = ErrorUserDb(error: e.message);
+    }
+  }
+
+  Future<void> onLogin() async {
+    try {
+      await cloudDbRepository.onLogin();
+    } on Failures catch (e) {
+      state = ErrorUserDb(error: e.message);
     }
   }
 
   Future<void> addFavouriteItems(Photos photos) async {
     try {
       await cloudDbRepository.addToBookmark(photos);
-    } catch (e) {
-      state = ErrorUserDb(error: e.toString());
+    } on Failures catch (e) {
+      state = ErrorUserDb(error: e.message);
     }
   }
 
   Future<void> deleteBookmarkItem(Photos photos) async {
     try {
       await cloudDbRepository.deleteBookmark(photos);
-    } catch (e) {
-      state = ErrorUserDb(error: e.toString());
+    } on Failures catch (e) {
+      state = ErrorUserDb(error: e.message);
     }
   }
 
@@ -66,9 +75,9 @@ class UserDbStateNotifier extends StateNotifier<UserDbState> {
 
       EasyLoading.dismiss();
       return data;
-    } catch (e) {
+    } on Failures catch (e) {
       EasyLoading.dismiss();
-      state = ErrorUserDb(error: e.toString());
+      state = ErrorUserDb(error: e.message);
       return null;
     }
   }
@@ -78,32 +87,42 @@ class UserDbStateNotifier extends StateNotifier<UserDbState> {
   ) async {
     try {
       await cloudDbRepository.deleteDownloadHistory(downloadImageModel);
-    } catch (e) {
-      state = ErrorUserDb(error: e.toString());
+    } on Failures catch (e) {
+      state = ErrorUserDb(error: e.message);
     }
   }
 
   Future<void> deleteAllDownloadedHistory() async {
     try {
       await cloudDbRepository.deleteAllDownloadHistory();
-    } catch (e) {
-      state = ErrorUserDb(error: e.toString());
+    } on Failures catch (e) {
+      state = ErrorUserDb(error: e.message);
+    }
+  }
+
+  Future<void> deleteAccount(String password) async {
+    try {
+      state = LoadingUserDb();
+      await cloudDbRepository.deleteAccount(password);
+      state = AccountDeleteUserDb();
+    } on Failures catch (e) {
+      state = ErrorUserDb(error: e.message);
     }
   }
 
   Future<void> addSearchHistory(SearchHistory searchHistory) async {
     try {
       await cloudDbRepository.addSearchHistory(searchHistory);
-    } catch (e) {
-      state = ErrorUserDb(error: e.toString());
+    } on Failures catch (e) {
+      state = ErrorUserDb(error: e.message);
     }
   }
 
   Future<void> removeSearchHistory(SearchHistory searchHistory) async {
     try {
       await cloudDbRepository.removerSearchHistory(searchHistory);
-    } catch (e) {
-      state = ErrorUserDb(error: e.toString());
+    } on Failures catch (e) {
+      state = ErrorUserDb(error: e.message);
     }
   }
 }
@@ -124,6 +143,10 @@ class LoadedSuccessfulyUserDb extends UserDbState {
   final Auth auth;
 
   const LoadedSuccessfulyUserDb({required this.auth});
+}
+
+class AccountDeleteUserDb extends UserDbState {
+  const AccountDeleteUserDb();
 }
 
 class ErrorUserDb extends UserDbState {

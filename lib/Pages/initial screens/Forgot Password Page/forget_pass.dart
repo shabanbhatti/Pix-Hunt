@@ -114,7 +114,7 @@ class _ForgetPassPageState extends ConsumerState<ForgetPassPage>
   Widget build(BuildContext context) {
     log('Forgot password page build called');
     var lng = AppLocalizations.of(context);
-    ref.listen(authProvider('forgot'), (previous, next) {
+    ref.listen(authProvider(AuthKeys.forgotPassword), (previous, next) {
       if (next is AuthLoadedSuccessfuly) {
         ToastUtils.showToast("${lng?.passwordResetLinkSent ?? ''}");
       } else if (next is AuthError) {
@@ -246,7 +246,7 @@ Widget _forgotBtn(
 ) {
   return Consumer(
     builder: (context, ref, child) {
-      var myRef = ref.watch(authProvider('forgot'));
+      var myRef = ref.watch(authProvider(AuthKeys.forgotPassword));
       return AppMainBtn(
         widgetOrTitle: WidgetOrTitle.widget,
         btnValueWidget:
@@ -262,7 +262,7 @@ Widget _forgotBtn(
           var isValidate = formKey.currentState!.validate();
           if (isValidate) {
             ref
-                .read(authProvider('forgot').notifier)
+                .read(authProvider(AuthKeys.forgotPassword).notifier)
                 .forgotPassword(controller.text.trim());
           }
         },

@@ -31,6 +31,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
   late Animation<double> scale;
   late Animation<double> fade;
   ValueNotifier<String> usernameNotifier = ValueNotifier('');
+  ValueNotifier<String> languageNotifier = ValueNotifier('en');
   @override
   void initState() {
     super.initState();
@@ -53,25 +54,40 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
     });
 
     loadUsername();
+    getCurrentLanguage();
   }
 
   Future<void> loadUsername() async {
     var spService = getIt<SharedPreferencesService>();
     var name = await spService.getString(ConstantsSharedprefKeys.usernameKey);
+    await ref.read(userDbProvider.notifier).fetchUserDbData();
+    await ref.read(userDbProvider.notifier).onLogin();
+    // ref.read(authProvider(AuthKeys.login).notifier).onLogin();
     usernameNotifier.value = name ?? '';
+  }
+
+  void getCurrentLanguage() async {
+    var sharedPreferencesService = getIt<SharedPreferencesService>();
+    var language =
+        await sharedPreferencesService.getString(
+          ConstantsSharedprefKeys.languageKey,
+        ) ??
+        'en';
+    languageNotifier.value = language;
   }
 
   @override
   void dispose() {
     animationController.dispose();
-    usernameNotifier.dispose();
+    // usernameNotifier.dispose();
+    languageNotifier.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     log('Profile page build called');
-    ref.listen(authProvider('logout1'), (previous, next) {
+    ref.listen(authProvider(AuthKeys.logout), (previous, next) {
       if (next is AuthError) {
         var error = next.error;
 
@@ -80,6 +96,20 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
         Navigator.of(
           context,
         ).pushNamedAndRemoveUntil(LoginPage.pageName, (route) => false);
+      }
+    });
+    ref.listen(userDbProvider, (previous, next) {
+      if (next is ErrorUserDb) {
+        var error = next.error;
+
+        ToastUtils.showToast(error, color: Colors.red);
+        if (error == 'Session expired. Please sign in again.') {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            LoginPage.pageName,
+            (route) => false,
+          );
+        }
       }
     });
     return Scaffold(
@@ -104,7 +134,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
                         const CircleAvatarWidget(),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsetsGeometry.only(left: 10),
+                            padding: EdgeInsetsGeometry.only(left: 5),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -144,7 +174,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
                     opacity: fade,
                     child: ScaleTransition(
                       scale: scale,
-                      child: const ProfileListtileWidget(),
+                      child: ProfileListtileWidget(
+                        languageNotifier: languageNotifier,
+                      ),
                     ),
                   ),
                 ),
@@ -193,7 +225,6 @@ Widget _userName() {
         } else if (myRef is LoadedSuccessfulyUserDb) {
           return Text(
             myRef.auth.name!,
-            // 'Muhammad Shaban Abubakkar Bhatti',
             maxLines: 2,
 
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

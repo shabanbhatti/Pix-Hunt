@@ -89,6 +89,10 @@ class ViewCardDetailDownloadBtn extends ConsumerWidget {
                                 ? () {}
                                 : (interstitialAd is ErrorInterstitialAdsState)
                                 ? () async {
+                                  var internet =
+                                      await getIt<InternetCheckerUtil>()
+                                          .checkInternet();
+                                  if (!internet) return;
                                   String id =
                                       DateTime.now().microsecondsSinceEpoch
                                           .toString();

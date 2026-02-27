@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-void openHalfBottomSheet(BuildContext context, {required Widget child}) {
+void openHalfBottomSheet(
+  BuildContext context, {
+  required Widget child,
+  double? size,
+}) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -10,7 +14,7 @@ void openHalfBottomSheet(BuildContext context, {required Widget child}) {
       borderRadius: BorderRadius.vertical(top: Radius.circular(05)),
     ),
     builder: (context) {
-      return FractionallySizedBox(heightFactor: 0.75, child: child);
+      return FractionallySizedBox(heightFactor: size ?? 0.75, child: child);
     },
   );
 }

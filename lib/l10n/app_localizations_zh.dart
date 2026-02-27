@@ -319,4 +319,46 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get updateNameBtnDetail => '按此按钮以更新您的姓名。';
+
+  @override
+  String get newPassword => '新密码';
+
+  @override
+  String get oldPassword => '旧密码';
+
+  @override
+  String get changePassword => '更改密码';
+
+  @override
+  String get changePasswordDetailDes => '按此按钮可将您的账户密码从旧密码安全更新为新密码。';
+
+  @override
+  String get passwordChangeSuccessfully => '密码修改成功';
+
+  @override
+  String get delete_warning => '按下此按钮后，您的账户、所有个人数据以及图片历史记录将被永久删除。';
+
+  @override
+  String get account_deletion_title => '删除账户';
+
+  @override
+  String get confirm_deletion => '确认删除';
+
+  @override
+  String get delete_account => '删除账户';
+
+  @override
+  String get delete_confirmation_message => '您确定要永久删除您的账户吗？';
+
+  @override
+  String get account_deleted_success => '账户删除成功！希望您很快再次创建新账户。';
+
+  @override
+  String get settings => '设置';
+
+  @override
+  String get language => '语言';
+
+  @override
+  String get select_language => '选择语言';
 }

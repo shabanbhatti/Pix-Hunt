@@ -330,4 +330,50 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get updateNameBtnDetail =>
       'Presione este botón para actualizar su nombre.';
+
+  @override
+  String get newPassword => 'Contraseña nueva';
+
+  @override
+  String get oldPassword => 'Contraseña antigua';
+
+  @override
+  String get changePassword => 'Cambiar contraseña';
+
+  @override
+  String get changePasswordDetailDes =>
+      'Presione este botón para actualizar de forma segura su contraseña de la antigua a la nueva.';
+
+  @override
+  String get passwordChangeSuccessfully => 'Contraseña cambiada con éxito';
+
+  @override
+  String get delete_warning =>
+      'Al presionar este botón, su cuenta, todos los datos personales y el historial de imágenes se eliminarán permanentemente.';
+
+  @override
+  String get account_deletion_title => 'Eliminación de Cuenta';
+
+  @override
+  String get confirm_deletion => 'Confirmar Eliminación';
+
+  @override
+  String get delete_account => 'Eliminar Cuenta';
+
+  @override
+  String get delete_confirmation_message =>
+      '¿Está seguro de que desea eliminar su cuenta permanentemente?';
+
+  @override
+  String get account_deleted_success =>
+      '¡Cuenta eliminada con éxito! Esperamos que cree otra pronto.';
+
+  @override
+  String get settings => 'Configuración';
+
+  @override
+  String get language => 'Idioma';
+
+  @override
+  String get select_language => 'Seleccionar idioma';
 }

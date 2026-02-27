@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/api%20controller/api_riverpod.dart';
-import 'package:pix_hunt_project/Controllers/on%20sync%20after%20email%20verify%20riverpod/on_sync_after_email_verify.dart';
 import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/Search%20page/Widgets/search_photos_pages_widget.dart';
 import 'package:pix_hunt_project/core/Widgets/card_widget.dart';
@@ -40,9 +39,6 @@ class _SearchPageState extends ConsumerState<SearchPage>
     );
 
     Future.microtask(() async {
-      ref
-          .read(onSyncAfterEmailVerifyProvider.notifier)
-          .syncEmailAfterVerification();
       ref.read(apiProvider.notifier).eraseAll();
     });
   }
@@ -75,6 +71,7 @@ class _SearchPageState extends ConsumerState<SearchPage>
         });
       }
     });
+
     return Scaffold(
       body: Center(
         child: Scrollbar(

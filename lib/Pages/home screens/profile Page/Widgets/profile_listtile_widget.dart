@@ -8,6 +8,7 @@ import 'package:pix_hunt_project/Pages/home%20screens/Theme%20page/theme_page.da
 import 'package:pix_hunt_project/Pages/home%20screens/View%20Search%20history%20page/search_history_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/language%20page/language_page.dart';
 import 'package:pix_hunt_project/core/Utils/get_language_by_code_util.dart';
+import 'package:pix_hunt_project/core/Utils/redirect_to_url_util.dart';
 import 'package:pix_hunt_project/core/Widgets/custom_listtile_widget.dart';
 import 'package:pix_hunt_project/core/Utils/dialog%20boxes/logout_dialog_box.dart';
 import 'package:pix_hunt_project/core/constants/constant_colors.dart';
@@ -80,7 +81,16 @@ class ProfileListtileWidget extends StatelessWidget {
             },
           ),
         ),
+        CustomListTileWidget(
+          leading: Icons.privacy_tip,
 
+          title: 'Privacy Policy',
+          onTap: () async {
+            RedirectToUrlUtil.openThisLink(
+              'https://shabanbhatti.github.io/pixhunt_privacy_policy/',
+            );
+          },
+        ),
         Consumer(
           builder: (contextx, ref, child) {
             return CustomListTileWidget(

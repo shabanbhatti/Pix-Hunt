@@ -392,8 +392,9 @@ class _LoginEmailTextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var lng = AppLocalizations.of(context);
     return CustomTextfieldWidget(
-      validator:
-          (value) => ValidationsTextfieldsUtils.emailValidation(value, context),
+      // validator:
+      //     (value) => ValidationsTextfieldsUtils.emailValidation(value, context),
+      validator: null,
       controller: controller,
       focusNode: focusNode,
       label: lng?.email ?? '',
@@ -424,6 +425,7 @@ class _LoginPasswordTextFieldWidget extends StatelessWidget {
       validator:
           (value) =>
               ValidationsTextfieldsUtils.passwordValidation(value, context),
+
       onFieldSubmitted:
           (p0) => FocusScope.of(context).requestFocus(btnFocusNode),
     );

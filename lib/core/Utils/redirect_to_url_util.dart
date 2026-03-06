@@ -10,17 +10,4 @@ abstract class RedirectToUrlUtil {
       }
     }
   }
-
-  static Future<void> openWhatsApp() async {
-    const phoneNumber = "923281022320";
-    const message = "Hello Shaban, I want to hire you";
-
-    final Uri url = Uri.parse(
-      "https://wa.me/$phoneNumber?text=${Uri.encodeComponent(message)}",
-    );
-
-    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      throw Exception('ERROR FOUND');
-    }
-  }
 }

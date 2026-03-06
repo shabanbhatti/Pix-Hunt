@@ -118,5 +118,6 @@
   "account_deleted_success": "계정이 성공적으로 삭제되었습니다! 다시 새 계정을 만들어 주시길 바랍니다.",
   "settings": "설정",
   "language": "언어",
-  "select_language": "언어 선택"
+  "select_language": "언어 선택",
+  "browseCetagory": "카테고리별 탐색"
 }

@@ -364,4 +364,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get select_language => '言語を選択';
+
+  @override
+  String get browseCetagory => 'カテゴリ別に閲覧';
 }

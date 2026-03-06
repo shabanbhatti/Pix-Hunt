@@ -363,4 +363,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get select_language => '언어 선택';
+
+  @override
+  String get browseCetagory => '카테고리별 탐색';
 }

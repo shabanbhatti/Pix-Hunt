@@ -120,7 +120,8 @@
   "account_deleted_success": "اکاؤنٹ کامیابی سے حذف ہو گیا! امید ہے آپ جلد دوبارہ نیا اکاؤنٹ بنائیں گے۔",
    "settings": "ترتیبات",
     "language": "زبان",
-    "select_language": "زبان منتخب کریں"
+    "select_language": "زبان منتخب کریں",
+    "browseCetagory": "زمرہ کے ذریعے براؤز کریں"
 
 
 }

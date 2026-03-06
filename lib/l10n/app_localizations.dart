@@ -830,6 +830,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select Language'**
   String get select_language;
+
+  /// No description provided for @browseCetagory.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse by Category'**
+  String get browseCetagory;
 }
 
 class _AppLocalizationsDelegate

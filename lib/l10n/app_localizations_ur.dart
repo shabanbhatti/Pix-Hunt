@@ -377,4 +377,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get select_language => 'زبان منتخب کریں';
+
+  @override
+  String get browseCetagory => 'زمرہ کے ذریعے براؤز کریں';
 }

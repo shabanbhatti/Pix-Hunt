@@ -376,4 +376,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get select_language => 'Dil Seç';
+
+  @override
+  String get browseCetagory => 'Kategoriye Göre Gözat';
 }

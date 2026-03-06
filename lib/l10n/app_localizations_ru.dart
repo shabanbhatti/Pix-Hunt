@@ -376,4 +376,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get select_language => 'Выберите язык';
+
+  @override
+  String get browseCetagory => 'Просмотреть по категории';
 }

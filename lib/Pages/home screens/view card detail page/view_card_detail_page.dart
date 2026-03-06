@@ -279,7 +279,7 @@ class _ViewCardDetailsPageState extends ConsumerState<ViewCardDetailsPage>
         onTap:
             () => pageController.animateToPage(
               dataList.indexOf(item),
-              duration: const Duration(seconds: 1),
+              duration: const Duration(milliseconds: 500),
               curve: Curves.easeInCirc,
             ),
         child: Column(

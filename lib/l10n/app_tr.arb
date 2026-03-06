@@ -118,5 +118,6 @@
   "account_deleted_success": "Hesap başarıyla silindi! Umarız yakında tekrar oluşturursunuz.",
   "settings": "Ayarlar",
   "language": "Dil",
-  "select_language": "Dil Seç"
+  "select_language": "Dil Seç",
+  "browseCetagory": "Kategoriye Göre Gözat"
 }

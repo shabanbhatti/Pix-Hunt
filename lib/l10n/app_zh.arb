@@ -119,5 +119,6 @@
   "account_deleted_success": "账户删除成功！希望您很快再次创建新账户。",
    "settings": "设置",
     "language": "语言",
-    "select_language": "选择语言"
+    "select_language": "选择语言",
+    "browseCetagory": "按类别浏览"
 }

@@ -7,6 +7,7 @@ import 'package:pix_hunt_project/Controllers/api%20controller/api_riverpod.dart'
 import 'package:pix_hunt_project/Controllers/cloud%20db%20controller/user_db_riverpod.dart';
 import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/View%20home%20cetagory%20Page/Widgets/photo_pages_widget.dart';
+import 'package:pix_hunt_project/Pages/home%20screens/View%20home%20cetagory%20Page/Widgets/top_cetagories_widget.dart';
 import 'package:pix_hunt_project/Pages/initial%20screens/Login%20Page/login_page.dart';
 import 'package:pix_hunt_project/core/Utils/toast.dart';
 import 'package:pix_hunt_project/core/Widgets/card_widget.dart';
@@ -14,6 +15,7 @@ import 'package:pix_hunt_project/core/Widgets/custom_sliver_appbar.dart';
 import 'package:pix_hunt_project/core/Widgets/loading%20widgets/custom_loading_card_widget.dart';
 import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/core/typedefs/typedefs.dart';
+import 'package:pix_hunt_project/l10n/app_localizations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ViewContentPage extends ConsumerStatefulWidget {
@@ -33,19 +35,27 @@ class ViewContentPage extends ConsumerStatefulWidget {
 class _ViewContentPageState extends ConsumerState<ViewContentPage>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
-  late Animation<double> scale;
+  late Animation<Offset> slide;
+  late Animation<double> fade;
+  ValueNotifier<String> titleNotifier = ValueNotifier('');
   @override
   void initState() {
     super.initState();
     animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 500),
     );
-    scale = Tween<double>(begin: 0.5, end: 1.0).animate(
+    slide = Tween<Offset>(begin: Offset(0, 0.2), end: Offset.zero).animate(
       CurvedAnimation(parent: animationController, curve: Curves.easeInOutBack),
     );
+    fade = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.easeInOutBack),
+    );
+    animationController.forward();
 
     if (widget.title == null) {
+      titleNotifier.value = widget.constListProducts.title;
+      print('No 1');
       Future.microtask(() {
         ref
             .read(apiProvider.notifier)
@@ -53,6 +63,8 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
         ref.read(interstitialAdProvider.notifier).initInterstitialAds();
       });
     } else {
+      titleNotifier.value = widget.title ?? '';
+      print('No 2');
       Future.microtask(() {
         ref
             .read(apiProvider.notifier)
@@ -67,19 +79,14 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
   void dispose() {
     scrollController.dispose();
     animationController.dispose();
+    titleNotifier.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     log('View Home cetagory page build called');
-    ref.listen(apiProvider, (previous, next) {
-      if (next is ApiLoadedSuccessfuly) {
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          animationController.forward();
-        });
-      }
-    });
+
     ref.listen(userDbProvider, (previous, next) {
       if (next is ErrorUserDb) {
         var error = next.error;
@@ -94,6 +101,7 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
         }
       }
     });
+
     return Scaffold(
       body: Center(
         child: RefreshIndicator(
@@ -117,10 +125,51 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
             child: CustomScrollView(
               controller: scrollController,
               slivers: [
-                if (widget.title == null)
-                  CustomSliverAppBar(title: widget.constListProducts.title)
-                else
-                  CustomSliverAppBar(title: widget.title ?? ''),
+                ValueListenableBuilder(
+                  valueListenable: titleNotifier,
+                  builder: (context, value, child) {
+                    return CustomSliverAppBar(title: value);
+                  },
+                ),
+
+                SliverPadding(
+                  padding: const EdgeInsetsGeometry.only(
+                    top: 10,
+                    left: 15,
+                    right: 15,
+                    bottom: 10,
+                  ),
+                  sliver: SliverToBoxAdapter(
+                    child: FadeTransition(
+                      opacity: fade,
+                      child: SlideTransition(
+                        position: slide,
+                        child: Text(
+                          '*${AppLocalizations.of(context)?.browseCetagory ?? ''}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 132, 132, 132),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SliverPadding(
+                  padding: const EdgeInsetsGeometry.symmetric(horizontal: 5),
+                  sliver: SliverToBoxAdapter(
+                    child: FadeTransition(
+                      opacity: fade,
+                      child: SlideTransition(
+                        position: slide,
+                        child: TopCetagoriesWidget(
+                          titleNotifier: titleNotifier,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
                 SliverSafeArea(
                   top: false,
 
@@ -130,7 +179,7 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
                       if (myRef is ApiLoading) {
                         return _loading();
                       } else if (myRef is ApiLoadedSuccessfuly) {
-                        return _cardData(myRef.pexer, scale);
+                        return _cardData(myRef.pexer);
                       } else if (myRef is ApiError) {
                         return SliverFillRemaining(
                           child: Center(
@@ -157,7 +206,7 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
                           padding: EdgeInsets.symmetric(vertical: 20),
                           child: PhotoPagesWidget(
                             title:
-                                (widget.title == null)
+                                widget.title == null
                                     ? widget.constListProducts.title
                                     : widget.title ?? '',
                             pexer: myRef.pexer,
@@ -178,7 +227,7 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
     );
   }
 
-  Widget _cardData(Pexer pexer, Animation<double> scale) {
+  Widget _cardData(Pexer pexer) {
     List<Photos> photosList = pexer.photosList ?? [];
     return SliverPadding(
       padding: const EdgeInsetsGeometry.symmetric(horizontal: 5, vertical: 10),

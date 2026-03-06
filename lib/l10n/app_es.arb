@@ -119,7 +119,8 @@
   "account_deleted_success": "¡Cuenta eliminada con éxito! Esperamos que cree otra pronto.",
   "settings": "Configuración",
     "language": "Idioma",
-    "select_language": "Seleccionar idioma"
+    "select_language": "Seleccionar idioma",
+    "browseCetagory": "Explorar por categoría"
 
 
 }

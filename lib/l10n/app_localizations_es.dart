@@ -376,4 +376,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get select_language => 'Seleccionar idioma';
+
+  @override
+  String get browseCetagory => 'Explorar por categoría';
 }

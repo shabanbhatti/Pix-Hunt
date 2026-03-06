@@ -8,12 +8,12 @@ class BottomThanksWidget extends StatelessWidget {
   final String value;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Wrap(
+      // mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           '🎉${AppLocalizations.of(context)!.thanks} ',
-          style: TextStyle(fontSize: 12),
+          style: const TextStyle(fontSize: 12),
         ),
         Text(
           value.firstTwoWords(),

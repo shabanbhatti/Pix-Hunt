@@ -376,4 +376,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get select_language => 'Sprache auswählen';
+
+  @override
+  String get browseCetagory => 'Nach Kategorie durchsuchen';
 }

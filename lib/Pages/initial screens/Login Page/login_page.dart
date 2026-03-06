@@ -256,7 +256,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
                       ScaleTransition(
                         scale: scaleCreateAccount,
                         child: FadeTransition(
-                          opacity: scaleCreateAccount,
+                          opacity: fadeCreateAccount,
                           child: Consumer(
                             builder: (context, ref, child) {
                               return GestureDetector(

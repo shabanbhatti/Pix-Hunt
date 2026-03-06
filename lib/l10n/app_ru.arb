@@ -118,5 +118,6 @@
   "account_deleted_success": "Аккаунт успешно удалён! Надеемся, вы создадите новый снова.",
   "settings": "Настройки",
   "language": "Язык",
-  "select_language": "Выберите язык"
+  "select_language": "Выберите язык",
+  "browseCetagory": "Просмотреть по категории"
 }

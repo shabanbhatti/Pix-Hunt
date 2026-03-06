@@ -118,5 +118,6 @@
   "account_deleted_success": "Account deleted successfully! We hope you will create another one soon.",
    "settings": "Settings",
     "language": "Language",
-    "select_language": "Select Language"
+    "select_language": "Select Language",
+     "browseCetagory": "Browse by Category"
 }

@@ -375,4 +375,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get select_language => 'اختر اللغة';
+
+  @override
+  String get browseCetagory => 'تصفح حسب الفئة';
 }

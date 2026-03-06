@@ -118,5 +118,6 @@
   "account_deleted_success": "Konto erfolgreich gelöscht! Wir hoffen, dass Sie bald ein neues erstellen.",
   "settings": "Einstellungen",
   "language": "Sprache",
-  "select_language": "Sprache auswählen"
+  "select_language": "Sprache auswählen",
+   "browseCetagory": "Nach Kategorie durchsuchen"
 }

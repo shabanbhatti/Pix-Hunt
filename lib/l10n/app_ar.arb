@@ -119,7 +119,8 @@
   "account_deleted_success": "تم حذف الحساب بنجاح! نأمل أن تقوم بإنشاء حساب جديد قريبًا.",
    "settings": "الإعدادات",
     "language": "اللغة",
-    "select_language": "اختر اللغة"
+    "select_language": "اختر اللغة",
+    "browseCetagory": "تصفح حسب الفئة"
 
 
 }

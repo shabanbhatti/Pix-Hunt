@@ -361,4 +361,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get select_language => '选择语言';
+
+  @override
+  String get browseCetagory => '按类别浏览';
 }

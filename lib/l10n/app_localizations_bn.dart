@@ -374,4 +374,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get select_language => 'ভাষা নির্বাচন করুন';
+
+  @override
+  String get browseCetagory => 'বিভাগ অনুসারে ব্রাউজ করুন';
 }

@@ -3,7 +3,7 @@ import 'package:pix_hunt_project/core/typedefs/typedefs.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 abstract class ConstantStaticProductsHomeUtils {
-  static  List<BoxModel> product1(BuildContext context) {
+  static List<BoxModel> product1(BuildContext context) {
     var lng = AppLocalizations.of(context);
     return [
       (title: lng?.nature ?? '', imgPath: 'nature.jpg'),

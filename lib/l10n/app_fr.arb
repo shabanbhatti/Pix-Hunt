@@ -120,5 +120,6 @@
 
   "settings": "Paramètres",
   "language": "Langue",
-  "select_language": "Choisir la langue"
+  "select_language": "Choisir la langue",
+   "browseCetagory": "Parcourir par catégorie"
 }

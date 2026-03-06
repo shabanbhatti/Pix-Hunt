@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pix_hunt_project/Controllers/language%20controller/language_riverpod.dart';
+import 'package:pix_hunt_project/core/Utils/get_language_by_code_util.dart';
 import 'package:pix_hunt_project/core/Widgets/custom_sliver_appbar.dart';
 import 'package:pix_hunt_project/core/constants/constant_colors.dart';
 import 'package:pix_hunt_project/core/constants/constant_languages_list.dart';
@@ -45,6 +46,18 @@ class _LanguagePageState extends ConsumerState<LanguagePage> {
               child: ListTile(
                 leading: const Icon(Icons.language),
                 title: Text(lng?.select_language ?? ''),
+                trailing: ValueListenableBuilder(
+                  valueListenable: widget.languageNotifier,
+                  builder: (context, value, child) {
+                    return Text(
+                      '${getFlagFromCode(value)}',
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
             SliverSafeArea(
@@ -99,6 +112,7 @@ class _LanguagePageState extends ConsumerState<LanguagePage> {
         child: Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: BoxDecoration(
+            color: (lngModel.code == value) ? ConstantColors.appColor : null,
             border: Border.all(
               color:
                   (lngModel.code == value)
@@ -126,7 +140,12 @@ class _LanguagePageState extends ConsumerState<LanguagePage> {
               widget.languageNotifier.value = lngModel.code;
             },
             leading: Text(lngModel.flag, style: const TextStyle(fontSize: 30)),
-            title: Text(lngModel.language),
+            title: Text(
+              lngModel.language,
+              style: TextStyle(
+                color: (lngModel.code == value) ? Colors.white : null,
+              ),
+            ),
           ),
         ),
       ),

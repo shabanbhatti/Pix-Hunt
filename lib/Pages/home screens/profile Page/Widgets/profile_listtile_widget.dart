@@ -75,7 +75,7 @@ class ProfileListtileWidget extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey,
+                  color: Color.fromARGB(255, 127, 127, 127),
                 ),
               );
             },

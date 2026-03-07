@@ -34,7 +34,7 @@ class CustomListTileWidget extends StatelessWidget {
       ),
       trailing:
           (disableTrailing ?? false)
-              ? SizedBox()
+              ? const SizedBox()
               : const Icon(Icons.arrow_forward_ios),
       onTap: onTap,
     );

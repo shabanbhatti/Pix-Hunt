@@ -61,12 +61,9 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
                 onTap: () {
                   Navigator.pop(context);
                 },
-                child: Icon(Icons.arrow_back_ios_new_outlined),
+                child: const Icon(Icons.arrow_back_ios_new_outlined),
               ),
-              largeTitle: Text(
-                lng?.downloadHistory ?? '',
-                style: const TextStyle(),
-              ),
+              largeTitle: Text(lng?.downloadHistory ?? ''),
               trailing: GestureDetector(
                 onTap: () {
                   EasyLoading.show(
@@ -82,7 +79,7 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
                 },
                 child: Text(
                   lng?.clearAll ?? '',
-                  style: TextStyle(color: ConstantColors.appColor),
+                  style: const TextStyle(color: ConstantColors.appColor),
                 ),
               ),
             ),
@@ -100,11 +97,11 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.download),
+                                  const Icon(Icons.download),
                                   Text(
                                     ' ${lng?.noDownloads ?? ''}',
 
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       // color: ConstantColors.appColor,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -209,13 +206,13 @@ Widget _loading() {
             clipBehavior: Clip.antiAliasWithSaveLayer,
             decoration: BoxDecoration(
               color: Colors.grey.withAlpha(100),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
           ),
         ),
 
-        title: Text('Hi there is a downliad histry page'),
-        subtitle: Text('Photographer \n  (2000 Pizels)'),
+        title: const Text('Hi there is a downliad histry page'),
+        subtitle: const Text('Photographer \n  (2000 Pizels)'),
       );
     },
   );

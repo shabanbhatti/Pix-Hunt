@@ -212,7 +212,7 @@ class _ViewCardDetailsPageState extends ConsumerState<ViewCardDetailsPage>
                 arguments: item,
               ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
             child: CachedNetworkImage(
               imageUrl: item.imgPath,
               fit: BoxFit.cover,
@@ -297,7 +297,7 @@ class _ViewCardDetailsPageState extends ConsumerState<ViewCardDetailsPage>
                 child: Padding(
                   padding: const EdgeInsets.all(1.3),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
                     child: Opacity(
                       opacity: isSelected ? 1.0 : 0.5,
                       child: CachedNetworkImage(

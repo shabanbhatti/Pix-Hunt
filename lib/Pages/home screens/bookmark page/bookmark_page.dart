@@ -87,7 +87,7 @@ class _BookmarkPageState extends ConsumerState<BookmarkPage>
     return Scaffold(
       body: Scrollbar(
         radius: const Radius.circular(20),
-        thickness: 5,
+
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
@@ -117,7 +117,7 @@ class _BookmarkPageState extends ConsumerState<BookmarkPage>
                                 value,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: ConstantColors.appColor,
                                   fontWeight: FontWeight.bold,
                                 ),

@@ -203,7 +203,7 @@ class _ViewContentPageState extends ConsumerState<ViewContentPage>
                     if (myRef is ApiLoadedSuccessfuly) {
                       return SliverToBoxAdapter(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
+                          padding: const EdgeInsets.symmetric(vertical: 20),
                           child: PhotoPagesWidget(
                             title:
                                 widget.title == null

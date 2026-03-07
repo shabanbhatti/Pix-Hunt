@@ -62,7 +62,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
     var name = await spService.getString(ConstantsSharedprefKeys.usernameKey);
     await ref.read(userDbProvider.notifier).fetchUserDbData();
     await ref.read(userDbProvider.notifier).onLogin();
-    // ref.read(authProvider(AuthKeys.login).notifier).onLogin();
+
     usernameNotifier.value = name ?? '';
   }
 
@@ -134,7 +134,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
                         const CircleAvatarWidget(),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsetsGeometry.only(left: 5),
+                            padding: const EdgeInsetsGeometry.only(left: 5),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -211,7 +211,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
 
 Widget _userName() {
   return Padding(
-    padding: EdgeInsets.only(top: 15),
+    padding: const EdgeInsets.only(top: 15),
     child: Consumer(
       builder: (context, ref, child) {
         var myRef = ref.watch(userDbProvider);
@@ -239,7 +239,7 @@ Widget _userName() {
 
 Widget _userEmail() {
   return Padding(
-    padding: EdgeInsets.only(bottom: 20),
+    padding: const EdgeInsets.only(bottom: 20),
     child: Consumer(
       builder: (context, ref, child) {
         var myRef = ref.watch(userDbProvider);
@@ -263,7 +263,7 @@ Widget _userEmail() {
             ),
           );
         } else {
-          return Text('');
+          return const Text('');
         }
       },
     ),

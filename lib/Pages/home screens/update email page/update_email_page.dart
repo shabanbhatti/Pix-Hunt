@@ -173,13 +173,12 @@ class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage>
                                 context,
                               ).requestFocus(passwordFocusNode);
                             },
-                            // validator: (v) {
-                            //   return ValidationsTextfieldsUtils.emailValidation(
-                            //     v,
-                            //     context,
-                            //   );
-                            // },
-                            validator: null,
+                            validator: (v) {
+                              return ValidationsTextfieldsUtils.emailValidation(
+                                v,
+                                context,
+                              );
+                            },
                           ),
                         ),
                       ),
@@ -206,7 +205,10 @@ class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage>
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsGeometry.only(bottom: 10, top: 0),
+                        padding: const EdgeInsetsGeometry.only(
+                          bottom: 10,
+                          top: 0,
+                        ),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: ScaleTransition(
@@ -215,7 +217,7 @@ class _UpdateIdentityPageState extends ConsumerState<UpdateEmailPage>
                               opacity: fadeUpdateBtnDetail,
                               child: Text(
                                 '*${lng?.updateEmailBtnDetail ?? ''}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
 
                                   color: ConstantColors.appColor,

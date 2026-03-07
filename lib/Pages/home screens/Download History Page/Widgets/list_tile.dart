@@ -29,7 +29,7 @@ class CustomListTile1 extends StatelessWidget {
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
           color: Colors.grey.withAlpha(100),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: CachedNetworkImage(
           imageUrl: imgUrl,

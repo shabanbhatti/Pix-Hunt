@@ -52,10 +52,7 @@ class PhotographerDetailCard extends StatelessWidget {
                 padding: const EdgeInsetsGeometry.only(left: 10),
                 child: ScaleTransition(
                   scale: scaleTitle,
-                  child: FadeTransition(
-                    opacity: fadeTitle,
-                    child: Text(title, style: const TextStyle()),
-                  ),
+                  child: FadeTransition(opacity: fadeTitle, child: Text(title)),
                 ),
               ),
               const Divider(),

@@ -9,7 +9,7 @@ class LoginTitleWidget extends StatelessWidget {
     var lng = AppLocalizations.of(context);
     return Text(
       lng?.loginYourAccount ?? '',
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
     );
   }
 }

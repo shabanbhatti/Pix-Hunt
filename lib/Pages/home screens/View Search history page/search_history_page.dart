@@ -83,10 +83,10 @@ class _ViewSearchHistoryPageState extends ConsumerState<ViewSearchHistoryPage>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.search),
+                const Icon(Icons.search),
                 Text(
                   ' ${AppLocalizations.of(context)?.noSearchHistory ?? ''} ',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
             ),

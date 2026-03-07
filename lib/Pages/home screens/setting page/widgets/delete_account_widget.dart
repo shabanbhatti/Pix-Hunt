@@ -133,7 +133,7 @@ class _DeleteAccountWidgetState extends ConsumerState<DeleteAccountWidget>
             child: CustomScrollView(
               slivers: [
                 SliverPadding(
-                  padding: EdgeInsetsGeometry.only(
+                  padding: const EdgeInsetsGeometry.only(
                     left: 10,
                     bottom: 15,
                     right: 10,
@@ -145,7 +145,7 @@ class _DeleteAccountWidgetState extends ConsumerState<DeleteAccountWidget>
                         opacity: fadeTitle,
                         child: Text(
                           lng?.account_deletion_title ?? '',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 33,
                             fontWeight: FontWeight.bold,
                           ),
@@ -155,7 +155,7 @@ class _DeleteAccountWidgetState extends ConsumerState<DeleteAccountWidget>
                   ),
                 ),
                 SliverPadding(
-                  padding: EdgeInsetsGeometry.only(
+                  padding: const EdgeInsetsGeometry.only(
                     right: 10,
                     left: 10,
                     top: 20,
@@ -185,23 +185,25 @@ class _DeleteAccountWidgetState extends ConsumerState<DeleteAccountWidget>
                     ),
                   ),
                 ),
-                SliverPadding(
-                  padding: EdgeInsetsGeometry.only(right: 10, left: 10),
-                  sliver: SliverToBoxAdapter(
-                    child: Padding(
-                      padding: EdgeInsetsGeometry.only(bottom: 10, top: 0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: ScaleTransition(
-                          scale: scaleBtnDetail,
-                          child: FadeTransition(
-                            opacity: fadeBtnDetail,
-                            child: Text(
-                              '*${lng?.delete_warning ?? ''}',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: ConstantColors.appColor,
-                              ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsetsGeometry.only(
+                      bottom: 10,
+                      top: 0,
+                      right: 10,
+                      left: 10,
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: ScaleTransition(
+                        scale: scaleBtnDetail,
+                        child: FadeTransition(
+                          opacity: fadeBtnDetail,
+                          child: Text(
+                            '*${lng?.delete_warning ?? ''}',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: ConstantColors.appColor,
                             ),
                           ),
                         ),
@@ -210,7 +212,7 @@ class _DeleteAccountWidgetState extends ConsumerState<DeleteAccountWidget>
                   ),
                 ),
                 SliverPadding(
-                  padding: EdgeInsetsGeometry.only(right: 10, left: 10),
+                  padding: const EdgeInsetsGeometry.only(right: 10, left: 10),
                   sliver: SliverToBoxAdapter(
                     child: ScaleTransition(
                       scale: scaleBtn,

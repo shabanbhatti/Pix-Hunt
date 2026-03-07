@@ -77,7 +77,7 @@ class _SearchPageState extends ConsumerState<SearchPage>
         child: Scrollbar(
           controller: scrollController,
           radius: Radius.circular(20),
-          thickness: 5,
+
           child: CustomScrollView(
             controller: scrollController,
             slivers: [

@@ -30,7 +30,7 @@ class BookmarkCardWidget extends StatelessWidget {
         child: Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
             color: Colors.grey.withAlpha(50),
           ),
           child: Padding(
@@ -92,7 +92,7 @@ class BookmarkCardWidget extends StatelessWidget {
                           padding: const EdgeInsetsGeometry.only(left: 10),
                           child: Text(
                             DateFormatUtil.dateFormat(photos.createdAt ?? ''),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                             ),

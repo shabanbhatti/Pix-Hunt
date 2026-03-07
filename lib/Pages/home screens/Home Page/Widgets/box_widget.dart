@@ -12,7 +12,7 @@ class BoxWidget extends StatelessWidget {
       padding: const EdgeInsets.all(5),
       child: Material(
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
         child: InkWell(
           onTap: () {
             Navigator.of(context).pushNamed(
@@ -27,7 +27,7 @@ class BoxWidget extends StatelessWidget {
             clipBehavior: Clip.antiAliasWithSaveLayer,
             decoration: BoxDecoration(
               color: Colors.black,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
               image: DecorationImage(
                 image: AssetImage('assets/images/${record.imgPath}'),
                 fit: BoxFit.cover,
@@ -43,7 +43,7 @@ class BoxWidget extends StatelessWidget {
                     color: Colors.white,
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
-                    shadows: [
+                    shadows: const [
                       Shadow(
                         color: Colors.black87,
                         blurRadius: 4,

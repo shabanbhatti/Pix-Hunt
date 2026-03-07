@@ -44,7 +44,7 @@ class _ViewImagePageState extends State<ViewImagePage>
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         leading: GestureDetector(
-          child: Icon(CupertinoIcons.back, size: 30),
+          child: const Icon(CupertinoIcons.back, size: 30),
           onTap: () {
             Navigator.pop(context);
           },
@@ -65,8 +65,8 @@ class _ViewImagePageState extends State<ViewImagePage>
                       child: CachedNetworkImage(
                         imageUrl: widget.imgRecord.imgPath,
                         placeholder:
-                            (context, url) => Center(
-                              child: const CupertinoActivityIndicator(),
+                            (context, url) => const Center(
+                              child: CupertinoActivityIndicator(),
                             ),
                         fit: BoxFit.fitWidth,
                         width: double.infinity,

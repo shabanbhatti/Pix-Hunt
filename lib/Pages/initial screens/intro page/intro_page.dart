@@ -68,7 +68,7 @@ class IntroPage extends StatelessWidget {
                         ),
 
                         Padding(
-                          padding: EdgeInsetsGeometry.only(top: 10),
+                          padding: const EdgeInsetsGeometry.only(top: 10),
                           child: ScaleTransition(
                             scale: desScaleAnimation,
                             child: FadeTransition(
@@ -76,22 +76,26 @@ class IntroPage extends StatelessWidget {
                               child: const Text(
                                 'Press Continue and download ultra HD images completely free on your phone. Enjoy rich, high quality pixels and stunning visuals anytime.🎉',
                                 textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                           ),
                         ),
 
                         Padding(
-                          padding: EdgeInsetsGeometry.only(top: 50),
+                          padding: const EdgeInsetsGeometry.only(top: 50),
                           child: ScaleTransition(
                             scale: btnScaleAnimation,
                             child: FadeTransition(
                               opacity: btnFadeAnimation,
                               child: AppMainBtn(
                                 onTap: () async {
-                                  var spService = getIt<SharedPreferencesService>();
-                                  await spService.setBool(ConstantsSharedprefKeys.introPageKey, true);
+                                  var spService =
+                                      getIt<SharedPreferencesService>();
+                                  await spService.setBool(
+                                    ConstantsSharedprefKeys.introPageKey,
+                                    true,
+                                  );
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                     LoginPage.pageName,
                                     (route) => false,

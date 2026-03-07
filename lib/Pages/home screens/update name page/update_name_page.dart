@@ -172,7 +172,10 @@ class _UpdateNamePageState extends ConsumerState<UpdateNamePage>
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsGeometry.only(bottom: 10, top: 0),
+                        padding: const EdgeInsetsGeometry.only(
+                          bottom: 10,
+                          top: 0,
+                        ),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: ScaleTransition(
@@ -181,7 +184,7 @@ class _UpdateNamePageState extends ConsumerState<UpdateNamePage>
                               opacity: fadeUpdateNameDetail,
                               child: Text(
                                 '*${lng?.updateNameBtnDetail ?? ''}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
 
                                   color: ConstantColors.appColor,

@@ -15,7 +15,7 @@ class LoginSliverAppbar extends ConsumerWidget {
           builder: (context, themeRef, _) {
             var theme = themeRef.watch(themeProvider);
             return Padding(
-              padding: EdgeInsetsGeometry.symmetric(horizontal: 5),
+              padding: const EdgeInsetsGeometry.symmetric(horizontal: 5),
               child: GestureDetector(
                 onTap: () {
                   ref.read(themeProvider.notifier).toggeled();

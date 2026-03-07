@@ -39,11 +39,11 @@ class _CardWidgetState extends ConsumerState<CardWidget> {
         );
       },
       child: Padding(
-        padding: EdgeInsetsGeometry.all(5),
+        padding: const EdgeInsetsGeometry.all(5),
         child: Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
             color: Colors.grey.withAlpha(50),
           ),
 
@@ -56,7 +56,7 @@ class _CardWidgetState extends ConsumerState<CardWidget> {
                   flex: 25,
 
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
                     child: Hero(
                       tag: widget.photo.originalImgUrl ?? '',
                       child: CachedNetworkImage(

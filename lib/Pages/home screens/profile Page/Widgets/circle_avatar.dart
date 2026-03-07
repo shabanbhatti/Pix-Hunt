@@ -71,7 +71,7 @@ class _CircleAvatarWidgetState extends ConsumerState<CircleAvatarWidget> {
         } else {
           return Center(
             child: Padding(
-              padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
+              padding: const EdgeInsetsGeometry.symmetric(horizontal: 10),
               child: Container(
                 height: 120,
                 width: 120,
@@ -148,7 +148,7 @@ class _CircleAvatarWidgetState extends ConsumerState<CircleAvatarWidget> {
 
 Widget _loading() {
   return Padding(
-    padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
+    padding: const EdgeInsetsGeometry.symmetric(horizontal: 10),
     child: ClipOval(
       child: Skeletonizer(
         enabled: true,
@@ -167,7 +167,7 @@ Widget _circleAvatarWidget(
   required void Function() onRemovePic,
 }) {
   return Padding(
-    padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
+    padding: const EdgeInsetsGeometry.symmetric(horizontal: 10),
     child: Container(
       height: 120,
       width: 120,

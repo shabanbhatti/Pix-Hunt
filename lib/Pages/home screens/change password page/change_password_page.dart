@@ -34,7 +34,6 @@ class _ChangePasswordPageState extends ConsumerState<ChangePasswordPage>
 
   ValueNotifier<bool> OldPasswordObscure = ValueNotifier(true);
   ValueNotifier<bool> newPasswordObscure = ValueNotifier(true);
-  // ValueNotifier<bool> OldPasswordObscure = ValueNotifier(true);
   late AnimationController animationController;
   late Animation<double> scaleOldPassword;
   late Animation<double> fadeOldPassword;
@@ -120,6 +119,7 @@ class _ChangePasswordPageState extends ConsumerState<ChangePasswordPage>
     OldPasswordObscure.dispose();
     oldPasswordController.dispose();
     oldPasswordFocusNode.dispose();
+    newPasswordObscure.dispose();
     btnFocusNode.dispose();
     newPasswordFocusNode.dispose();
     super.dispose();
@@ -206,7 +206,10 @@ class _ChangePasswordPageState extends ConsumerState<ChangePasswordPage>
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsGeometry.only(bottom: 10, top: 0),
+                        padding: const EdgeInsetsGeometry.only(
+                          bottom: 10,
+                          top: 0,
+                        ),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: ScaleTransition(
@@ -215,7 +218,7 @@ class _ChangePasswordPageState extends ConsumerState<ChangePasswordPage>
                               opacity: fadeChangePassBtnDetail,
                               child: Text(
                                 '*${lng?.changePasswordDetailDes ?? ''}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
 
                                   color: ConstantColors.appColor,

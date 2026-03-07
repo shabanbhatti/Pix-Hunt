@@ -50,7 +50,7 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
               backgroundColor: Colors.transparent,
 
               leading: Padding(
-                padding: EdgeInsetsGeometry.all(5),
+                padding: const EdgeInsetsGeometry.all(5),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
@@ -179,10 +179,10 @@ class _ViewDownloadedItemState extends State<ViewDownloadedItem>
 Widget _listtile({required String title, required String value}) {
   return Row(
     children: [
-      Text('$title:', style: TextStyle(fontWeight: FontWeight.bold)),
+      Text('$title:', style: const TextStyle(fontWeight: FontWeight.bold)),
       Expanded(
         child: Padding(
-          padding: EdgeInsetsGeometry.only(left: 10, right: 10),
+          padding: const EdgeInsetsGeometry.only(left: 10, right: 10),
           child: Text(value, maxLines: 1, overflow: TextOverflow.ellipsis),
         ),
       ),

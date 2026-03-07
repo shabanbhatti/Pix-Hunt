@@ -126,7 +126,7 @@ class _HomeWidget extends StatelessWidget {
                     const HomeSliverAppbar(),
 
                     SliverPadding(
-                      padding: EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.only(top: 20),
                       sliver: Consumer(
                         builder: (context, r, _) {
                           return _topRowList(
@@ -135,7 +135,7 @@ class _HomeWidget extends StatelessWidget {
                         },
                       ),
                     ),
-                    SliverToBoxAdapter(child: const Divider()),
+                    const SliverToBoxAdapter(child: const Divider()),
                     Consumer(
                       builder: (context, r, _) {
                         return _topRowList(
@@ -143,7 +143,7 @@ class _HomeWidget extends StatelessWidget {
                         );
                       },
                     ),
-                    SliverToBoxAdapter(child: const Divider()),
+                    const SliverToBoxAdapter(child: const Divider()),
 
                     Consumer(
                       builder: (context, r, _) {
@@ -152,7 +152,7 @@ class _HomeWidget extends StatelessWidget {
                         );
                       },
                     ),
-                    SliverToBoxAdapter(child: const Divider()),
+                    const SliverToBoxAdapter(child: const Divider()),
                     Consumer(
                       builder: (context, r, _) {
                         return _topRowList(
@@ -160,7 +160,7 @@ class _HomeWidget extends StatelessWidget {
                         );
                       },
                     ),
-                    SliverToBoxAdapter(child: const Divider()),
+                    const SliverToBoxAdapter(child: const Divider()),
 
                     Consumer(
                       builder: (context, r, _) {
@@ -169,7 +169,7 @@ class _HomeWidget extends StatelessWidget {
                         );
                       },
                     ),
-                    SliverToBoxAdapter(child: const Divider()),
+                    const SliverToBoxAdapter(child: const Divider()),
                     SliverPadding(
                       padding: const EdgeInsetsGeometry.only(bottom: 50),
                       sliver: Consumer(
@@ -192,7 +192,7 @@ class _HomeWidget extends StatelessWidget {
                   if (bannerAdState is LoadedBannerAdsState) {
                     var bannerAdd = bannerAdState.bannerAd;
                     return Padding(
-                      padding: EdgeInsetsGeometry.only(left: 2),
+                      padding: const EdgeInsetsGeometry.only(left: 2),
                       child: SizedBox(
                         height: bannerAdd.size.height.toDouble(),
                         width: bannerAdd.size.width.toDouble(),

@@ -30,13 +30,13 @@ class AppMainBtn extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: color ?? ConstantColors.appColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
         ),
         onPressed: onTap,
         child:
             (widgetOrTitle == WidgetOrTitle.title)
-                ? Text(btnTitle!, style: TextStyle(color: Colors.white))
+                ? Text(btnTitle!, style: const TextStyle(color: Colors.white))
                 : btnValueWidget,
       ),
     );

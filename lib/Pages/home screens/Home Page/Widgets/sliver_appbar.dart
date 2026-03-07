@@ -27,7 +27,7 @@ class HomeSliverAppbar extends ConsumerWidget {
       ),
       actions: [
         Padding(
-          padding: EdgeInsets.only(right: 10),
+          padding: const EdgeInsets.only(right: 10),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -57,8 +57,7 @@ class HomeSliverAppbar extends ConsumerWidget {
       backgroundColor: Colors.transparent,
       pinned: true,
       expandedHeight: 200,
-      // floating: true,
-      // snap: true,
+
       flexibleSpace: FlexibleSpaceBar(
         background: LayoutBuilder(
           builder: (context, constraints) {
@@ -96,7 +95,7 @@ class HomeSliverAppbar extends ConsumerWidget {
                       builder: (context, ref, child) {
                         var myRef = ref.watch(userDbProvider);
                         if (myRef is LoadingUserDb) {
-                          return Skeletonizer(
+                          return const Skeletonizer(
                             enabled: true,
                             child: Text('Loading.....'),
                           );
@@ -109,7 +108,7 @@ class HomeSliverAppbar extends ConsumerWidget {
                               color: Colors.white,
 
                               fontWeight: FontWeight.bold,
-                              shadows: [
+                              shadows: const [
                                 Shadow(
                                   color: Colors.black87,
                                   blurRadius: 4,

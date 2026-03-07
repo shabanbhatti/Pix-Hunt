@@ -21,9 +21,9 @@ class ThemePage extends StatelessWidget {
           CustomSliverAppBar(title: lng?.theme ?? ''),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 15),
+              padding: const EdgeInsets.symmetric(vertical: 15),
               child: ListTile(
-                leading: CircleAvatar(
+                leading: const CircleAvatar(
                   backgroundColor: ConstantColors.appColor,
                   child: const Icon(Icons.dark_mode, color: Colors.white),
                 ),
@@ -32,9 +32,6 @@ class ThemePage extends StatelessWidget {
                   builder: (context, ref, child) {
                     var value = ref.watch(themeProvider).isDark;
                     return CupertinoSwitch(
-                      // activeThumbColor: Colors.green,
-
-                      // thumbColor: WidgetStatePropertyAll(Colors.white),
                       value: value,
                       onChanged: (value) {
                         ref.read(themeProvider.notifier).toggeled();

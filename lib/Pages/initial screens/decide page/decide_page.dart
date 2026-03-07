@@ -43,56 +43,71 @@ class _DecidePageState extends ConsumerState<DecidePage>
       duration: const Duration(seconds: 2),
     );
     fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animationController, curve: Interval(0.0, 0.3)),
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.0, 0.3),
+      ),
     );
 
     scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
-        curve: Interval(0.0, 0.3, curve: Curves.bounceOut),
+        curve: const Interval(0.0, 0.3, curve: Curves.bounceOut),
       ),
     );
 
     desFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animationController, curve: Interval(0.3, 0.6)),
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.3, 0.6),
+      ),
     );
 
     desScaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
-        curve: Interval(0.3, 0.6, curve: Curves.bounceOut),
+        curve: const Interval(0.3, 0.6, curve: Curves.bounceOut),
       ),
     );
 
     btnFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animationController, curve: Interval(0.6, 1.0)),
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.6, 1.0),
+      ),
     );
 
     btnScaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
-        curve: Interval(0.6, 1.0, curve: Curves.bounceOut),
+        curve: const Interval(0.6, 1.0, curve: Curves.bounceOut),
       ),
     );
     // --------------------------------------------
     scaleIntroIcon = Tween<double>(begin: 0.5, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
-        curve: Interval(0.0, 0.5, curve: Curves.bounceOut),
+        curve: const Interval(0.0, 0.5, curve: Curves.bounceOut),
       ),
     );
     fadeIntroIcon = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animationController, curve: Interval(0.0, 0.5)),
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.0, 0.5),
+      ),
     );
 
     scaleIntroText = Tween<double>(begin: 0.5, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
-        curve: Interval(0.5, 1.0, curve: Curves.bounceOut),
+        curve: const Interval(0.5, 1.0, curve: Curves.bounceOut),
       ),
     );
     fadeIntroText = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animationController, curve: Interval(0.5, 1.0)),
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.5, 1.0),
+      ),
     );
     whichPage();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {

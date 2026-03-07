@@ -105,7 +105,10 @@ class _LanguagePageState extends ConsumerState<LanguagePage> {
 
   Widget myTile(LanguageModel lngModel, String value) {
     return Padding(
-      padding: EdgeInsetsGeometry.symmetric(horizontal: 7, vertical: 5),
+      padding: EdgeInsetsGeometry.symmetric(
+        horizontal: 7,
+        vertical: (lngModel.code == value) ? 20 : 5,
+      ),
       child: Material(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -121,7 +124,7 @@ class _LanguagePageState extends ConsumerState<LanguagePage> {
               width: (lngModel.code == value) ? 2 : 0.5,
             ),
 
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
           ),
           child: ListTile(
             splashColor: Colors.transparent,
@@ -131,7 +134,7 @@ class _LanguagePageState extends ConsumerState<LanguagePage> {
 
             trailing:
                 (lngModel.code == value)
-                    ? Icon(Icons.check, color: ConstantColors.appColor)
+                    ? const Icon(Icons.check, color: ConstantColors.appColor)
                     : null,
             onTap: () {
               ref

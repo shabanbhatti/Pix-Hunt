@@ -132,7 +132,7 @@ class _SettingPageState extends ConsumerState<SettingPage>
           slivers: [
             CustomSliverAppBar(title: lng?.settings ?? ''),
             SliverPadding(
-              padding: EdgeInsetsGeometry.symmetric(vertical: 10),
+              padding: const EdgeInsetsGeometry.symmetric(vertical: 10),
               sliver: SliverToBoxAdapter(
                 child: Column(
                   children: [

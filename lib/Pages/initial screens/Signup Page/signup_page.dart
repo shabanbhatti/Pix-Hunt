@@ -196,7 +196,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
             child: CustomScrollView(
               slivers: [
                 SliverPadding(
-                  padding: EdgeInsetsGeometry.symmetric(vertical: 10),
+                  padding: const EdgeInsetsGeometry.symmetric(vertical: 10),
                   sliver: SliverToBoxAdapter(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -225,7 +225,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                             opacity: fadeTitle,
                             child: Text(
                               lng?.createAccount ?? '',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 40,
                               ),
@@ -349,7 +349,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                             opacity: fadeDetailTitle,
                             child: Text(
                               '*${lng?.createBtnDetail ?? ''}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
 
                                 color: ConstantColors.appColor,

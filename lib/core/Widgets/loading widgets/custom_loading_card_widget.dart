@@ -11,11 +11,11 @@ class CustomLoadingCardsWidget extends StatelessWidget {
       child: Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
           color: Colors.grey.withAlpha(50),
         ),
         child: Padding(
-          padding: EdgeInsets.all(7),
+          padding: const EdgeInsets.all(7),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -23,7 +23,7 @@ class CustomLoadingCardsWidget extends StatelessWidget {
                 flex: 25,
 
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: const BorderRadius.all(Radius.circular(5)),
                   child: Skeletonizer(
                     enabled: true,
                     child: Container(
@@ -34,7 +34,7 @@ class CustomLoadingCardsWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Spacer(flex: 1),
+              const Spacer(flex: 1),
               const Expanded(
                 flex: 10,
                 child: Text(

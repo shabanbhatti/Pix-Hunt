@@ -58,56 +58,71 @@ class _LoginPageState extends ConsumerState<LoginPage>
       duration: const Duration(seconds: 1),
     );
     fadeTitle = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animationController, curve: Interval(0.0, 0.2)),
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.0, 0.2),
+      ),
     );
 
     scaleTitle = Tween<double>(begin: 0.8, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
-        curve: Interval(0.0, 0.2, curve: Curves.linear),
+        curve: const Interval(0.0, 0.2, curve: Curves.linear),
       ),
     );
 
     fadeEmailField = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animationController, curve: Interval(0.2, 0.4)),
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.2, 0.4),
+      ),
     );
 
     scaleEmailField = Tween<double>(begin: 0.8, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
-        curve: Interval(0.2, 0.4, curve: Curves.linear),
+        curve: const Interval(0.2, 0.4, curve: Curves.linear),
       ),
     );
 
     fadePasswordField = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animationController, curve: Interval(0.4, 0.6)),
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.4, 0.6),
+      ),
     );
 
     scalePasswordField = Tween<double>(begin: 0.8, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
-        curve: Interval(0.4, 0.6, curve: Curves.linear),
+        curve: const Interval(0.4, 0.6, curve: Curves.linear),
       ),
     );
     // --------------------------------------------
     scaleLoginbtn = Tween<double>(begin: 0.5, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
-        curve: Interval(0.6, 0.8, curve: Curves.linear),
+        curve: const Interval(0.6, 0.8, curve: Curves.linear),
       ),
     );
     fadeLoginBtn = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animationController, curve: Interval(0.6, 0.8)),
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.6, 0.8),
+      ),
     );
 
     scaleCreateAccount = Tween<double>(begin: 0.5, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
-        curve: Interval(0.8, 1.0, curve: Curves.linear),
+        curve: const Interval(0.8, 1.0, curve: Curves.linear),
       ),
     );
     fadeCreateAccount = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animationController, curve: Interval(0.8, 1.0)),
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.8, 1.0),
+      ),
     );
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       animationController.forward();
@@ -178,7 +193,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
     return Scaffold(
       body: Center(
         child: SafeArea(
-          minimum: EdgeInsets.symmetric(horizontal: 10),
+          minimum: const EdgeInsets.symmetric(horizontal: 10),
           child: Form(
             key: formKey,
             child: CustomScrollView(
@@ -313,7 +328,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
                   ? const CupertinoActivityIndicator(color: Colors.white)
                   : Text(
                     AppLocalizations.of(context)?.login ?? '',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
           onTap: () async {
             var isValidate = formKey.currentState?.validate();
@@ -362,7 +377,7 @@ Widget _signupbutton(BuildContext context) {
                 padding: EdgeInsetsGeometry.only(left: 10, right: 10),
                 child: Text(
                   AppLocalizations.of(contextx)?.createAccount ?? '',
-                  style: TextStyle(
+                  style: const TextStyle(
                     decorationColor: ConstantColors.appColor,
                     decoration: TextDecoration.underline,
                     color: ConstantColors.appColor,
@@ -392,9 +407,9 @@ class _LoginEmailTextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var lng = AppLocalizations.of(context);
     return CustomTextfieldWidget(
-      // validator:
-      //     (value) => ValidationsTextfieldsUtils.emailValidation(value, context),
-      validator: null,
+      validator:
+          (value) => ValidationsTextfieldsUtils.emailValidation(value, context),
+
       controller: controller,
       focusNode: focusNode,
       label: lng?.email ?? '',

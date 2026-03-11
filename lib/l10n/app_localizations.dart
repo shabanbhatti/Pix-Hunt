@@ -836,6 +836,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Browse by Category'**
   String get browseCetagory;
+
+  /// No description provided for @deleteAccountNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note: You signed in using your Google account. For security purposes, you will first need to re-authenticate. After successful re-authentication, the account deletion process will begin.'**
+  String get deleteAccountNote;
 }
 
 class _AppLocalizationsDelegate

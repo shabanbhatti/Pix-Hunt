@@ -119,5 +119,6 @@
   "settings": "Einstellungen",
   "language": "Sprache",
   "select_language": "Sprache auswählen",
-   "browseCetagory": "Nach Kategorie durchsuchen"
+   "browseCetagory": "Nach Kategorie durchsuchen",
+   "deleteAccountNote":"Hinweis: Sie haben sich mit Ihrem Google-Konto angemeldet. Aus Sicherheitsgründen müssen Sie sich zunächst erneut authentifizieren. Nach erfolgreicher erneuter Authentifizierung beginnt der Löschvorgang des Kontos."
 }

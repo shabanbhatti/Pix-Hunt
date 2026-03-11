@@ -379,4 +379,8 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get browseCetagory => 'Kategoriye Göre Gözat';
+
+  @override
+  String get deleteAccountNote =>
+      'Not: Google hesabınızı kullanarak giriş yaptınız. Güvenlik amacıyla önce yeniden kimlik doğrulaması yapmanız gerekmektedir. Yeniden kimlik doğrulama başarılı olduktan sonra hesap silme işlemi başlayacaktır.';
 }

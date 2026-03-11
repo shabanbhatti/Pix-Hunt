@@ -98,12 +98,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
         ).pushNamedAndRemoveUntil(LoginPage.pageName, (route) => false);
       }
     });
-    ref.listen(userDbProvider, (previous, next) {
+    ref.listen(userDbProvider, (previous, next) async {
       if (next is ErrorUserDb) {
         var error = next.error;
 
         ToastUtils.showToast(error, color: Colors.red);
         if (error == 'Session expired. Please sign in again.') {
+          ref.read(authProvider(AuthKeys.logout).notifier).logout();
           Navigator.pushNamedAndRemoveUntil(
             context,
             LoginPage.pageName,
@@ -230,7 +231,12 @@ Widget _userName() {
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           );
         } else {
-          return const Text('');
+          return const Skeletonizer(
+            child: Text(
+              'Muhammad SHaban abubakkar',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          );
         }
       },
     ),
@@ -263,7 +269,13 @@ Widget _userEmail() {
             ),
           );
         } else {
-          return const Text('');
+          return const Skeletonizer(
+            enabled: true,
+            child: Text(
+              'muhammadshabanbhatti@gmail.com',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          );
         }
       },
     ),

@@ -49,27 +49,30 @@ class _ViewSearchHistoryPageState extends ConsumerState<ViewSearchHistoryPage>
     });
     return Scaffold(
       body: Center(
-        child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            CustomSliverAppBar(
-              title: AppLocalizations.of(context)!.searchHistory,
-            ),
+        child: Scrollbar(
+          radius: const Radius.circular(50),
+          child: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              CustomSliverAppBar(
+                title: AppLocalizations.of(context)!.searchHistory,
+              ),
 
-            Consumer(
-              builder: (context, ref, child) {
-                var myRef = ref.watch(searchHistoryStreamProvider);
-                return myRef.when(
-                  data: (data) => _data(data),
-                  error:
-                      (error, stackTrace) => SliverFillRemaining(
-                        child: Center(child: Text(error.toString())),
-                      ),
-                  loading: () => _loading(),
-                );
-              },
-            ),
-          ],
+              Consumer(
+                builder: (context, ref, child) {
+                  var myRef = ref.watch(searchHistoryStreamProvider);
+                  return myRef.when(
+                    data: (data) => _data(data),
+                    error:
+                        (error, stackTrace) => SliverFillRemaining(
+                          child: Center(child: Text(error.toString())),
+                        ),
+                    loading: () => _loading(),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

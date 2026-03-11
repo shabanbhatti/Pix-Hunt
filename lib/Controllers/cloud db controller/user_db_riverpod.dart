@@ -100,10 +100,10 @@ class UserDbStateNotifier extends StateNotifier<UserDbState> {
     }
   }
 
-  Future<void> deleteAccount(String password) async {
+  Future<void> deleteAccount(String password, bool isGoogleSignIn) async {
     try {
       state = LoadingUserDb();
-      await cloudDbRepository.deleteAccount(password);
+      await cloudDbRepository.deleteAccount(password, isGoogleSignIn);
       state = AccountDeleteUserDb();
     } on Failures catch (e) {
       state = ErrorUserDb(error: e.message);

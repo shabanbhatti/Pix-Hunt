@@ -366,4 +366,8 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get browseCetagory => '카테고리별 탐색';
+
+  @override
+  String get deleteAccountNote =>
+      '참고: Google 계정을 사용하여 로그인했습니다. 보안을 위해 먼저 다시 인증해야 합니다. 재인증이 성공적으로 완료되면 계정 삭제 절차가 시작됩니다.';
 }

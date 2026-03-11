@@ -379,4 +379,8 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get browseCetagory => 'Nach Kategorie durchsuchen';
+
+  @override
+  String get deleteAccountNote =>
+      'Hinweis: Sie haben sich mit Ihrem Google-Konto angemeldet. Aus Sicherheitsgründen müssen Sie sich zunächst erneut authentifizieren. Nach erfolgreicher erneuter Authentifizierung beginnt der Löschvorgang des Kontos.';
 }

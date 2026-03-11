@@ -53,140 +53,145 @@ class _DownloadHistoryPageState extends ConsumerState<DownloadHistoryPage>
     });
     return Scaffold(
       body: Center(
-        child: CustomScrollView(
-          slivers: [
-            CupertinoSliverNavigationBar(
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              leading: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(Icons.arrow_back_ios_new_outlined),
-              ),
-              largeTitle: Text(lng?.downloadHistory ?? ''),
-              trailing: GestureDetector(
-                onTap: () {
-                  EasyLoading.show(
-                    indicator: CupertinoActivityIndicator(color: Colors.white),
-                    status: 'Clearing all history...',
-                    dismissOnTap: false,
-                  );
-                  ref
-                      .read(userDbProvider.notifier)
-                      .deleteAllDownloadedHistory();
+        child: Scrollbar(
+          radius: const Radius.circular(50),
+          child: CustomScrollView(
+            slivers: [
+              CupertinoSliverNavigationBar(
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                leading: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(Icons.arrow_back_ios_new_outlined),
+                ),
+                largeTitle: Text(lng?.downloadHistory ?? ''),
+                trailing: GestureDetector(
+                  onTap: () {
+                    EasyLoading.show(
+                      indicator: CupertinoActivityIndicator(
+                        color: Colors.white,
+                      ),
+                      status: 'Clearing all history...',
+                      dismissOnTap: false,
+                    );
+                    ref
+                        .read(userDbProvider.notifier)
+                        .deleteAllDownloadedHistory();
 
-                  EasyLoading.dismiss();
-                },
-                child: Text(
-                  lng?.clearAll ?? '',
-                  style: const TextStyle(color: ConstantColors.appColor),
+                    EasyLoading.dismiss();
+                  },
+                  child: Text(
+                    lng?.clearAll ?? '',
+                    style: const TextStyle(color: ConstantColors.appColor),
+                  ),
                 ),
               ),
-            ),
-            SliverSafeArea(
-              top: false,
-              sliver: Consumer(
-                builder: (context, ref, child) {
-                  var myRef = ref.watch(downloadHistoryStreamProvider);
-                  return myRef.when(
-                    data: (x) {
-                      var data = x.reversed.toList();
-                      return (data.isEmpty)
-                          ? SliverFillRemaining(
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(Icons.download),
-                                  Text(
-                                    ' ${lng?.noDownloads ?? ''}',
+              SliverSafeArea(
+                top: false,
+                sliver: Consumer(
+                  builder: (context, ref, child) {
+                    var myRef = ref.watch(downloadHistoryStreamProvider);
+                    return myRef.when(
+                      data: (x) {
+                        var data = x.reversed.toList();
+                        return (data.isEmpty)
+                            ? SliverFillRemaining(
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.download),
+                                    Text(
+                                      ' ${lng?.noDownloads ?? ''}',
 
-                                    style: const TextStyle(
-                                      // color: ConstantColors.appColor,
-                                      fontWeight: FontWeight.bold,
+                                      style: const TextStyle(
+                                        // color: ConstantColors.appColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          )
-                          : SliverList.builder(
-                            itemCount: data.length,
-                            itemBuilder: (context, index) {
-                              final animation = CurvedAnimation(
-                                parent: animationController,
-                                curve: Interval(
-                                  index / data.length,
-                                  (index + 1) / data.length,
-                                  curve: Curves.easeInQuart,
-                                ),
-                              );
-                              return SlideTransition(
-                                position: Tween<Offset>(
-                                  begin: const Offset(-1, 0),
-                                  end: Offset.zero,
-                                ).animate(animation),
-                                child: CustomListTile1(
-                                  imgUrl: data[index].imgUrl,
-                                  date: DateFormatUtil.dateFormat(
-                                    data[index].date.toString(),
+                            )
+                            : SliverList.builder(
+                              itemCount: data.length,
+                              itemBuilder: (context, index) {
+                                final animation = CurvedAnimation(
+                                  parent: animationController,
+                                  curve: Interval(
+                                    index / data.length,
+                                    (index + 1) / data.length,
+                                    curve: Curves.easeInQuart,
                                   ),
+                                );
+                                return SlideTransition(
+                                  position: Tween<Offset>(
+                                    begin: const Offset(-1, 0),
+                                    end: Offset.zero,
+                                  ).animate(animation),
+                                  child: CustomListTile1(
+                                    imgUrl: data[index].imgUrl,
+                                    date: DateFormatUtil.dateFormat(
+                                      data[index].date.toString(),
+                                    ),
 
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                      ViewDownloadedItem.pageName,
-                                      arguments: data[index],
-                                    );
-                                  },
-                                  onLongTap: () {
-                                    showOptionsSheet(
-                                      context,
-                                      open: () {
-                                        Navigator.pop(context);
-                                        Navigator.of(context).pushNamed(
-                                          ViewDownloadedItem.pageName,
-                                          arguments: data[index],
-                                        );
-                                      },
-                                      delete: () {
-                                        Navigator.pop(context);
-                                        deleteDialogBox(
-                                          context,
-                                          describtion:
-                                              lng?.doYouWantToDelete ?? '',
-                                          title: lng?.delete ?? '',
-                                          delete: () {
-                                            ref
-                                                .read(userDbProvider.notifier)
-                                                .deleteDownloadedHistory(
-                                                  data[index],
-                                                );
-                                          },
-                                        );
-                                      },
-                                    );
-                                  },
-                                  photographer:
-                                      '${data[index].photographer}\n [${data[index].pixels}]',
-                                  title: data[index].title,
-                                ),
-                              );
-                            },
-                          );
-                    },
-                    error: (error, stackTrace) {
-                      return SliverFillRemaining(
-                        child: Center(child: Text('$error')),
-                      );
-                    },
-                    loading: () {
-                      return _loading();
-                    },
-                  );
-                },
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                        ViewDownloadedItem.pageName,
+                                        arguments: data[index],
+                                      );
+                                    },
+                                    onLongTap: () {
+                                      showOptionsSheet(
+                                        context,
+                                        open: () {
+                                          Navigator.pop(context);
+                                          Navigator.of(context).pushNamed(
+                                            ViewDownloadedItem.pageName,
+                                            arguments: data[index],
+                                          );
+                                        },
+                                        delete: () {
+                                          Navigator.pop(context);
+                                          deleteDialogBox(
+                                            context,
+                                            describtion:
+                                                lng?.doYouWantToDelete ?? '',
+                                            title: lng?.delete ?? '',
+                                            delete: () {
+                                              ref
+                                                  .read(userDbProvider.notifier)
+                                                  .deleteDownloadedHistory(
+                                                    data[index],
+                                                  );
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                    photographer:
+                                        '${data[index].photographer}\n [${data[index].pixels}]',
+                                    title: data[index].title,
+                                  ),
+                                );
+                              },
+                            );
+                      },
+                      error: (error, stackTrace) {
+                        return SliverFillRemaining(
+                          child: Center(child: Text('$error')),
+                        );
+                      },
+                      loading: () {
+                        return _loading();
+                      },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

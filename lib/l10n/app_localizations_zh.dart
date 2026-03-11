@@ -364,4 +364,8 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get browseCetagory => '按类别浏览';
+
+  @override
+  String get deleteAccountNote =>
+      '注意：您是使用Google账户登录的。出于安全原因，您需要先重新进行身份验证。成功重新验证后，账户删除流程将开始。';
 }

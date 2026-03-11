@@ -119,5 +119,6 @@
   "settings": "Impostazioni",
   "language": "Lingua",
   "select_language": "Seleziona lingua",
-   "browseCetagory": "Sfoglia per categoria"
+   "browseCetagory": "Sfoglia per categoria",
+   "deleteAccountNote":"Nota: Hai effettuato l'accesso utilizzando il tuo account Google. Per motivi di sicurezza, dovrai prima eseguire nuovamente l'autenticazione. Dopo una ri-autenticazione riuscita, inizierà il processo di eliminazione dell'account."
 }

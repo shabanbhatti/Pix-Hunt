@@ -119,5 +119,6 @@
   "settings": "Configurações",
   "language": "Idioma",
   "select_language": "Selecionar idioma",
-  "browseCetagory": "Navegar por categoria"
+  "browseCetagory": "Navegar por categoria",
+  "deleteAccountNote":"Nota: Você entrou usando sua conta do Google. Por motivos de segurança, primeiro será necessário realizar a reautenticação. Após a reautenticação bem-sucedida, o processo de exclusão da conta começará."
 }

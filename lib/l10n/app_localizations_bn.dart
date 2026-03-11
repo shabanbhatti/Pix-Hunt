@@ -377,4 +377,8 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get browseCetagory => 'বিভাগ অনুসারে ব্রাউজ করুন';
+
+  @override
+  String get deleteAccountNote =>
+      'নোট: আপনি আপনার Google অ্যাকাউন্ট ব্যবহার করে সাইন ইন করেছেন। নিরাপত্তার কারণে প্রথমে আপনাকে পুনরায় প্রমাণীকরণ করতে হবে। সফল পুনরায় প্রমাণীকরণের পরে অ্যাকাউন্ট মুছে ফেলার প্রক্রিয়া শুরু হবে।';
 }

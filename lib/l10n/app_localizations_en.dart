@@ -378,6 +378,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get browseCetagory => 'Browse by Category';
+
+  @override
+  String get deleteAccountNote =>
+      'Note: You signed in using your Google account. For security purposes, you will first need to re-authenticate. After successful re-authentication, the account deletion process will begin.';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -754,4 +758,8 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get browseCetagory => 'Browse by Category';
+
+  @override
+  String get deleteAccountNote =>
+      'Note: You signed in using your Google account. For security purposes, you will first need to re-authenticate. After successful re-authentication, the account deletion process will begin.';
 }

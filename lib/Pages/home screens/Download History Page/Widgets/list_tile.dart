@@ -22,7 +22,6 @@ class CustomListTile1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      shape: const Border(bottom: BorderSide(width: 0.2)),
       leading: Container(
         width: 80,
         height: 80,

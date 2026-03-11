@@ -379,4 +379,8 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get browseCetagory => 'Просмотреть по категории';
+
+  @override
+  String get deleteAccountNote =>
+      'Примечание: Вы вошли с помощью своей учетной записи Google. В целях безопасности сначала необходимо пройти повторную аутентификацию. После успешной повторной аутентификации начнется процесс удаления аккаунта.';
 }

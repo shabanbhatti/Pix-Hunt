@@ -11,6 +11,9 @@ import 'package:pix_hunt_project/core/Widgets/custom_listtile_widget.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/update%20email%20page/update_email_page.dart';
 import 'package:pix_hunt_project/Pages/home%20screens/update%20name%20page/update_name_page.dart';
 import 'package:pix_hunt_project/core/Widgets/custom_sliver_appbar.dart';
+import 'package:pix_hunt_project/core/constants/constants_sharedPref_keys.dart';
+import 'package:pix_hunt_project/core/injectors/injectors.dart';
+import 'package:pix_hunt_project/core/services/shared_preference_service.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class SettingPage extends ConsumerStatefulWidget {
@@ -31,7 +34,7 @@ class _SettingPageState extends ConsumerState<SettingPage>
   late Animation<double> fade3;
   late Animation<double> scale4;
   late Animation<double> fade4;
-
+  ValueNotifier<bool> isSignInViaGoogleNotifier = ValueNotifier(false);
   @override
   void initState() {
     super.initState();
@@ -39,6 +42,7 @@ class _SettingPageState extends ConsumerState<SettingPage>
       vsync: this,
       duration: const Duration(seconds: 1),
     );
+    checkSignInViaGoogle();
     fade1 = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
@@ -100,10 +104,20 @@ class _SettingPageState extends ConsumerState<SettingPage>
     });
   }
 
+  void checkSignInViaGoogle() async {
+    var sp = await getIt<SharedPreferencesService>();
+    var isSignInWithGoogle = await sp.getBool(
+      ConstantsSharedprefKeys.googleSignin,
+    );
+    if (isSignInWithGoogle) {
+      isSignInViaGoogleNotifier.value = isSignInWithGoogle;
+    }
+  }
+
   @override
   void dispose() {
     animationController.dispose();
-
+    isSignInViaGoogleNotifier.dispose();
     super.dispose();
   }
 
@@ -134,72 +148,108 @@ class _SettingPageState extends ConsumerState<SettingPage>
             SliverPadding(
               padding: const EdgeInsetsGeometry.symmetric(vertical: 10),
               sliver: SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    ScaleTransition(
-                      scale: scale1,
-                      child: FadeTransition(
-                        opacity: fade1,
-                        child: CustomListTileWidget(
-                          leading: Icons.email,
-                          title: AppLocalizations.of(context)!.updateEmail,
-                          onTap: () {
-                            Navigator.of(
-                              context,
-                            ).pushNamed(UpdateEmailPage.pageName);
-                          },
+                child: ValueListenableBuilder(
+                  valueListenable: isSignInViaGoogleNotifier,
+                  builder: (context, value, child) {
+                    return Column(
+                      children: [
+                        if (value)
+                          const SizedBox()
+                        else
+                          ScaleTransition(
+                            scale: scale1,
+                            child: FadeTransition(
+                              opacity: fade1,
+                              child: CustomListTileWidget(
+                                leading: Icons.email,
+                                title:
+                                    AppLocalizations.of(context)!.updateEmail,
+                                onTap: () {
+                                  Navigator.of(
+                                    context,
+                                  ).pushNamed(UpdateEmailPage.pageName);
+                                },
+                              ),
+                            ),
+                          ),
+                        ScaleTransition(
+                          scale: scale2,
+                          child: FadeTransition(
+                            opacity: fade2,
+                            child: CustomListTileWidget(
+                              leading: Icons.person,
+                              title: AppLocalizations.of(context)!.updateName,
+                              onTap: () {
+                                Navigator.of(
+                                  context,
+                                ).pushNamed(UpdateNamePage.pageName);
+                              },
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    ScaleTransition(
-                      scale: scale2,
-                      child: FadeTransition(
-                        opacity: fade2,
-                        child: CustomListTileWidget(
-                          leading: Icons.person,
-                          title: AppLocalizations.of(context)!.updateName,
-                          onTap: () {
-                            Navigator.of(
-                              context,
-                            ).pushNamed(UpdateNamePage.pageName);
-                          },
-                        ),
-                      ),
-                    ),
-                    ScaleTransition(
-                      scale: scale3,
-                      child: FadeTransition(
-                        opacity: fade3,
-                        child: CustomListTileWidget(
-                          leading: Icons.lock,
-                          title: AppLocalizations.of(context)!.changePassword,
-                          onTap: () {
-                            Navigator.of(
-                              context,
-                            ).pushNamed(ChangePasswordPage.pageName);
-                          },
-                        ),
-                      ),
-                    ),
-                    ScaleTransition(
-                      scale: scale4,
-                      child: FadeTransition(
-                        opacity: fade4,
-                        child: CustomListTileWidget(
-                          leading: Icons.delete,
-                          color: Colors.red,
-                          title: lng?.delete_account ?? '',
-                          onTap: () {
-                            openHalfBottomSheet(
-                              context,
-                              child: const DeleteAccountWidget(),
-                              size: 0.8,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
+                        if (value)
+                          const SizedBox()
+                        else
+                          ScaleTransition(
+                            scale: scale3,
+                            child: FadeTransition(
+                              opacity: fade3,
+                              child: CustomListTileWidget(
+                                leading: Icons.lock,
+                                title:
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.changePassword,
+                                onTap: () {
+                                  Navigator.of(
+                                    context,
+                                  ).pushNamed(ChangePasswordPage.pageName);
+                                },
+                              ),
+                            ),
+                          ),
+                        if (value)
+                          ScaleTransition(
+                            scale: scale3,
+                            child: FadeTransition(
+                              opacity: fade3,
+                              child: CustomListTileWidget(
+                                leading: Icons.delete,
+                                color: Colors.red,
+                                title: lng?.delete_account ?? '',
+                                onTap: () {
+                                  openHalfBottomSheet(
+                                    context,
+                                    child:
+                                        const DeleteAccountWidgetForGoogleSignIn(),
+                                    size: 0.8,
+                                  );
+                                },
+                              ),
+                            ),
+                          )
+                        else
+                          ScaleTransition(
+                            scale: scale4,
+                            child: FadeTransition(
+                              opacity: fade4,
+                              child: CustomListTileWidget(
+                                leading: Icons.delete,
+                                color: Colors.red,
+                                title: lng?.delete_account ?? '',
+                                onTap: () {
+                                  openHalfBottomSheet(
+                                    context,
+                                    child: const DeleteAccountWidget(),
+                                    size: 0.8,
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),

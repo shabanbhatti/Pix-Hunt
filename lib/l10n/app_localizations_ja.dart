@@ -367,4 +367,8 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get browseCetagory => 'カテゴリ別に閲覧';
+
+  @override
+  String get deleteAccountNote =>
+      '注意: あなたはGoogleアカウントを使用してサインインしています。セキュリティ上の理由により、まず再認証を行う必要があります。再認証が成功すると、アカウント削除の処理が開始されます。';
 }

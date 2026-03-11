@@ -5,4 +5,5 @@ abstract class ConstantsSharedprefKeys {
   static const String languageKey = 'language';
   static const String introPageKey = 'intro';
   static const String themeKey = 'theme';
+  static const String googleSignin = 'google_sign_in';
 }

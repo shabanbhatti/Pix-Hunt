@@ -119,5 +119,6 @@
   "settings": "Ayarlar",
   "language": "Dil",
   "select_language": "Dil Seç",
-  "browseCetagory": "Kategoriye Göre Gözat"
+  "browseCetagory": "Kategoriye Göre Gözat",
+  "deleteAccountNote":"Not: Google hesabınızı kullanarak giriş yaptınız. Güvenlik amacıyla önce yeniden kimlik doğrulaması yapmanız gerekmektedir. Yeniden kimlik doğrulama başarılı olduktan sonra hesap silme işlemi başlayacaktır."
 }

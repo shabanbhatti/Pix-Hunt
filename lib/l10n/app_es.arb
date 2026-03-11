@@ -120,7 +120,8 @@
   "settings": "Configuración",
     "language": "Idioma",
     "select_language": "Seleccionar idioma",
-    "browseCetagory": "Explorar por categoría"
+    "browseCetagory": "Explorar por categoría",
+    "deleteAccountNote":"Nota: Has iniciado sesión usando tu cuenta de Google. Por motivos de seguridad, primero deberás volver a autenticarte. Después de una reautenticación exitosa, comenzará el proceso de eliminación de la cuenta."
 
 
 }

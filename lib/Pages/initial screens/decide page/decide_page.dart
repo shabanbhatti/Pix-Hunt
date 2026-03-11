@@ -128,6 +128,10 @@ class _DecidePageState extends ConsumerState<DecidePage>
         }
       });
     } else {
+      var spService = getIt<SharedPreferencesService>();
+      await spService.setBool(ConstantsSharedprefKeys.googleSignin, false);
+      await spService.setBool(ConstantsSharedprefKeys.loggedKEY, false);
+      await spService.remove(ConstantsSharedprefKeys.userImgKEY);
       Future.delayed(const Duration(seconds: 3), () {
         if (mounted) {
           Navigator.of(

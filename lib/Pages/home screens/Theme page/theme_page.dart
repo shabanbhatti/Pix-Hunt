@@ -17,6 +17,7 @@ class ThemePage extends StatelessWidget {
     log('Theme page build called');
     return Scaffold(
       body: CustomScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         slivers: [
           CustomSliverAppBar(title: lng?.theme ?? ''),
           SliverToBoxAdapter(

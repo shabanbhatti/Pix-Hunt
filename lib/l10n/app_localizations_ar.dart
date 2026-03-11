@@ -378,4 +378,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get browseCetagory => 'تصفح حسب الفئة';
+
+  @override
+  String get deleteAccountNote =>
+      'ملاحظة: لقد قمت بتسجيل الدخول باستخدام حساب Google الخاص بك. لأغراض الأمان، ستحتاج أولاً إلى إعادة المصادقة. بعد نجاح إعادة المصادقة، ستبدأ عملية حذف الحساب.';
 }

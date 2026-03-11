@@ -1,12 +1,17 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
 import 'package:pix_hunt_project/Models/downloads_image_model.dart';
 import 'package:pix_hunt_project/Models/pictures_model.dart';
 import 'package:pix_hunt_project/Models/search_history.dart';
+import 'package:pix_hunt_project/core/constants/constants_sharedPref_keys.dart';
 import 'package:pix_hunt_project/core/errors/exceptions/firebase_exceptions_handler.dart';
+import 'package:pix_hunt_project/core/errors/exceptions/google_signin_exceptions.dart';
 import 'package:pix_hunt_project/core/errors/failures/failures.dart';
+import 'package:pix_hunt_project/core/injectors/injectors.dart';
+import 'package:pix_hunt_project/core/services/shared_preference_service.dart';
 import 'package:pix_hunt_project/services/auth_service.dart';
 import 'package:pix_hunt_project/services/cloud_DB_service.dart';
 import 'package:pix_hunt_project/services/local_database_service.dart';
@@ -52,8 +57,7 @@ class CloudDbRepository {
       String? email = await cloudDbService.getEmailFromDb(uid);
       log('Current email: ${currentUserEmail}');
       log(' email: ${email}');
-      print('Current email== email: ${email == currentUserEmail}');
-      print('Current email!= email: ${email != currentUserEmail}');
+
       if (email != currentUserEmail) {
         await cloudDbService.onLogin(currentUserEmail, uid);
         await cloudDbService.getUserData(uid);
@@ -266,32 +270,43 @@ class CloudDbRepository {
     }
   }
 
-  Future<void> deleteAccount(String password) async {
+  Future<void> deleteAccount(String password, bool isGoogleSignIn) async {
     try {
-      // await Future.delayed(const Duration(seconds: 4));
-
       String? uid = authService.firebaseAuth.currentUser?.uid;
       if (uid == null) {
         throw AuthFailure(message: 'Session expired. Please sign in again.');
       }
-      await authService.reAuthenticateUser(password);
+      if (isGoogleSignIn) {
+        await authService.reAuthenticateWithGoogle();
+      } else {
+        await authService.reAuthenticateUser(password);
+      }
 
       var path = await cloudDbService.getUserImageStoragePath(uid);
       if (path != null) {
         await storageService.deleteFile('/user_img', 'img/$uid');
       }
-      print('STORAGE IMG DELETED');
+
       await cloudDbService.deleteAccount(uid);
-      print('REMOTE DB DELETED');
+
       await localDatabaseService.deleteAllData();
-      print('LOCAL DB DELETED');
+
       await authService.deleteAccount(password);
-      print('USER DELETED');
+
       await authService.logout();
-      print('LOGOUT');
+      var spService = getIt<SharedPreferencesService>();
+      await spService.setBool(ConstantsSharedprefKeys.googleSignin, false);
+      await spService.setBool(ConstantsSharedprefKeys.loggedKEY, false);
+      await spService.remove(ConstantsSharedprefKeys.userImgKEY);
+    } on GoogleSignInException catch (e) {
+      var message = GoogleSignInExceptionsHandler.googleSignInError(e);
+      throw AuthFailure(message: message);
     } on FirebaseAuthException catch (e) {
+      log(e.code);
       if (e.code == 'invalid-credential' || e.credential == 'wrong-password') {
         throw AuthFailure(message: 'Incorrect Password');
+      } else if (e.code == 'user-mismatch') {
+        throw AuthFailure(message: 'Incorrect Account');
       } else {
         var message = FirebaseExceptionsHandler.authException(e);
         throw AuthFailure(message: message);

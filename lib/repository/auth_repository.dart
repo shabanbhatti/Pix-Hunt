@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pix_hunt_project/Models/auth_model.dart';
@@ -24,10 +22,7 @@ class AuthRepository {
         String currentUserEmail =
             authService.firebaseAuth.currentUser?.email ?? '';
         String? email = await cloudDbService.getEmailFromDb(uid);
-        log('Current email: ${currentUserEmail}');
-        log(' email: ${email}');
-        print('Current email== email: ${email == currentUserEmail}');
-        print('Current email!= email: ${email != currentUserEmail}');
+
         if (email != currentUserEmail) {
           await cloudDbService.onLogin(currentUserEmail, uid);
           await cloudDbService.getUserData(uid);
@@ -111,7 +106,9 @@ class AuthRepository {
   Future<void> signOut() async {
     try {
       var spService = getIt<SharedPreferencesService>();
+
       await authService.logout();
+      await spService.setBool(ConstantsSharedprefKeys.googleSignin, false);
       await spService.setBool(ConstantsSharedprefKeys.loggedKEY, false);
       await spService.remove(ConstantsSharedprefKeys.userImgKEY);
     } on FirebaseAuthException catch (e) {

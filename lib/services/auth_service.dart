@@ -19,6 +19,7 @@ class AuthService {
     if (user) {
       return true;
     } else {
+      await googleSignIn.signOut();
       await firebaseAuth.signOut();
       return false;
     }
@@ -148,7 +149,33 @@ class AuthService {
     }
   }
 
+  Future<void> reAuthenticateWithGoogle() async {
+    await googleSignIn.initialize(serverClientId: EnvUtils.serverClientId);
+
+    GoogleSignInAccount? googleUser = await googleSignIn.authenticate();
+
+    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+    AuthCredential credential = GoogleAuthProvider.credential(
+      idToken: googleAuth.idToken,
+    );
+
+    await firebaseAuth.currentUser!.reauthenticateWithCredential(credential);
+  }
+
   Future<void> deleteAccount(String password) async {
+    var user = firebaseAuth.currentUser;
+    if (user != null) {
+      // final cred = EmailAuthProvider.credential(
+      //   email: user.email!,
+      //   password: password,
+      // );
+      // await firebaseAuth.currentUser?.reauthenticateWithCredential(cred);
+      await firebaseAuth.currentUser?.delete();
+    }
+  }
+
+  Future<void> deleteAccountFromGoogle(String password) async {
     var user = firebaseAuth.currentUser;
     if (user != null) {
       final cred = EmailAuthProvider.credential(

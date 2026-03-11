@@ -121,5 +121,6 @@
   "settings": "Paramètres",
   "language": "Langue",
   "select_language": "Choisir la langue",
-   "browseCetagory": "Parcourir par catégorie"
+   "browseCetagory": "Parcourir par catégorie",
+   "deleteAccountNote":"Remarque : Vous vous êtes connecté à l'aide de votre compte Google. Pour des raisons de sécurité, vous devrez d'abord vous réauthentifier. Après une réauthentification réussie, le processus de suppression du compte commencera."
 }

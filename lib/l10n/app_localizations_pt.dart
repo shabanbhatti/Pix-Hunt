@@ -379,4 +379,8 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get browseCetagory => 'Navegar por categoria';
+
+  @override
+  String get deleteAccountNote =>
+      'Nota: Você entrou usando sua conta do Google. Por motivos de segurança, primeiro será necessário realizar a reautenticação. Após a reautenticação bem-sucedida, o processo de exclusão da conta começará.';
 }

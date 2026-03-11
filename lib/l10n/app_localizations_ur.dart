@@ -380,4 +380,8 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get browseCetagory => 'زمرہ کے ذریعے براؤز کریں';
+
+  @override
+  String get deleteAccountNote =>
+      'نوٹ: آپ نے اپنے گوگل اکاؤنٹ کے ذریعے سائن ان کیا ہے۔ سیکیورٹی کے مقاصد کے لیے پہلے آپ کو دوبارہ تصدیق (ری آتھنٹیکیٹ) کرنا ہوگی۔ کامیاب دوبارہ تصدیق کے بعد اکاؤنٹ حذف کرنے کا عمل شروع ہو جائے گا۔';
 }

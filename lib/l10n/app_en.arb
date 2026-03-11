@@ -119,5 +119,6 @@
    "settings": "Settings",
     "language": "Language",
     "select_language": "Select Language",
-     "browseCetagory": "Browse by Category"
+     "browseCetagory": "Browse by Category",
+     "deleteAccountNote":"Note: You signed in using your Google account. For security purposes, you will first need to re-authenticate. After successful re-authentication, the account deletion process will begin."
 }

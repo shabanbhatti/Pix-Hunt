@@ -7,6 +7,7 @@ import 'package:pix_hunt_project/core/Utils/validations_textfields_utils.dart';
 import 'package:pix_hunt_project/core/Widgets/custom%20btns/app_main_btn.dart';
 import 'package:pix_hunt_project/core/Widgets/custom%20textfields/password_textfield_widget.dart';
 import 'package:pix_hunt_project/core/constants/constant_colors.dart';
+import 'package:pix_hunt_project/core/constants/constant_imgs.dart';
 import 'package:pix_hunt_project/l10n/app_localizations.dart';
 
 class DeleteAccountWidget extends ConsumerStatefulWidget {
@@ -231,6 +232,7 @@ class _DeleteAccountWidgetState extends ConsumerState<DeleteAccountWidget>
                                       .read(userDbProvider.notifier)
                                       .deleteAccount(
                                         passwordController.text.trim(),
+                                        false,
                                       );
                                 },
                                 title: lng?.delete_account ?? '',
@@ -251,6 +253,257 @@ class _DeleteAccountWidgetState extends ConsumerState<DeleteAccountWidget>
           ),
         ],
       ),
+    );
+  }
+}
+
+class DeleteAccountWidgetForGoogleSignIn extends ConsumerStatefulWidget {
+  const DeleteAccountWidgetForGoogleSignIn({super.key});
+
+  @override
+  ConsumerState<DeleteAccountWidgetForGoogleSignIn> createState() =>
+      _DeleteAccountWidgetForGoogleSignInState();
+}
+
+class _DeleteAccountWidgetForGoogleSignInState
+    extends ConsumerState<DeleteAccountWidgetForGoogleSignIn>
+    with SingleTickerProviderStateMixin {
+  ValueNotifier<bool> isObscureNotifier = ValueNotifier(true);
+  late AnimationController animationController;
+  late Animation<double> scaleTitle;
+  late Animation<double> fadeTitle;
+  late Animation<double> scaleBtnDetail;
+  late Animation<double> fadeBtnDetail;
+  late Animation<double> scalebtn;
+  late Animation<double> fadeBtn;
+  late Animation<double> scaleNote;
+  late Animation<double> fadeNote;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+    fadeTitle = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.0, 0.25),
+      ),
+    );
+
+    scaleTitle = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.0, 0.25),
+      ),
+    );
+
+    fadeBtnDetail = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.25, 0.50),
+      ),
+    );
+
+    scaleBtnDetail = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.25, 0.50),
+      ),
+    );
+
+    fadeBtn = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.50, 0.75),
+      ),
+    );
+
+    scalebtn = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.50, 0.75),
+      ),
+    );
+
+    fadeNote = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.75, 1.0),
+      ),
+    );
+
+    scaleNote = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.75, 1.0),
+      ),
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      animationController.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var lng = AppLocalizations.of(context);
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(CupertinoIcons.xmark_circle_fill, size: 30),
+            ),
+          ],
+        ),
+        Expanded(
+          child: CustomScrollView(
+            slivers: [
+              SliverPadding(
+                padding: const EdgeInsetsGeometry.only(
+                  left: 10,
+                  bottom: 15,
+                  right: 10,
+                ),
+                sliver: SliverToBoxAdapter(
+                  child: ScaleTransition(
+                    scale: scaleTitle,
+                    child: FadeTransition(
+                      opacity: fadeTitle,
+                      child: Text(
+                        lng?.account_deletion_title ?? '',
+                        style: const TextStyle(
+                          fontSize: 33,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsetsGeometry.only(
+                    bottom: 10,
+                    top: 0,
+                    right: 10,
+                    left: 10,
+                  ),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: ScaleTransition(
+                      scale: scaleBtnDetail,
+                      child: FadeTransition(
+                        opacity: fadeBtnDetail,
+                        child: Text(
+                          '*${lng?.delete_warning ?? ''}',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: ConstantColors.appColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsetsGeometry.only(right: 10, left: 10),
+                sliver: SliverToBoxAdapter(
+                  child: ScaleTransition(
+                    scale: scalebtn,
+                    child: FadeTransition(
+                      opacity: fadeBtn,
+                      child: AppMainBtn(
+                        onTap: () {
+                          deleteDialogBox(
+                            context,
+                            delete: () async {
+                              await ref
+                                  .read(userDbProvider.notifier)
+                                  .deleteAccount('', true);
+                            },
+                            title: lng?.delete_account ?? '',
+                            describtion: lng?.delete_confirmation_message ?? '',
+                          );
+                        },
+                        widgetOrTitle: WidgetOrTitle.title,
+                        btnTitle: lng?.delete_account ?? '',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsetsGeometry.only(
+                  right: 10,
+                  left: 10,
+                  top: 20,
+                ),
+                sliver: SliverToBoxAdapter(
+                  child: ScaleTransition(
+                    scale: scaleNote,
+                    child: FadeTransition(
+                      opacity: fadeNote,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.red.withAlpha(170),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsetsGeometry.all(10),
+                                child: Text(
+                                  lng?.deleteAccountNote ?? '',
+                                  style: TextStyle(
+                                    fontSize: 9,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsGeometry.only(
+                                right: 10,
+                                top: 5,
+                                left: 5,
+                                bottom: 10,
+                              ),
+                              child: Image.asset(
+                                ConstantImgs.google_logo,
+                                height: 40,
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

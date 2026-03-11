@@ -287,6 +287,11 @@ class _LoginPageState extends ConsumerState<LoginPage>
                                   if (isLogged == null) return;
 
                                   if (isLogged) {
+                                    var sp = getIt<SharedPreferencesService>();
+                                    await sp.setBool(
+                                      ConstantsSharedprefKeys.googleSignin,
+                                      true,
+                                    );
                                     Navigator.of(
                                       context,
                                     ).pushNamedAndRemoveUntil(

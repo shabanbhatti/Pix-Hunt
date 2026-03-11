@@ -39,44 +39,48 @@ class _LanguagePageState extends ConsumerState<LanguagePage> {
     var lng = AppLocalizations.of(context);
     return Scaffold(
       body: Center(
-        child: CustomScrollView(
-          slivers: [
-            CustomSliverAppBar(title: lng?.language ?? ''),
-            SliverToBoxAdapter(
-              child: ListTile(
-                leading: const Icon(Icons.language),
-                title: Text(lng?.select_language ?? ''),
-                trailing: ValueListenableBuilder(
+        child: Scrollbar(
+          radius: const Radius.circular(50),
+          child: CustomScrollView(
+            slivers: [
+              CustomSliverAppBar(title: lng?.language ?? ''),
+              SliverToBoxAdapter(
+                child: ListTile(
+                  leading: const Icon(Icons.language),
+                  title: Text(lng?.select_language ?? ''),
+                  trailing: ValueListenableBuilder(
+                    valueListenable: widget.languageNotifier,
+                    builder: (context, value, child) {
+                      return Text(
+                        '${getFlagFromCode(value)}',
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              SliverSafeArea(
+                top: false,
+                sliver: ValueListenableBuilder(
                   valueListenable: widget.languageNotifier,
                   builder: (context, value, child) {
-                    return Text(
-                      '${getFlagFromCode(value)}',
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    return SliverAnimatedList(
+                      key: _listKey,
+                      initialItemCount: 0,
+                      itemBuilder: (context, index, animation) {
+                        var lngModel =
+                            ConstantLanguagesList.languagesList[index];
+                        return _animatedTile(lngModel, value, animation, index);
+                      },
                     );
                   },
                 ),
               ),
-            ),
-            SliverSafeArea(
-              top: false,
-              sliver: ValueListenableBuilder(
-                valueListenable: widget.languageNotifier,
-                builder: (context, value, child) {
-                  return SliverAnimatedList(
-                    key: _listKey,
-                    initialItemCount: 0,
-                    itemBuilder: (context, index, animation) {
-                      var lngModel = ConstantLanguagesList.languagesList[index];
-                      return _animatedTile(lngModel, value, animation, index);
-                    },
-                  );
-                },
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

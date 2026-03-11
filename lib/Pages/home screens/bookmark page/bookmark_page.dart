@@ -86,7 +86,7 @@ class _BookmarkPageState extends ConsumerState<BookmarkPage>
 
     return Scaffold(
       body: Scrollbar(
-        radius: const Radius.circular(20),
+        radius: const Radius.circular(50),
 
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),

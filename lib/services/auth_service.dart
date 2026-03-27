@@ -107,7 +107,6 @@ class AuthService {
   Future<Auth?> signInWithGOOGLE() async {
     try {
       await googleSignIn.initialize(serverClientId: EnvUtils.serverClientId);
-
       GoogleSignInAccount? googleSignInAccount =
           await googleSignIn.authenticate();
 

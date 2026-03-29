@@ -1,6 +1,7 @@
 {
   "projects": {
-    "pixhunt": "arcane-bus-466702-a4"
+    "pixhunt": "arcane-bus-466702-a4",
+    "default": "arcane-bus-466702-a4"
   },
   "targets": {},
   "etags": {}

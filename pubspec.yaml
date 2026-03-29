@@ -73,6 +73,7 @@ dependencies:
   flutter_spinkit: ^5.2.2
   google_mobile_ads: ^7.0.0
   url_launcher: ^6.3.2
+  cloud_functions: ^5.6.2
   
 
 

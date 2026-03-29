@@ -10,7 +10,9 @@ class Pexer {
       page: json['pages'] ?? 0,
       title: json['title'] ?? '',
       photosList:
-          (json['photos'] as List).map((x) => Photos.fromJson(x)).toList(),
+          (json['photos'] as List<dynamic>? ?? [])
+              .map((x) => Photos.fromJson(Map<String, dynamic>.from(x)))
+              .toList(),
     );
   }
 

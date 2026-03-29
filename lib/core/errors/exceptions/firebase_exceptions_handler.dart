@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class FirebaseExceptionsHandler {
@@ -159,6 +160,58 @@ abstract class FirebaseExceptionsHandler {
 
       default:
         return 'Something went wrong. Please try again.';
+    }
+  }
+
+  static String firebaseFunctionExceptions(FirebaseFunctionsException e) {
+    switch (e.code) {
+      case 'unauthenticated':
+        return "Please login first";
+
+      case 'permission-denied':
+        return "You don’t have permission";
+
+      case 'not-found':
+        return "Requested data not found";
+
+      case 'already-exists':
+        return "Data already exists";
+
+      case 'invalid-argument':
+        return "Invalid input provided";
+
+      case 'failed-precondition':
+        return "Operation not allowed right now";
+
+      case 'out-of-range':
+        return "Value out of range";
+
+      case 'unimplemented':
+        return "Feature not implemented";
+
+      case 'internal':
+        return "Server error, try again later";
+
+      case 'unavailable':
+        return "Service unavailable, try again later";
+
+      case 'data-loss':
+        return "Data loss occurred";
+
+      case 'resource-exhausted':
+        return "Too many requests, try later";
+
+      case 'deadline-exceeded':
+        return "Request timeout, try again";
+
+      case 'cancelled':
+        return "Request was cancelled";
+
+      case 'unknown':
+        return "Unknown error occurred";
+
+      default:
+        return e.message ?? "Something went wrong";
     }
   }
 }

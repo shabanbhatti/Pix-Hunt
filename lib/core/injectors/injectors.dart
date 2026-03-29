@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -37,7 +38,10 @@ Future<void> initGetIt() async {
   );
   getIt.registerLazySingleton<DioClient>(() => DioClient());
   getIt.registerLazySingleton<ApiService>(
-    () => ApiService(dio: getIt<DioClient>().dio),
+    () => ApiService(
+      dio: getIt<DioClient>().dio,
+      firebaseFunctions: FirebaseFunctions.instance,
+    ),
   );
   getIt.registerLazySingleton(
     () => LocalDatabaseService(appDatabase: AppDatabase()),
@@ -46,6 +50,7 @@ Future<void> initGetIt() async {
     () => ApiRepository(
       apiService: getIt<ApiService>(),
       localDatabaseService: getIt<LocalDatabaseService>(),
+      authService: getIt<AuthService>(),
     ),
   );
   getIt.registerLazySingleton<StorageService>(
